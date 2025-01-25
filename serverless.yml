@@ -1,0 +1,14 @@
+# "org" ensures this Service is used with the correct Serverless Framework Access Key.
+org: pablojoellopez
+# "app" enables Serverless Framework Dashboard features and sharing them with other Services.
+app: health-dashboard
+# "service" is the name of this project. This will also be added to your AWS resource names.
+service: health-dashboard
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+
+functions:
+  dummy:
+    handler: app/src/handlers/dummy/dummy.handler
