@@ -9,7 +9,7 @@ class ClaimsHandler {
   constructor(private readonly claimsModel: ClaimsModel) {}
 
   async handleEvent(event: ClaimsEvent): HandlerResult {
-    const claims = this.claimsModel.getClaims(event?.influencers);
+    const claims = await this.claimsModel.getClaims(event?.influencers);
 
     return {
       statusCode: 200,

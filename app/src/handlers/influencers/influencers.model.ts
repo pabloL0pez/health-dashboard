@@ -31,6 +31,7 @@ export class InfluencersModel {
     }
 
     const response = await this.aiService.getStructuredResponse<InfluencersResponse>(requestBody);
+    
     return response;
   }
 }
