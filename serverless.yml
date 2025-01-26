@@ -12,3 +12,5 @@ provider:
 functions:
   dummy:
     handler: app/src/handlers/dummy/dummy.handler
+  influencers:
+    handler: app/src/handlers/influencers/influencers.handler
