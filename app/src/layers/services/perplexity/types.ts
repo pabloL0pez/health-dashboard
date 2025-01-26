@@ -18,24 +18,24 @@ export interface PerplexityMessage {
   content: string;
 }
 
-export interface JsonSchema<T> {
-  schema: T;
+export interface JsonSchema {
+  schema: Record<string, unknown>;
 }
 
 export interface RegexSchema {
   regex: RegExp;
 }
 
-export interface PerplexityResponseFormat<T> {
+export interface PerplexityResponseFormat {
   type: FormatType;
-  json_schema?: JsonSchema<T>;
+  json_schema?: JsonSchema;
   regex?: RegexSchema;
 }
 
-export interface PerplexityRequestBody<T> {
+export interface PerplexityRequestBody {
   model: LLMType;
   messages: PerplexityMessage[];
-  response_format?: PerplexityResponseFormat<T>;
+  response_format?: PerplexityResponseFormat;
 }
 
 export interface PerplexityChoice {

@@ -24,7 +24,7 @@ export class PerplexityService {
     return this._instance;
   }
 
-  async getStructuredResponse<T>(requestBody: PerplexityRequestBody<T>): Promise<T | null> {
+  async getStructuredResponse<T>(requestBody: PerplexityRequestBody): Promise<T | null> {
     if (!this.url) {
       throw new Error('Perplexity API URL is not defined');
     }

@@ -1,20 +1,10 @@
-import { InfluencersResponse } from "./types";
+import { Influencer } from "./types";
 
 export const DEFAULT_TOP_N_INFLUENCERS = 10;
 
-export const INFLUENCERS_SCHEMA: InfluencersResponse = {
-  influencers: [
-    {
-      rank: 1,
-      name: 'Michael Jordan',
-      instagramUser: 'jumpman23',
-      twitterUser: 'mjordan',
-    },
-    {
-      rank: 2,
-      name: 'LeBron James',
-      instagramUser: 'kingjames',
-      twitterUser: 'ljames',
-    },
-  ],
+export const INFLUENCER_OBJECT: Influencer = {
+  rank: 0,
+  name: '',
+  instagramUser: '',
+  twitterUser: '',
 }

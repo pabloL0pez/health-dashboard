@@ -20,3 +20,4 @@ functions:
   influencers:
     handler: app/src/handlers/influencers/influencers.handler
     timeout: 20
+    memorySize: 128
