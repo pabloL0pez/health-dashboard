@@ -19,3 +19,7 @@ functions:
     handler: app/src/handlers/influencers/influencers.handler
     timeout: 20
     memorySize: 128
+  claims:
+    handler: app/src/handlers/claims/claims.handler
+    timeout: 20
+    memorySize: 128
