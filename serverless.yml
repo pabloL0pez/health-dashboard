@@ -15,8 +15,6 @@ provider:
     PERPLEXITY_API_URL: ${env:PERPLEXITY_API_URL}
 
 functions:
-  dummy:
-    handler: app/src/handlers/dummy/dummy.handler
   influencers:
     handler: app/src/handlers/influencers/influencers.handler
     timeout: 20
