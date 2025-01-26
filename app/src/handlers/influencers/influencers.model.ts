@@ -1,16 +1,13 @@
 import { AIService } from "../../layers/services/ai.service";
-import { PerplexityService } from "../../layers/services/perplexity/perplexity.service";
-import { FormatType, PerplexityRequestBody } from "../../layers/services/perplexity/types";
-import { LLMType, RoleType } from "../../layers/services/types";
+import { AIRequestBody, LLMType, RoleType } from "../../layers/services/types";
 import { DEFAULT_TOP_N_INFLUENCERS, INFLUENCER_OBJECT } from "./constants";
-import { InfluencersResponseSchema } from "./schemas";
 import { InfluencersResponse } from "./types";
 
 export class InfluencersModel {
   constructor(private readonly aiService: AIService) {}
 
   async getInfluencers(topN: number = DEFAULT_TOP_N_INFLUENCERS) {
-    const requestBody: PerplexityRequestBody = {
+    const requestBody: AIRequestBody = {
       model: LLMType.Sonar,
       messages: [
         {
