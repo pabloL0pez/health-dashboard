@@ -8,13 +8,13 @@ export const INFLUENCERS_SCHEMA: InfluencersResponse = {
       rank: 1,
       name: 'Michael Jordan',
       instagramUser: 'jumpman23',
-      xUser: 'mjordan',
+      twitterUser: 'mjordan',
     },
     {
       rank: 2,
       name: 'LeBron James',
       instagramUser: 'kingjames',
-      xUser: 'ljames',
+      twitterUser: 'ljames',
     },
   ],
 }

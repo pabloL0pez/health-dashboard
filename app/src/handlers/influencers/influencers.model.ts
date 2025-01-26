@@ -1,5 +1,5 @@
 import { PerplexityService } from "../../layers/services/perplexity/perplexity.service";
-import { FormatType, LLMType, PerplexityRequestBody } from "../../layers/services/perplexity/types";
+import { FormatType, LLMType, PerplexityRequestBody, RoleType } from "../../layers/services/perplexity/types";
 import { DEFAULT_TOP_N_INFLUENCERS, INFLUENCERS_SCHEMA } from "./constants";
 import { InfluencersResponse } from "./types";
 
@@ -12,12 +12,18 @@ export class InfluencersModel {
     const requestBody: PerplexityRequestBody<InfluencersResponse> = {
       model: LLMType.Sonar,
       messages: [
-        {role: "system", content: "Be precise and concise."},
-        {role: "user", content: [
-          `Please perform a discovery of the top ${topN} health influencers on social media.`,
-          "Please output an array of JSON objects containing the following fields: ",
-          Object.keys(influencerSchema).join(", "),
-        ]},
+        {
+          role: RoleType.System,
+          content: "Be precise and concise. Only output structured JSON data with the requested fields."
+        },
+        {
+          role: RoleType.User,
+          content: `
+            Please perform a discovery of the top ${topN} health influencers on social media. 
+            Please output a JSON object with the 'influencers' key containing an array of influencers, with the following fields: 
+            ${Object.keys(influencerSchema).join(", ")}
+          `
+        },
       ],
       response_format: {
           type: FormatType.JsonSchema,
@@ -25,6 +31,8 @@ export class InfluencersModel {
       },
     }
 
-    return this.perplexityService.getStructuredResponse<InfluencersResponse>(requestBody);
+    const response = await this.perplexityService.getStructuredResponse<InfluencersResponse>(requestBody);
+    
+    return response;
   }
 }

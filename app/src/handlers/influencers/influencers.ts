@@ -1,4 +1,6 @@
-import { Handler, HandlerResult } from "../types";
+import { isValidType } from "../../layers/utils/typeGuard";
+import { Handler, HandlerError, HandlerResult } from "../types";
+import { buildHandlerError } from "../utils";
 import { InfluencersModel } from "./influencers.model";
 import { InfluencersEvent } from "./types";
 
@@ -24,7 +26,14 @@ class InfluencersHandlerProvider {
   }
 }
 
-export const handler = async (event: InfluencersEvent) => {
+export const handler = async (event: InfluencersEvent): HandlerResult => {
+  if (!isValidType<InfluencersEvent>(['topN'], event)) {
+    return {
+      statusCode: 400,
+      body: buildHandlerError(event),
+    }
+  }
+
   const influencersHandler = InfluencersHandlerProvider.inject();
   return await influencersHandler.handleEvent(event);
 };

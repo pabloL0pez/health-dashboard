@@ -1,4 +1,5 @@
 import { PerplexityRequestBody } from "./types";
+import { parseResponse } from "./utils";
 
 export class PerplexityService {
   private static _instance: PerplexityService;
@@ -28,17 +29,19 @@ export class PerplexityService {
       throw new Error('Perplexity API URL is not defined');
     }
 
+    const options = {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      headers: this.headers,
+    }
     let response = null;
-
+    
     try {
-      response = await fetch(this.url, {
-        method: 'POST',
-        body: JSON.stringify(requestBody),
-        headers: this.headers,
-      });
+      response = await fetch(this.url, options);
 
       if (response.ok) {
-        return response.json();
+        const rawResponse = await response.json();
+        return parseResponse<T>(rawResponse);
       } else {
         throw new Error(`An error occured while fetching Perplexity API. Status: ${response.status}`);
       }

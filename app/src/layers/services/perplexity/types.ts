@@ -7,9 +7,15 @@ export enum FormatType {
   Regex = 'regex',
 }
 
+export enum RoleType {
+  Assistant = 'assistant',
+  System = 'system',
+  User = 'user',
+}
+
 export interface PerplexityMessage {
-  role: string;
-  content: string | string[];
+  role: RoleType;
+  content: string;
 }
 
 export interface JsonSchema<T> {
@@ -29,5 +35,16 @@ export interface PerplexityResponseFormat<T> {
 export interface PerplexityRequestBody<T> {
   model: LLMType;
   messages: PerplexityMessage[];
-  response_format: PerplexityResponseFormat<T>;
+  response_format?: PerplexityResponseFormat<T>;
+}
+
+export interface PerplexityChoice {
+  index: number;
+  finish_reason: string;
+  message: PerplexityMessage;
+  delta: PerplexityMessage;
+}
+
+export interface PerplexityResponse {
+  choices: PerplexityChoice[];
 }

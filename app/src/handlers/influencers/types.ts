@@ -2,7 +2,7 @@ interface Influencer {
   rank: number;
   name: string;
   instagramUser?: string;
-  xUser?: string;
+  twitterUser?: string;
 }
 
 export interface InfluencersResponse {
