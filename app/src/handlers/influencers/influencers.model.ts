@@ -9,8 +9,7 @@ export class InfluencersModel {
 
   constructor() {}
 
-  async getInfluencers() {
-    const topN = process.env.TOP_N_INFLUENCERS ?? DEFAULT_TOP_N_INFLUENCERS;
+  async getInfluencers(topN: number = DEFAULT_TOP_N_INFLUENCERS) {
     const influencerSchema = INFLUENCERS_SCHEMA.influencers[0];
 
     const requestBody: PerplexityRequestBody<InfluencersResponse> = {

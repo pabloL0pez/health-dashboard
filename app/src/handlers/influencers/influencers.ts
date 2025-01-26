@@ -1,13 +1,14 @@
 import { Handler } from "../types";
 import { InfluencersModel } from "./influencers.model";
+import { InfluencersEvent } from "./types";
 
 class InfluencersHandler implements Handler {
   constructor(private readonly influencersModel: InfluencersModel) {}
 
-  async handleEvent(event: any): Promise<any> {
+  async handleEvent(event: InfluencersEvent): Promise<any> {
     return {
       statusCode: 200,
-      body: JSON.stringify(this.influencersModel.getInfluencers())
+      body: JSON.stringify(this.influencersModel.getInfluencers(event?.topN))
     };
   }
 }
@@ -21,7 +22,7 @@ class InfluencersHandlerProvider {
   }
 }
 
-export const handler = async (event: any): Promise<any> => {
+export const handler = async (event: InfluencersEvent): Promise<any> => {
   const influencersHandler = InfluencersHandlerProvider.inject();
   return await influencersHandler.handleEvent(event);
 };
