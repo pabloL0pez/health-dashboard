@@ -1,21 +1,8 @@
-export enum LLMType {
-  Sonar = 'sonar',
-}
+import { AIMessage, AIRequestBody } from "../types";
 
 export enum FormatType {
   JsonSchema = 'json_schema',
   Regex = 'regex',
-}
-
-export enum RoleType {
-  Assistant = 'assistant',
-  System = 'system',
-  User = 'user',
-}
-
-export interface PerplexityMessage {
-  role: RoleType;
-  content: string;
 }
 
 export interface JsonSchema {
@@ -32,17 +19,15 @@ export interface PerplexityResponseFormat {
   regex?: RegexSchema;
 }
 
-export interface PerplexityRequestBody {
-  model: LLMType;
-  messages: PerplexityMessage[];
+export interface PerplexityRequestBody extends AIRequestBody {
   response_format?: PerplexityResponseFormat;
 }
 
 export interface PerplexityChoice {
   index: number;
   finish_reason: string;
-  message: PerplexityMessage;
-  delta: PerplexityMessage;
+  message: AIMessage;
+  delta: AIMessage;
 }
 
 export interface PerplexityResponse {

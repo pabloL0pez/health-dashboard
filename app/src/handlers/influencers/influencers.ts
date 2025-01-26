@@ -1,3 +1,4 @@
+import { PerplexityService } from "../../layers/services/perplexity/perplexity.service";
 import { isValidType } from "../../layers/utils/typeGuard";
 import { Handler, HandlerError, HandlerResult } from "../types";
 import { buildHandlerError } from "../utils";
@@ -18,7 +19,7 @@ class InfluencersHandler implements Handler<InfluencersEvent> {
 }
 
 class InfluencersHandlerProvider {
-  private static readonly model: InfluencersModel = new InfluencersModel();
+  private static readonly model: InfluencersModel = new InfluencersModel(PerplexityService.instance);
   private static readonly handler = new InfluencersHandler(this.model);
 
   static inject() {

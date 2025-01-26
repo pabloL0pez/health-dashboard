@@ -1,27 +1,20 @@
+import { Singleton } from "../../utils/singleton";
+import { AIService } from "../ai.service";
 import { PerplexityRequestBody } from "./types";
 import { parseResponse } from "./utils";
 
-export class PerplexityService {
-  private static _instance: PerplexityService;
-
+export class PerplexityService extends Singleton<PerplexityService>() implements AIService {
   private readonly url: string | undefined;
   private readonly headers: Record<string, string> = {};
 
   constructor() {
+    super();
     this.url = process.env.PERPLEXITY_API_URL;
     this.headers = {
       'accept': 'application/json',
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${process.env.PERPLEXITY_API_KEY}`,
     }
-  }
-
-  public static get instance(): PerplexityService {
-    if (!this._instance) {
-      this._instance = new PerplexityService();      
-    }
-
-    return this._instance;
   }
 
   async getStructuredResponse<T>(requestBody: PerplexityRequestBody): Promise<T | null> {
