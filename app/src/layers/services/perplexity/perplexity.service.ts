@@ -1,7 +1,6 @@
 import { PerplexityRequestBody } from "./types";
 
 export class PerplexityService {
-
   private static _instance: PerplexityService;
 
   private readonly url: string | undefined;
