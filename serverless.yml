@@ -5,9 +5,14 @@ app: health-dashboard
 # "service" is the name of this project. This will also be added to your AWS resource names.
 service: health-dashboard
 
+useDotenv: true
+
 provider:
   name: aws
-  runtime: nodejs20.x
+  runtime: nodejs22.x
+  environment:
+    PERPLEXITY_API_KEY: ${env:PERPLEXITY_API_KEY}
+    PERPLEXITY_API_URL: ${env:PERPLEXITY_API_URL}
 
 functions:
   dummy:
