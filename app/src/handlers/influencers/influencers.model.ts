@@ -28,6 +28,6 @@ export class InfluencersModel {
       },
     }
 
-    return await this.perplexityService.getStructuredResponse<InfluencersResponse>(requestBody);
+    return this.perplexityService.getStructuredResponse<InfluencersResponse>(requestBody);
   }
 }
