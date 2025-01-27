@@ -2,14 +2,14 @@ import { PerplexityService } from "../../layers/services/perplexity/perplexity.s
 import { isValidType } from "../../layers/utils/typeGuard";
 import { HandlerResult } from "../types";
 import { buildHandlerError } from "../utils";
-import { ClaimsModel } from "./claims.model";
+import { ClaimsController } from "./claims.controller";
 import { ClaimsEvent } from "./types";
 
 class ClaimsHandler {
-  constructor(private readonly claimsModel: ClaimsModel) {}
+  constructor(private readonly claimsController: ClaimsController) {}
 
   async handleEvent(event: ClaimsEvent): HandlerResult {
-    const claims = await this.claimsModel.getClaims(event?.influencers);
+    const claims = await this.claimsController.getClaims(event?.influencers);
 
     return {
       statusCode: 200,
@@ -19,8 +19,8 @@ class ClaimsHandler {
 }
 
 class ClaimsHandlerProvider {
-  private static readonly model: ClaimsModel = new ClaimsModel(PerplexityService.instance);
-  private static readonly handler = new ClaimsHandler(this.model);
+  private static readonly controller: ClaimsController = new ClaimsController(PerplexityService.instance);
+  private static readonly handler = new ClaimsHandler(this.controller);
 
   static inject() {
     return this.handler;

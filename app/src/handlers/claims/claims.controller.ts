@@ -3,7 +3,7 @@ import { AIRequestBody, LLMType, RoleType } from "../../layers/services/types";
 import { CLAIM_OBJECT, DEFAULT_MAX_CLAIMS } from "./constants";
 import { ClaimsResponse } from "./types";
 
-export class ClaimsModel {
+export class ClaimsController {
   constructor(private readonly aiService: AIService) {}
 
   async getClaims(influencers: string[], maxClaims: number = DEFAULT_MAX_CLAIMS): Promise<any> {
@@ -32,8 +32,6 @@ export class ClaimsModel {
     }
 
     const response = await this.aiService.getStructuredResponse<ClaimsResponse>(requestBody);
-
-    console.log(response);
 
     return response;
   }

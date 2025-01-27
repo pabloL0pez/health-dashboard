@@ -3,7 +3,7 @@ import { AIRequestBody, LLMType, RoleType } from "../../layers/services/types";
 import { DEFAULT_TOP_N_INFLUENCERS, INFLUENCER_OBJECT } from "./constants";
 import { InfluencersResponse } from "./types";
 
-export class InfluencersModel {
+export class InfluencersController {
   constructor(private readonly aiService: AIService) {}
 
   async getInfluencers(topN: number = DEFAULT_TOP_N_INFLUENCERS) {
