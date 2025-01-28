@@ -1,31 +1,32 @@
-import { Repository } from "../repository";
+import { Model, UpdateQuery } from 'mongoose';
+import { DALRepository } from "../repository";
 
-export class MongoRespository<T> extends Repository<T>{
-  constructor(private readonly model: mongoose.Model<T>) {
+export class MongoDALRepository<T extends UpdateQuery<T>> extends DALRepository<T>{
+  constructor(private readonly model: Model<T>) {
     super();
   }
 
-  insert(item: T): Promise<T> {
-    return this.model.insert(item);
+  async insert(item: T): Promise<T> {
+    return this.model.create(item);
   }
 
-  insertMany(item: T[]): Promise<T[]> {
-    return this.model.insertMany(item);
+  async insertMany(items: T[]): Promise<T[]> {
+    return this.model.insertMany(items);
   }
 
-  update(id: string, item: T): Promise<T> {
-    return this.model.findByIdAndUpdate(id, item, { new: true });
+  async update(id: string, item: T): Promise<T | null> {
+    return this.model.findByIdAndUpdate({ _id: id }, item, { new: true });
   }
 
-  delete(id: string): Promise<boolean> {
+  async delete(id: string): Promise<boolean> {
     return this.model.findByIdAndDelete(id).then(() => true);
   }
 
-  find(item: T): Promise<T[]> {
+  async find(item: T): Promise<T[]> {
     return this.model.find(item);
   }
 
-  findOne(id: string): Promise<T> {
+  async findOne(id: string): Promise<T | null> {
     return this.model.findById(id);
   }
 }

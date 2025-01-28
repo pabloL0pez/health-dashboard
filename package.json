@@ -2,9 +2,11 @@
   "dependencies": {
     "@types/aws-lambda": "^8.10.147",
     "@types/serverless": "^3.12.26",
+    "mongoose": "^8.9.5",
     "typescript": "^5.7.3"
   },
   "devDependencies": {
+    "@types/mongoose": "^5.11.96",
     "@types/node": "^22.10.10"
   }
 }
