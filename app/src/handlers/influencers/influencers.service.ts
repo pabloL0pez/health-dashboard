@@ -1,11 +1,14 @@
-import { AIService } from "../../layers/services/ai.service";
-import { AIRequestBody, LLMType, RoleType } from "../../layers/services/types";
+import { AIRequestBody, AIService, LLMType, RoleType } from "../../layers/services/types";
 import { INFLUENCER_OBJECT } from "./constants";
-import { InfluencerRepository } from "./influencers.repository";
+import { iInfluencerRepository } from "./influencers.repository";
 import { InfluencersResponse } from "./types";
 
-export class InfluencersService {
-  constructor(private readonly aiService: AIService, private readonly influencerRepository: InfluencerRepository) {}
+export interface iInfluencersService {
+  discoverInfluencers(topN: number): Promise<InfluencersResponse>;
+}
+
+export class InfluencersService implements iInfluencersService {
+  constructor(private readonly aiService: AIService, private readonly influencerRepository: iInfluencerRepository) {}
   
   async discoverInfluencers(topN: number) {
     const requestBody: AIRequestBody = {

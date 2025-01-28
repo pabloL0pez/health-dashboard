@@ -1,9 +1,9 @@
 import { MongoDALRepository } from "../../layers/repository/data-access/mongo.repository"
-import { DALRepository } from "../../layers/repository/repository";
+import { DALRepository } from "../../layers/repository/types";
 import { InfluencerDAO, InfluencerModel } from "./influencers.model"
 import { Influencer } from "./types"
 
-export interface InfluencerRepository {
+export interface iInfluencerRepository {
   getInfluencers(): Promise<Influencer[]>;
   saveInfluencers(influencers: Influencer[]): Promise<Influencer[]>;
 }
@@ -14,7 +14,7 @@ export class InfluencerRepositoryMongo extends MongoDALRepository<InfluencerDAO>
   };
 }
 
-export class InfluencersRepository implements InfluencerRepository {
+export class InfluencersRepository implements iInfluencerRepository {
   constructor(private readonly dalRepository: DALRepository<InfluencerDAO>) {}
 
   async getInfluencers(): Promise<Influencer[]> {

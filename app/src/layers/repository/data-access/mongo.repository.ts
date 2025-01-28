@@ -1,10 +1,8 @@
 import { Model, UpdateQuery } from 'mongoose';
-import { DALRepository } from "../repository";
+import { DALRepository } from "../types";
 
-export class MongoDALRepository<T extends UpdateQuery<T>> extends DALRepository<T>{
-  constructor(private readonly model: Model<T>) {
-    super();
-  }
+export class MongoDALRepository<T extends UpdateQuery<T>> implements DALRepository<T>{
+  constructor(private readonly model: Model<T>) {}
 
   async insert(item: T): Promise<T> {
     return this.model.create(item);
@@ -28,5 +26,9 @@ export class MongoDALRepository<T extends UpdateQuery<T>> extends DALRepository<
 
   async findOne(id: string): Promise<T | null> {
     return this.model.findById(id);
+  }
+
+  async findAll(): Promise<T[]> {
+    throw new Error('Method not implemented.');
   }
 }

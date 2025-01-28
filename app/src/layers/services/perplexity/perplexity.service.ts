@@ -1,5 +1,5 @@
 import { Singleton } from "../../utils/singleton";
-import { AIService } from "../ai.service";
+import { AIService } from "../types";
 import { PerplexityRequestBody } from "./types";
 import { parseResponse } from "./utils";
 
@@ -17,7 +17,7 @@ export class PerplexityService extends Singleton<PerplexityService>() implements
     }
   }
 
-  async getStructuredResponse<T>(requestBody: PerplexityRequestBody): Promise<T | null> {
+  async getStructuredResponse<T>(requestBody: PerplexityRequestBody): Promise<T> {
     if (!this.url) {
       throw new Error('Perplexity API URL is not defined');
     }
@@ -42,6 +42,6 @@ export class PerplexityService extends Singleton<PerplexityService>() implements
       console.error('Error: Could not fetch Perplexity API', e);
     }
 
-    return Promise.resolve(null);
+    return Promise.resolve([] as unknown as T);
   }
 }
