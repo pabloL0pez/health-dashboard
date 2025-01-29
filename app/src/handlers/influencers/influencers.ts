@@ -35,7 +35,7 @@ class InfluencersHandlerProvider {
   }
 }
 
-export const handler = async (event: InfluencersEvent, context: Context): HandlerResult => {
+export const handler = async (event: InfluencersEvent): HandlerResult => {
   if (!isValidType<InfluencersEvent>(['topN'], event)) {
     return {
       statusCode: 400,
