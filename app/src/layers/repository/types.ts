@@ -6,9 +6,19 @@
 export interface DALRepository<T> {
   insert(item: T): Promise<T>;
   insertMany(items: T[]): Promise<T[]>;
-  update(id: string, item: T): Promise<T | null>;
+  update(id: string, item: T, upsert?: boolean): Promise<T | null>;
+  /** 
+   * Updates the specified items.
+   * 
+   * An array of `ids` can be provided to update those specific ids.
+   * 
+   * If the `upsert` option is set to `true`, the item will be inserted if it doesn't exist already.
+   */
+  updateMany(items: T[], ids?: string[], upsert?: boolean): Promise<number>;
   delete(id: string): Promise<boolean>;
-  find(item: T): Promise<T[]>;
+  /**
+   * Finds the specified item. If no item is provided, all items are returned.
+   */
+  find(item?: T): Promise<T[]>;
   findOne(id: string): Promise<T | null>;
-  findAll(): Promise<T[]>;
 }

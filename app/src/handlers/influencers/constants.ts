@@ -8,3 +8,5 @@ export const INFLUENCER_OBJECT: Influencer = {
   instagramUser: '',
   twitterUser: '',
 }
+
+export const INACTIVE_INFLUENCER_RANK = -1;
