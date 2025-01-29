@@ -1,3 +1,6 @@
+
+import { Context } from "aws-lambda";
+import { MongoClient } from "../../layers/config/mongo/mongo";
 import { PerplexityService } from "../../layers/services/perplexity/perplexity.service";
 import { isValidType } from "../../layers/utils/typeGuard";
 import { Handler, HandlerResult } from "../types";
@@ -32,14 +35,18 @@ class InfluencersHandlerProvider {
   }
 }
 
-export const handler = async (event: InfluencersEvent): HandlerResult => {
+export const handler = async (event: InfluencersEvent, context: Context): HandlerResult => {
   if (!isValidType<InfluencersEvent>(['topN'], event)) {
     return {
       statusCode: 400,
       body: buildHandlerError(event),
-    }
+    };
   }
 
+  await MongoClient.instance.connect();
+
   const influencersHandler = InfluencersHandlerProvider.inject();
-  return await influencersHandler.handleEvent(event);
+  const result = influencersHandler.handleEvent(event);
+
+  return result;
 };

@@ -1,5 +1,5 @@
 import { DEFAULT_TOP_N_INFLUENCERS } from "./constants";
-import { iInfluencersService, InfluencersService } from "./influencers.service";
+import { iInfluencersService } from "./influencers.service";
 import { InfluencersResponse } from "./types";
 
 export interface iInfluencersController {

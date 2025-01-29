@@ -1,4 +1,8 @@
 {
+  "scripts": {
+    "dev:influencers": "serverless invoke local --function influencers --path app/lib/data/influencers.json",
+    "dev:claims": "serverless invoke local --function claims --path app/lib/data/claims.json"
+  },
   "dependencies": {
     "@types/aws-lambda": "^8.10.147",
     "@types/serverless": "^3.12.26",

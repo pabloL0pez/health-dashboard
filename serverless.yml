@@ -13,12 +13,13 @@ provider:
   environment:
     PERPLEXITY_API_KEY: ${env:PERPLEXITY_API_KEY}
     PERPLEXITY_API_URL: ${env:PERPLEXITY_API_URL}
+    MONGO_URI: ${env:MONGO_URI}
 
 functions:
   influencers:
     handler: app/src/handlers/influencers/influencers.handler
-    timeout: 20
-    memorySize: 128
+    timeout: 60
+    memorySize: 512
   claims:
     handler: app/src/handlers/claims/claims.handler
     timeout: 60

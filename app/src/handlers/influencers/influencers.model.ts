@@ -10,8 +10,8 @@ export interface InfluencerDAO {
 const InfluencerSchema = new Schema<InfluencerDAO>({
   name: { type: String, require: true },
   rank: { type: Number, require: true },
-  instagramUser: { type: Number, default: null },
-  twitterUser: { type: Number, default: null },
+  instagramUser: { type: String, default: null },
+  twitterUser: { type: String, default: null },
 });
 
 export const InfluencerModel = model<InfluencerDAO>('Influencer', InfluencerSchema);
