@@ -1,5 +1,4 @@
 
-import { Context } from "aws-lambda";
 import { MongoClient } from "../../layers/config/mongo/mongo";
 import { PerplexityService } from "../../layers/services/perplexity/perplexity.service";
 import { isValidType } from "../../layers/utils/typeGuard";
