@@ -14,7 +14,7 @@ export interface DALRepository<T> {
    * 
    * If the `upsert` option is set to `true`, the item will be inserted if it doesn't exist already.
    */
-  updateMany(items: T[], ids?: string[], upsert?: boolean): Promise<number>;
+  updateMany(items: T[], ids?: string[], upsert?: boolean): Promise<boolean>;
   delete(id: string): Promise<boolean>;
   /**
    * Finds the specified item. If no item is provided, all items are returned.

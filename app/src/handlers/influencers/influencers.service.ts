@@ -1,10 +1,10 @@
 import { AIRequestBody, AIService, LLMType, RoleType } from "../../layers/services/types";
 import { INFLUENCER_OBJECT } from "./constants";
 import { iInfluencerRepository } from "./influencers.repository";
-import { InfluencersResponse } from "./types";
+import { Influencer, InfluencersResponse } from "./types";
 
 export interface iInfluencersService {
-  discoverInfluencers(topN: number): Promise<InfluencersResponse>;
+  discoverInfluencers(topN: number): Promise<Influencer[]>;
 }
 
 export class InfluencersService implements iInfluencersService {
@@ -32,9 +32,9 @@ export class InfluencersService implements iInfluencersService {
     const response = await this.aiService.getStructuredResponse<InfluencersResponse>(requestBody);
 
     if (response) {
-      this.influencerRepository.saveInfluencers(response.influencers);
+      return await this.influencerRepository.saveInfluencers(response.influencers);
     }
-    
-    return response;
+
+    return [];
   }
 }

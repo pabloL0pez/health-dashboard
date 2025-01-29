@@ -1,12 +1,12 @@
 import { MongoDALRepository } from "../../layers/repository/data-access/mongo.repository"
 import { DALRepository } from "../../layers/repository/types";
 import { INACTIVE_INFLUENCER_RANK } from "./constants";
-import { InfluencerDAO, InfluencerModel } from "./influencers.model"
-import { Influencer } from "./types"
+import { InfluencerModel } from "./influencers.model"
+import { Influencer, InfluencerDAO } from "./types"
 
 export interface iInfluencerRepository {
   getInfluencers(): Promise<Influencer[]>;
-  saveInfluencers(influencers: Influencer[]): Promise<number>;
+  saveInfluencers(influencers: Influencer[]): Promise<Influencer[]>;
 }
 
 export class InfluencerRepositoryMongo extends MongoDALRepository<InfluencerDAO> {
@@ -24,11 +24,13 @@ export class InfluencersRepository implements iInfluencerRepository {
     return this.mapInfluencersFromDAO(foundInfluencers);
   }
 
-  async saveInfluencers(influencers: Influencer[]): Promise<number> {
+  async saveInfluencers(influencers: Influencer[]): Promise<Influencer[]> {
     const currentInfluencers = await this.dalRepository.find();
     const updatedInfluencers = this.updateInfluencersRanking(currentInfluencers, influencers);
 
-    return await this.dalRepository.updateMany(updatedInfluencers, [], true);
+    const result = await this.dalRepository.updateMany(updatedInfluencers, [], true);
+
+    return result ? this.mapInfluencersFromDAO(updatedInfluencers) : [];
   }
    
   private mapInfluencersFromDAO(influencersDAO: InfluencerDAO[]): Influencer[] {

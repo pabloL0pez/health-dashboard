@@ -12,3 +12,11 @@ export interface InfluencersResponse {
 export interface InfluencersEvent {
   topN: number;
 }
+
+export interface InfluencerDAO {
+  id: string;
+  name: string;
+  rank: number;
+  instagramUser?: string;
+  twitterUser?: string;
+}

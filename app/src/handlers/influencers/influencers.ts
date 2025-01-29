@@ -17,6 +17,7 @@ class InfluencersHandler implements Handler<InfluencersEvent> {
 
     return {
       statusCode: 200,
+      statusDescription: "Updated database with following influencers: ",
       body: JSON.stringify(influencers),
     };
   }

@@ -1,12 +1,5 @@
 import { Schema, model } from 'mongoose';
-import { MongoDocument } from '../../layers/repository/data-access/mongo.repository';
-
-export interface InfluencerDAO extends MongoDocument {
-  name: string;
-  rank: number;
-  instagramUser?: string;
-  twitterUser?: string;
-}
+import { InfluencerDAO } from './types';
 
 const InfluencerSchema = new Schema<InfluencerDAO>({
   id: { type: String, require: true },

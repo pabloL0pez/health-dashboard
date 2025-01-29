@@ -1,9 +1,9 @@
 import { DEFAULT_TOP_N_INFLUENCERS } from "./constants";
 import { iInfluencersService } from "./influencers.service";
-import { InfluencersResponse } from "./types";
+import { Influencer } from "./types";
 
 export interface iInfluencersController {
-  getInfluencers(topN?: number): Promise<InfluencersResponse>;
+  getInfluencers(topN?: number): Promise<Influencer[]>;
 }
 
 export class InfluencersController implements iInfluencersController {

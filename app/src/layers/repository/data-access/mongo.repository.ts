@@ -22,7 +22,7 @@ export class MongoDALRepository<T extends MongoDocument> implements DALRepositor
     return await this.model.findByIdAndUpdate({ _id: id }, item, { new: true, upsert });
   }
 
-  async updateMany(items: T[], _ids?: string[], upsert?: boolean): Promise<number> {
+  async updateMany(items: T[], _ids?: string[], upsert?: boolean): Promise<boolean> {
     const writes = items.map(item => ({
         updateOne: {
           filter: { id: item.id },
@@ -33,8 +33,8 @@ export class MongoDALRepository<T extends MongoDocument> implements DALRepositor
     );
 
     const result = await this.model.bulkWrite(writes);
-
-    return result.upsertedCount;
+    
+    return result.isOk();
   }
 
   async delete(id: string): Promise<boolean> {
