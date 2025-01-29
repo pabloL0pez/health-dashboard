@@ -4,7 +4,7 @@ import { iInfluencerRepository } from "./influencers.repository";
 import { Influencer, InfluencersResponse } from "./types";
 
 export interface iInfluencersService {
-  discoverInfluencers(topN: number): Promise<Influencer[]>;
+  discoverInfluencers(topN: number): Promise<string[]>;
 }
 
 export class InfluencersService implements iInfluencersService {
@@ -32,7 +32,12 @@ export class InfluencersService implements iInfluencersService {
     const response = await this.aiService.getStructuredResponse<InfluencersResponse>(requestBody);
 
     if (response) {
-      return await this.influencerRepository.saveInfluencers(response.influencers);
+      const influencers = await this.influencerRepository.saveInfluencers(response.influencers);
+
+      return influencers
+        .filter(item => item.rank > 0)
+        .sort((a, b) => b.rank - a.rank)
+        .map(item => item.name);
     }
 
     return [];

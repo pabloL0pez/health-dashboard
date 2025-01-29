@@ -1,5 +1,9 @@
 import { Model } from 'mongoose';
-import { DALRepository } from "../types";
+import { DALRepository, DBOperator, DBQuery } from "../types";
+
+const operatorMap: Record<DBOperator, string> = {
+  'gte': '$gte',
+}
 
 export interface MongoDocument {
   id: string;
@@ -41,11 +45,21 @@ export class MongoDALRepository<T extends MongoDocument> implements DALRepositor
     return this.model.findByIdAndDelete(id).then(() => true);
   }
 
-  async find(item?: T): Promise<T[]> {
-    return (await this.model.find(item ?? {})).map(doc => doc.toObject());
+  async find(item?: T, query?: DBQuery<T>): Promise<T[]> {
+    const parsedQuery = this.parseQuery(query);
+
+    return (await this.model.find(item ?? parsedQuery)).map(doc => doc.toObject());
   }
 
   async findOne(id: string): Promise<T | null> {
     return (await this.model.findById(id))?.toObject() ?? null;
+  }
+
+  private parseQuery<T>(query?: DBQuery<T>): Record<keyof T, unknown> | {} {
+    if (!query) {
+      return {}
+    }
+
+    return {[query.field]: { [operatorMap[query.operator]]: query.value }};
   }
 }

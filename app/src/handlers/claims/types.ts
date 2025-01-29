@@ -18,10 +18,18 @@ export interface Claim {
 }
 
 export interface InfluencerClaims {
-  influencer: string;
+  influencerName: string;
   claims: Claim[];
 }
 
 export interface ClaimsResponse {
   claimsByInfluencer: InfluencerClaims[];
+}
+
+export interface ClaimDAO {
+  quote: string;
+  title: string;
+  category: string;
+  score: number;
+  status: StatusType;
 }

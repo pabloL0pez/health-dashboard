@@ -1,3 +1,5 @@
+import { ClaimDAO } from "../claims/types";
+
 export interface Influencer {
   rank: number;
   name: string;
@@ -19,4 +21,5 @@ export interface InfluencerDAO {
   rank: number;
   instagramUser?: string;
   twitterUser?: string;
+  claims?: ClaimDAO[];
 }

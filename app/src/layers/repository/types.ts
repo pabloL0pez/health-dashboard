@@ -1,3 +1,11 @@
+export type DBOperator = 'gte';
+
+export interface DBQuery<T> {
+  field: keyof T,
+  operator: DBOperator,
+  value: unknown;
+}
+
 /**
  * Base interface for Data Access Layer repositories. e.g: MongoDB, DynamoDB, etc.
  * 
@@ -19,6 +27,6 @@ export interface DALRepository<T> {
   /**
    * Finds the specified item. If no item is provided, all items are returned.
    */
-  find(item?: T): Promise<T[]>;
+  find(item?: T, query?: DBQuery<T>): Promise<T[]>;
   findOne(id: string): Promise<T | null>;
 }
