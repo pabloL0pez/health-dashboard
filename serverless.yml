@@ -18,9 +18,11 @@ provider:
 functions:
   influencers:
     handler: app/src/handlers/influencers/influencers.handler
+    name: InfluencersLambda
     timeout: 60
-    memorySize: 512
+    memorySize: 128
   claims:
     handler: app/src/handlers/claims/claims.handler
+    name: ClaimsLambda
     timeout: 60
     memorySize: 128
