@@ -1,4 +1,4 @@
-import { AIRequestBody, AIService, LLMType, RoleType } from "../../layers/services/types";
+import { AIRequestBody, AIProvider, LLMType, RoleType } from "../../layers/services/types";
 import { isValidType } from "../../layers/utils/typeGuard";
 import { iClaimsRepository } from "./claims.repository";
 import { CLAIM_OBJECT, INFLUENCER_CLAIMS_OBJECT } from "./constants";
@@ -9,7 +9,7 @@ export interface iClaimsService {
 }
 
 export class ClaimsService implements iClaimsService {
-  constructor(private readonly aiService: AIService, private readonly claimsRepository: iClaimsRepository) {}
+  constructor(private readonly aiService: AIProvider, private readonly claimsRepository: iClaimsRepository) {}
 
   public async identifyHealthClaims (influencers: string[], maxClaims: number): Promise<InfluencerClaims[]> {
     const requestBody: AIRequestBody = {

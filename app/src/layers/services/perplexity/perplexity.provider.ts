@@ -1,9 +1,9 @@
 import { Singleton } from "../../utils/singleton";
-import { AIService } from "../types";
+import { AIProvider } from "../types";
 import { PerplexityRequestBody } from "./types";
 import { parseResponse } from "./utils";
 
-export class PerplexityService extends Singleton<PerplexityService>() implements AIService {
+export class PerplexityProvider extends Singleton<PerplexityProvider>() implements AIProvider {
   private readonly url: string | undefined;
   private readonly headers: Record<string, string> = {};
 

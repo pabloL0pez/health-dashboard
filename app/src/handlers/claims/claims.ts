@@ -1,5 +1,5 @@
 import { MongoClient } from "../../layers/config/mongo/mongo";
-import { PerplexityService } from "../../layers/services/perplexity/perplexity.service";
+import { PerplexityProvider } from "../../layers/services/perplexity/perplexity.provider";
 import { isValidType } from "../../layers/utils/typeGuard";
 import { InfluencerRepositoryMongo } from "../influencers/influencers.repository";
 import { HandlerResult } from "../types";
@@ -26,7 +26,7 @@ class ClaimsHandler {
 class ClaimsHandlerProvider {
   private static readonly dalRepository = new InfluencerRepositoryMongo();
   private static readonly repository: ClaimsRepository = new ClaimsRepository(this.dalRepository);
-  private static readonly service: ClaimsService = new ClaimsService(PerplexityService.instance, this.repository);
+  private static readonly service: ClaimsService = new ClaimsService(PerplexityProvider.instance, this.repository);
   private static readonly controller: ClaimsController = new ClaimsController(this.service);
   private static readonly handler = new ClaimsHandler(this.controller);
 

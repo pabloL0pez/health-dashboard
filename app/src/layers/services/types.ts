@@ -1,7 +1,7 @@
 /**
- * Base AI service interface. All AI services should implement this interface.
+ * Base AI provider interface. All AI providers should implement this interface.
  */
-export interface AIService {
+export interface AIProvider {
   getStructuredResponse: <T>(requestBody: AIRequestBody) => Promise<T>;
 }
 
