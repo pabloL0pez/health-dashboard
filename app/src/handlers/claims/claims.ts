@@ -1,5 +1,5 @@
 import { MongoClient } from "../../layers/config/mongo/mongo";
-import { PerplexityProvider } from "../../layers/services/perplexity/perplexity.provider";
+import { PerplexityProvider } from "../../layers/providers/perplexity/perplexity.provider";
 import { isValidType } from "../../layers/utils/typeGuard";
 import { InfluencerRepositoryMongo } from "../influencers/influencers.repository";
 import { HandlerResult } from "../types";

@@ -1,6 +1,6 @@
 
 import { MongoClient } from "../../layers/config/mongo/mongo";
-import { PerplexityProvider } from "../../layers/services/perplexity/perplexity.provider";
+import { PerplexityProvider } from "../../layers/providers/perplexity/perplexity.provider";
 import { isValidType } from "../../layers/utils/typeGuard";
 import { Handler, HandlerResult } from "../types";
 import { buildHandlerError } from "../utils";
