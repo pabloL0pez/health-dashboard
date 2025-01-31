@@ -1,4 +1,4 @@
-import { AIRequestBody, AIProvider, LLMType, RoleType } from "../../layers/services/types";
+import { AIRequestBody, AIProvider, LLMType, RoleType } from "../../layers/providers/types";
 import { isValidType } from "../../layers/utils/typeGuard";
 import { iClaimsRepository } from "./claims.repository";
 import { CLAIM_OBJECT, INFLUENCER_CLAIMS_OBJECT } from "./constants";
