@@ -1,10 +1,6 @@
-import { Claim, ClaimsResponse, InfluencerClaims, StatusType } from "./types";
+import { Claim, InfluencerClaims, StatusType } from "./types";
 
 export const DEFAULT_MAX_CLAIMS = 5;
-
-export const CLAIMS_RESPONSE_OBJECT: ClaimsResponse = {
-  claimsByInfluencer: [],
-}
 
 export const INFLUENCER_CLAIMS_OBJECT: InfluencerClaims = {
   influencerName: '',

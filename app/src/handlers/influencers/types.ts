@@ -7,10 +7,6 @@ export interface Influencer {
   twitterUser?: string;
 }
 
-export interface InfluencersResponse {
-  influencers: Influencer[];
-}
-
 export interface InfluencersEvent {
   topN: number;
 }

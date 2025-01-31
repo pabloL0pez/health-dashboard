@@ -1,7 +1,8 @@
 import { AIRequestBody, AIService, LLMType, RoleType } from "../../layers/services/types";
+import { isValidType } from "../../layers/utils/typeGuard";
 import { INFLUENCER_OBJECT } from "./constants";
 import { iInfluencerRepository } from "./influencers.repository";
-import { Influencer, InfluencersResponse } from "./types";
+import { Influencer } from "./types";
 
 export interface iInfluencersService {
   discoverInfluencers(topN: number): Promise<string[]>;
@@ -16,23 +17,32 @@ export class InfluencersService implements iInfluencersService {
       messages: [
         {
           role: RoleType.System,
-          content: "Be precise and concise. Only output structured JSON data with the requested fields."
+          content: `
+            Your job is to discover the top health influencers on social media.
+            Be precise and concise.
+            Only output structured JSON data with the requested fields.
+          `
         },
         {
           role: RoleType.User,
           content: `
             Please perform a discovery of the top ${topN} health influencers on social media. 
-            Please output a JSON object with the 'influencers' key containing an array of influencers, with the following fields: 
+            Please output an array of JSON objects for each influencer.
+            Each JSON object should contain the following fields: 
             ${Object.keys(INFLUENCER_OBJECT).join(", ")}
           `
         },
       ],
     }
 
-    const response = await this.aiService.getStructuredResponse<InfluencersResponse>(requestBody);
+    const response = await this.aiService.getStructuredResponse<Influencer[]>(requestBody);
 
     if (response) {
-      const influencers = await this.influencerRepository.saveInfluencers(response.influencers);
+      if (!isValidType<Influencer>(['name', 'rank'], response[0])) {
+        throw new Error(`Invalid Influencer object, received: ${JSON.stringify(response)}`);
+      }
+
+      const influencers = await this.influencerRepository.saveInfluencers(response);
 
       return influencers
         .filter(item => item.rank > 0)

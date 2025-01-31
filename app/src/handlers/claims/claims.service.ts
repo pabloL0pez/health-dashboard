@@ -1,7 +1,8 @@
 import { AIRequestBody, AIService, LLMType, RoleType } from "../../layers/services/types";
+import { isValidType } from "../../layers/utils/typeGuard";
 import { iClaimsRepository } from "./claims.repository";
-import { CLAIM_OBJECT, CLAIMS_RESPONSE_OBJECT, INFLUENCER_CLAIMS_OBJECT } from "./constants";
-import { ClaimsResponse, InfluencerClaims } from "./types";
+import { CLAIM_OBJECT, INFLUENCER_CLAIMS_OBJECT } from "./constants";
+import { InfluencerClaims } from "./types";
 
 export interface iClaimsService {
   identifyHealthClaims: (influencers: string[], maxClaims: number) => Promise<InfluencerClaims[]>
@@ -16,7 +17,11 @@ export class ClaimsService implements iClaimsService {
       messages: [
         {
           role: RoleType.System,
-          content: "Be precise and complete. Only output structured JSON data with the requested fields."
+          content: `
+            You are a scientific journal, in charge of discovering and validating claims made by health influencers across social media.
+            Be precise and complete.
+            Only output structured JSON data with the requested fields.
+          `
         },
         {
           role: RoleType.User,
@@ -28,17 +33,22 @@ export class ClaimsService implements iClaimsService {
             Make sure to quote the influencer's claims and create a title for each claim, summarizing it in just a few words.
             Calculate a trust score from 0 to 100 for each claim, based on how reliable the source is.
             Based on the score, categorize each claim as either 'confirmed', 'questionable', or 'debunked'.
-            Please group the claims of each influencer in an array of JSON objects with the following property key: ${Object.keys(CLAIMS_RESPONSE_OBJECT).join("")}
+            Please group the claims of each influencer in an array of JSON objects.
             Each object should have the following properties: ${Object.keys(INFLUENCER_CLAIMS_OBJECT).join(", ")}
+            Make sure to include claims for EVERY influencer.
           `
         },
       ],
     }
 
-    const response = await this.aiService.getStructuredResponse<ClaimsResponse>(requestBody);
+    const response = await this.aiService.getStructuredResponse<InfluencerClaims[]>(requestBody);
 
     if (response) {
-      const influencerClaims = await this.claimsRepository.saveClaimsForInfluencers(response.claimsByInfluencer);
+      if (!isValidType<InfluencerClaims>(['influencerName', 'claims'], response[0])) {
+        throw new Error(`Invalid InfluencerClaims object, received: ${JSON.stringify(response)}`);
+      }
+
+      const influencerClaims = await this.claimsRepository.saveClaimsForInfluencers(response);
 
       return influencerClaims;
     }
