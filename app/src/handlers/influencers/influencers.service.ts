@@ -1,4 +1,4 @@
-import { AIRequestBody, AIProvider, RoleType } from "../../layers/providers/types";
+import { AIRequestBody, AIProvider, RoleType, AIProviderModel } from "../../layers/providers/types";
 import { isValidType } from "../../layers/utils/typeGuard";
 import { INFLUENCER_OBJECT } from "./constants";
 import { iInfluencerRepository } from "./influencers.repository";
@@ -37,14 +37,14 @@ export class InfluencersService implements iInfluencersService {
       ],
     }
 
-    const response = await this.aiProvider.getStructuredResponse<Influencer[]>(requestBody);
+    const { response, provider, model } = await this.aiProvider.getStructuredResponse<Influencer[]>(requestBody);
 
     if (response) {
       if (!isValidType<Influencer>(['name', 'rank'], response[0])) {
         throw new Error(`Invalid Influencer object, received: ${JSON.stringify(response)}`);
       }
 
-      const influencers = await this.influencerRepository.saveInfluencers(response);
+      const influencers = await this.influencerRepository.saveInfluencers(response, { provider, model });
 
       return influencers
         .filter(item => item.rank > 0)

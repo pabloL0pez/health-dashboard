@@ -43,7 +43,7 @@ export class ClaimsService implements iClaimsService {
       ],
     }
 
-    const response = await this.aiProvider.getStructuredResponse<InfluencerClaims[]>(requestBody);
+    const { response } = await this.aiProvider.getStructuredResponse<InfluencerClaims[]>(requestBody);
 
     if (response) {
       if (!isValidType<InfluencerClaims>(['influencerName', 'claims'], response[0])) {

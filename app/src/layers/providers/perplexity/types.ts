@@ -4,11 +4,6 @@ export enum PerplexityLLMType {
   Sonar = 'sonar',
 }
 
-export enum FormatType {
-  JsonSchema = 'json_schema',
-  Regex = 'regex',
-}
-
 export interface PerplexityAIRequestBody extends AIRequestBody {
   model: PerplexityLLMType;
 }

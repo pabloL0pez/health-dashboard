@@ -1,12 +1,16 @@
-import { AIProvider, AIRequestBody } from "../types";
+import { AIProvider, AIProviderModel, AIProviderType, AIRequestBody, AIResponse } from "../types";
 import { PerplexityAIRequestBody, PerplexityLLMType } from "./types";
 import { parseResponse } from "./utils";
 
 export class PerplexityProvider implements AIProvider {
   private readonly url: string | undefined;
   private readonly headers: Record<string, string> = {};
+  private readonly aiProviderModel: AIProviderModel = {
+    provider: AIProviderType.Perplexity,
+    model: this.model,
+  }
 
-  constructor(private readonly model?: PerplexityLLMType) {
+  constructor(private readonly model = PerplexityLLMType.Sonar) {
     this.url = process.env.PERPLEXITY_API_URL;
     this.headers = {
       'accept': 'application/json',
@@ -15,14 +19,14 @@ export class PerplexityProvider implements AIProvider {
     }
   }
 
-  async getStructuredResponse<T>(requestBody: AIRequestBody): Promise<T> {
+  async getStructuredResponse<T>(requestBody: AIRequestBody): Promise<AIResponse<T>> {
     if (!this.url) {
       throw new Error('Perplexity API URL is not defined');
     }
 
     const perplexityBody: PerplexityAIRequestBody = {
       ...requestBody,
-      model: this.model ?? PerplexityLLMType.Sonar,
+      model: this.model,
     }
 
     const options = {
@@ -30,21 +34,22 @@ export class PerplexityProvider implements AIProvider {
       body: JSON.stringify(perplexityBody),
       headers: this.headers,
     }
+
     let response = null;
     
     try {
-      response = await fetch(this.url, options);
+      const apiResponse = await fetch(this.url, options);
 
-      if (response.ok) {
-        const rawResponse = await response.json();
-        return parseResponse<T>(rawResponse);
+      if (apiResponse.ok) {
+        const rawResponse = await apiResponse.json();
+        response = parseResponse<T>(rawResponse);
       } else {
-        throw new Error(`An error occured while fetching Perplexity API. Status: ${response.status}`);
+        throw new Error(`An error occured while fetching Perplexity API. Status: ${apiResponse.status}`);
       }
     } catch (e) {
       console.error('Error: Could not fetch Perplexity API', e);
     }
 
-    return Promise.resolve([] as unknown as T);
+    return { response, ...this.aiProviderModel };
   }
 }

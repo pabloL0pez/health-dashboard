@@ -1,14 +1,27 @@
 import { Schema, model } from 'mongoose';
 import { InfluencerDAO } from './types';
 import { ClaimSchema } from '../claims/claims.model';
+import { AIProviderModel } from '../../layers/providers/types';
+import { AIProviderHandler } from '../types';
+
+const AIProviderModelSchema = new Schema<AIProviderModel>({
+  provider: { type: String, required: true },
+  model: { type: String, required: true },
+});
+
+const AIProviderHandlerSchema = new Schema<AIProviderHandler>({
+  influencers: { type: AIProviderModelSchema, default: null },
+  claims: { type: AIProviderModelSchema, default: null },
+});
 
 const InfluencerSchema = new Schema<InfluencerDAO>({
-  id: { type: String, require: true },
-  name: { type: String, require: true },
-  rank: { type: Number, require: true },
+  id: { type: String, required: true },
+  name: { type: String, required: true },
+  rank: { type: Number, required: true },
   instagramUser: { type: String, default: null },
   twitterUser: { type: String, default: null },
-  claims: { type: [ClaimSchema], default: [] },
+  claims: { type: [ClaimSchema], default: [], _id: false },
+  ai: { type: AIProviderHandlerSchema, default: null, _id: false }
 });
 
 export const InfluencerModel = model<InfluencerDAO>('Influencer', InfluencerSchema);
