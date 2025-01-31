@@ -5,10 +5,6 @@ export interface AIProvider {
   getStructuredResponse: <T>(requestBody: AIRequestBody) => Promise<T>;
 }
 
-export enum LLMType {
-  Sonar = 'sonar',
-}
-
 export enum RoleType {
   Assistant = 'assistant',
   System = 'system',
@@ -21,6 +17,5 @@ export interface AIMessage {
 }
 
 export interface AIRequestBody {
-  model: LLMType;
   messages: AIMessage[];
 }

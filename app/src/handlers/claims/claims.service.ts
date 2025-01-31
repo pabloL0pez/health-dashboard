@@ -1,4 +1,4 @@
-import { AIRequestBody, AIProvider, LLMType, RoleType } from "../../layers/providers/types";
+import { AIRequestBody, AIProvider, RoleType } from "../../layers/providers/types";
 import { isValidType } from "../../layers/utils/typeGuard";
 import { iClaimsRepository } from "./claims.repository";
 import { CLAIM_OBJECT, INFLUENCER_CLAIMS_OBJECT } from "./constants";
@@ -9,11 +9,13 @@ export interface iClaimsService {
 }
 
 export class ClaimsService implements iClaimsService {
-  constructor(private readonly aiService: AIProvider, private readonly claimsRepository: iClaimsRepository) {}
+  constructor(
+    private readonly aiProvider: AIProvider,
+    private readonly claimsRepository: iClaimsRepository
+  ) {}
 
   public async identifyHealthClaims (influencers: string[], maxClaims: number): Promise<InfluencerClaims[]> {
     const requestBody: AIRequestBody = {
-      model: LLMType.Sonar,
       messages: [
         {
           role: RoleType.System,
@@ -41,7 +43,7 @@ export class ClaimsService implements iClaimsService {
       ],
     }
 
-    const response = await this.aiService.getStructuredResponse<InfluencerClaims[]>(requestBody);
+    const response = await this.aiProvider.getStructuredResponse<InfluencerClaims[]>(requestBody);
 
     if (response) {
       if (!isValidType<InfluencerClaims>(['influencerName', 'claims'], response[0])) {

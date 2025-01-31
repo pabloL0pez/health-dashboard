@@ -1,12 +1,13 @@
 
 import { MongoClient } from "../../layers/config/mongo/mongo";
 import { PerplexityProvider } from "../../layers/providers/perplexity/perplexity.provider";
+import { PerplexityLLMType } from "../../layers/providers/perplexity/types";
 import { isValidType } from "../../layers/utils/typeGuard";
 import { Handler, HandlerResult } from "../types";
 import { buildHandlerError } from "../utils";
 import { iInfluencersController, InfluencersController } from "./influencers.controller";
-import { iInfluencerRepository, InfluencerRepositoryMongo, InfluencersRepository } from "./influencers.repository";
-import { iInfluencersService, InfluencersService } from "./influencers.service";
+import { InfluencerRepositoryMongo, InfluencersRepository } from "./influencers.repository";
+import { InfluencersService } from "./influencers.service";
 import { InfluencersEvent } from "./types";
 
 class InfluencersHandler implements Handler<InfluencersEvent> {
@@ -25,9 +26,10 @@ class InfluencersHandler implements Handler<InfluencersEvent> {
 
 class InfluencersHandlerProvider {
   private static readonly dalRepository = new InfluencerRepositoryMongo();
-  private static readonly repository: iInfluencerRepository = new InfluencersRepository(this.dalRepository);
-  private static readonly service: iInfluencersService = new InfluencersService(PerplexityProvider.instance, this.repository);
-  private static readonly controller: iInfluencersController = new InfluencersController(this.service);
+  private static readonly repository = new InfluencersRepository(this.dalRepository);
+  private static readonly aiProvider = new PerplexityProvider(PerplexityLLMType.Sonar);
+  private static readonly service = new InfluencersService(this.aiProvider, this.repository);
+  private static readonly controller = new InfluencersController(this.service);
   private static readonly handler = new InfluencersHandler(this.controller);
 
   static inject() {

@@ -1,4 +1,4 @@
-import { AIRequestBody, AIProvider, LLMType, RoleType } from "../../layers/providers/types";
+import { AIRequestBody, AIProvider, RoleType } from "../../layers/providers/types";
 import { isValidType } from "../../layers/utils/typeGuard";
 import { INFLUENCER_OBJECT } from "./constants";
 import { iInfluencerRepository } from "./influencers.repository";
@@ -9,11 +9,13 @@ export interface iInfluencersService {
 }
 
 export class InfluencersService implements iInfluencersService {
-  constructor(private readonly aiService: AIProvider, private readonly influencerRepository: iInfluencerRepository) {}
+  constructor(
+    private readonly aiProvider: AIProvider,
+    private readonly influencerRepository: iInfluencerRepository
+  ) {}
   
   async discoverInfluencers(topN: number) {
     const requestBody: AIRequestBody = {
-      model: LLMType.Sonar,
       messages: [
         {
           role: RoleType.System,
@@ -35,7 +37,7 @@ export class InfluencersService implements iInfluencersService {
       ],
     }
 
-    const response = await this.aiService.getStructuredResponse<Influencer[]>(requestBody);
+    const response = await this.aiProvider.getStructuredResponse<Influencer[]>(requestBody);
 
     if (response) {
       if (!isValidType<Influencer>(['name', 'rank'], response[0])) {

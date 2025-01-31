@@ -1,14 +1,12 @@
-import { Singleton } from "../../utils/singleton";
-import { AIProvider } from "../types";
-import { PerplexityRequestBody } from "./types";
+import { AIProvider, AIRequestBody } from "../types";
+import { PerplexityAIRequestBody, PerplexityLLMType } from "./types";
 import { parseResponse } from "./utils";
 
-export class PerplexityProvider extends Singleton<PerplexityProvider>() implements AIProvider {
+export class PerplexityProvider implements AIProvider {
   private readonly url: string | undefined;
   private readonly headers: Record<string, string> = {};
 
-  constructor() {
-    super();
+  constructor(private readonly model?: PerplexityLLMType) {
     this.url = process.env.PERPLEXITY_API_URL;
     this.headers = {
       'accept': 'application/json',
@@ -17,14 +15,19 @@ export class PerplexityProvider extends Singleton<PerplexityProvider>() implemen
     }
   }
 
-  async getStructuredResponse<T>(requestBody: PerplexityRequestBody): Promise<T> {
+  async getStructuredResponse<T>(requestBody: AIRequestBody): Promise<T> {
     if (!this.url) {
       throw new Error('Perplexity API URL is not defined');
     }
 
+    const perplexityBody: PerplexityAIRequestBody = {
+      ...requestBody,
+      model: this.model ?? PerplexityLLMType.Sonar,
+    }
+
     const options = {
       method: 'POST',
-      body: JSON.stringify(requestBody),
+      body: JSON.stringify(perplexityBody),
       headers: this.headers,
     }
     let response = null;

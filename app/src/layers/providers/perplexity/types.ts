@@ -1,26 +1,16 @@
 import { AIMessage, AIRequestBody } from "../types";
 
+export enum PerplexityLLMType {
+  Sonar = 'sonar',
+}
+
 export enum FormatType {
   JsonSchema = 'json_schema',
   Regex = 'regex',
 }
 
-export interface JsonSchema {
-  schema: Record<string, unknown>;
-}
-
-export interface RegexSchema {
-  regex: RegExp;
-}
-
-export interface PerplexityResponseFormat {
-  type: FormatType;
-  json_schema?: JsonSchema;
-  regex?: RegexSchema;
-}
-
-export interface PerplexityRequestBody extends AIRequestBody {
-  response_format?: PerplexityResponseFormat;
+export interface PerplexityAIRequestBody extends AIRequestBody {
+  model: PerplexityLLMType;
 }
 
 export interface PerplexityChoice {
