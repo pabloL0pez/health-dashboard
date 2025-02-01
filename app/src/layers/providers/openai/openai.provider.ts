@@ -1,7 +1,8 @@
 import { OpenAI } from "openai";
-import { AIProvider, AIProviderModel, AIProviderType, AIRequestBody, AIRequestResponse, AIResponse, AIResponseFormatType } from "../types";
+import { AIProvider, AIProviderType, AIRequestBody, AIRequestResponse, AIResponse, AIResponseFormatType } from "../types";
 import { OpenAIModelType, OpenAIRequestBody } from "./types";
 import { ChatCompletionCreateParamsNonStreaming } from "openai/src/resources/index.js";
+import { AIProviderModel } from "../../../handlers/types";
 
 export class OpenAIProvider implements AIProvider {
   private readonly openAIClient = new OpenAI();

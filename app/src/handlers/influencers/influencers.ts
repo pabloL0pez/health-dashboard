@@ -3,7 +3,7 @@ import { MongoClient } from "../../layers/config/mongo/mongo";
 import { PerplexityProvider } from "../../layers/providers/perplexity/perplexity.provider";
 import { PerplexityModelType } from "../../layers/providers/perplexity/types";
 import { isValidType } from "../../layers/utils/typeGuard";
-import { Handler, HandlerResult } from "../types";
+import { Handler, HandlerEvent, HandlerResult } from "../types";
 import { buildHandlerError } from "../utils";
 import { iInfluencersController, InfluencersController } from "./influencers.controller";
 import { InfluencerRepositoryMongo, InfluencersRepository } from "./influencers.repository";
@@ -37,7 +37,7 @@ class InfluencersHandlerProvider {
   }
 }
 
-export const handler = async (event: InfluencersEvent): HandlerResult => {
+export const handler = async (event: HandlerEvent<InfluencersEvent>): HandlerResult => {
   if (!isValidType<InfluencersEvent>(['topN'], event)) {
     return {
       statusCode: 400,

@@ -1,3 +1,5 @@
+import { AIProviderModel } from "../../handlers/types";
+
 /**
  * Base AI provider interface. All AI providers should implement this interface.
  */
@@ -33,12 +35,7 @@ export enum AIProviderType {
   OpenAI = 'openai',
 }
 
-export interface AIProviderModel {
-  provider: AIProviderType;
-  model: string;
-}
-
-export interface AIResponse<T> extends AIProviderModel {
+export type AIResponse<T> = AIProviderModel & {
   response: T | null;
 }
 
