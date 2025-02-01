@@ -18,6 +18,7 @@ export interface AIMessage {
 
 export interface AIRequestBody {
   messages: AIMessage[];
+  temperature?: number;
 }
 
 export enum AIProviderType {

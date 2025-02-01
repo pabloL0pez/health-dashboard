@@ -1,4 +1,4 @@
-import { AIRequestBody, AIProvider, RoleType, AIProviderModel } from "../../layers/providers/types";
+import { AIRequestBody, AIProvider, RoleType } from "../../layers/providers/types";
 import { isValidType } from "../../layers/utils/typeGuard";
 import { INFLUENCER_OBJECT } from "./constants";
 import { iInfluencerRepository } from "./influencers.repository";
@@ -32,9 +32,11 @@ export class InfluencersService implements iInfluencersService {
             Please output an array of JSON objects for each influencer.
             Each JSON object should contain the following fields: 
             ${Object.keys(INFLUENCER_OBJECT).join(", ")}
+            Make sure to include a base64 encoded image for each influencer.
           `
         },
       ],
+      temperature: 0,
     }
 
     const { response, provider, model } = await this.aiProvider.getStructuredResponse<Influencer[]>(requestBody);

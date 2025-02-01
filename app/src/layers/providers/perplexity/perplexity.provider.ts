@@ -27,6 +27,7 @@ export class PerplexityProvider implements AIProvider {
     const perplexityBody: PerplexityAIRequestBody = {
       ...requestBody,
       model: this.model,
+      return_images: true,
     }
 
     const options = {

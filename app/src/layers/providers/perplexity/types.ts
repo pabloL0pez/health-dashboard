@@ -6,6 +6,7 @@ export enum PerplexityLLMType {
 
 export interface PerplexityAIRequestBody extends AIRequestBody {
   model: PerplexityLLMType;
+  return_images?: boolean;
 }
 
 export interface PerplexityChoice {

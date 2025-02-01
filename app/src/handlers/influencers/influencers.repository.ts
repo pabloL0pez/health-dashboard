@@ -1,6 +1,7 @@
 import { AIProviderModel } from "../../layers/providers/types";
 import { MongoDALRepository } from "../../layers/repository/data-access/mongo.repository"
 import { DALRepository } from "../../layers/repository/types";
+import { base64toBlob } from "../../layers/utils/encoding";
 import { AIProviderHandler } from "../types";
 import { INACTIVE_INFLUENCER_RANK } from "./constants";
 import { InfluencerModel } from "./influencers.model"
@@ -55,13 +56,16 @@ export class InfluencersRepository implements iInfluencerRepository {
   }
 
   private mapInfluencersToDAO(influencers: Influencer[]): InfluencerDAO[] {
-    return influencers.map(({ name, rank, instagramUser, twitterUser }) => ({
-      id: name,
-      name,
-      rank,
-      instagramUser,
-      twitterUser
-    }));
+    return influencers.map(({ name, rank, instagramUser, twitterUser, image }) => {
+      return {
+        id: name,
+        name,
+        rank,
+        instagramUser,
+        twitterUser,
+        image: image ? base64toBlob(image, 'image/jpeg') : new Blob(),
+      }
+    });
   }
 
   private updateInfluencersRanking(currentInfluencers: InfluencerDAO[], newInfluencers: Influencer[]): InfluencerDAO[] {

@@ -21,7 +21,8 @@ const InfluencerSchema = new Schema<InfluencerDAO>({
   instagramUser: { type: String, default: null },
   twitterUser: { type: String, default: null },
   claims: { type: [ClaimSchema], default: [], _id: false },
-  ai: { type: AIProviderHandlerSchema, default: null, _id: false }
+  ai: { type: AIProviderHandlerSchema, default: null, _id: false },
+  image: { type: Buffer, default: null },
 });
 
 export const InfluencerModel = model<InfluencerDAO>('Influencer', InfluencerSchema);

@@ -6,6 +6,7 @@ export interface Influencer {
   name: string;
   instagramUser?: string;
   twitterUser?: string;
+  image?: string;
 }
 
 export interface InfluencersEvent {
@@ -20,4 +21,5 @@ export interface InfluencerDAO {
   twitterUser?: string;
   claims?: ClaimDAO[];
   ai?: AIProviderHandler;
+  image?: Blob;
 }
