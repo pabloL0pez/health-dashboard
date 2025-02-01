@@ -1,6 +1,5 @@
-import { AIProvider, AIProviderModel, AIProviderType, AIRequestBody, AIResponse } from "../types";
-import { PerplexityAIRequestBody, PerplexityLLMType } from "./types";
-import { parseResponse } from "./utils";
+import { AIProvider, AIProviderModel, AIProviderType, AIRequestBody, AIRequestResponse, AIResponse, AIResponseFormatType } from "../types";
+import { PerplexityAIRequestBody, PerplexityModelType } from "./types";
 
 export class PerplexityProvider implements AIProvider {
   private readonly url: string | undefined;
@@ -10,7 +9,7 @@ export class PerplexityProvider implements AIProvider {
     model: this.model,
   }
 
-  constructor(private readonly model = PerplexityLLMType.Sonar) {
+  constructor(private readonly model: PerplexityModelType = 'sonar') {
     this.url = process.env.PERPLEXITY_API_URL;
     this.headers = {
       'accept': 'application/json',
@@ -19,7 +18,7 @@ export class PerplexityProvider implements AIProvider {
     }
   }
 
-  async getStructuredResponse<T>(requestBody: AIRequestBody): Promise<AIResponse<T>> {
+  async getStructuredResponse<T>(requestBody: AIRequestBody, schema?: any): Promise<AIResponse<T>> {
     if (!this.url) {
       throw new Error('Perplexity API URL is not defined');
     }
@@ -28,6 +27,7 @@ export class PerplexityProvider implements AIProvider {
       ...requestBody,
       model: this.model,
       return_images: true,
+      response_format: schema ? { type: AIResponseFormatType.JsonSchema, json_schema: schema, } : undefined,
     }
 
     const options = {
@@ -43,7 +43,7 @@ export class PerplexityProvider implements AIProvider {
 
       if (apiResponse.ok) {
         const rawResponse = await apiResponse.json();
-        response = parseResponse<T>(rawResponse);
+        response = this.parseResponse<T>(rawResponse);
       } else {
         throw new Error(`An error occured while fetching Perplexity API. Status: ${apiResponse.status}`);
       }
@@ -52,5 +52,15 @@ export class PerplexityProvider implements AIProvider {
     }
 
     return { response, ...this.aiProviderModel };
+  }
+
+  protected parseResponse<T>(response: AIRequestResponse): T | null {
+    const content = response?.choices[0]?.message?.content;
+
+    if (!content) {
+      return null;
+    }
+
+    return JSON.parse(content.split('```')[1]?.split('json')[1]);
   }
 }

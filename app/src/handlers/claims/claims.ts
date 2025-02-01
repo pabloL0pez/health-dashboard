@@ -1,6 +1,6 @@
 import { MongoClient } from "../../layers/config/mongo/mongo";
 import { PerplexityProvider } from "../../layers/providers/perplexity/perplexity.provider";
-import { PerplexityLLMType } from "../../layers/providers/perplexity/types";
+import { PerplexityModelType } from "../../layers/providers/perplexity/types";
 import { isValidType } from "../../layers/utils/typeGuard";
 import { InfluencerRepositoryMongo } from "../influencers/influencers.repository";
 import { HandlerResult } from "../types";
@@ -27,7 +27,7 @@ class ClaimsHandler {
 class ClaimsHandlerProvider {
   private static readonly dalRepository = new InfluencerRepositoryMongo();
   private static readonly repository = new ClaimsRepository(this.dalRepository);
-  private static readonly aiProvider = new PerplexityProvider(PerplexityLLMType.Sonar);
+  private static readonly aiProvider = new PerplexityProvider('sonar');
   private static readonly service = new ClaimsService(this.aiProvider, this.repository);
   private static readonly controller = new ClaimsController(this.service);
   private static readonly handler = new ClaimsHandler(this.controller);

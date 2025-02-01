@@ -1,21 +1,8 @@
-import { AIMessage, AIRequestBody } from "../types";
+import { AIRequestBody } from "../types";
 
-export enum PerplexityLLMType {
-  Sonar = 'sonar',
-}
+export type PerplexityModelType = 'sonar' | 'sonar-reasoning' | 'sonar-pro';
 
 export interface PerplexityAIRequestBody extends AIRequestBody {
-  model: PerplexityLLMType;
+  model: PerplexityModelType;
   return_images?: boolean;
-}
-
-export interface PerplexityChoice {
-  index: number;
-  finish_reason: string;
-  message: AIMessage;
-  delta: AIMessage;
-}
-
-export interface PerplexityResponse {
-  choices: PerplexityChoice[];
 }

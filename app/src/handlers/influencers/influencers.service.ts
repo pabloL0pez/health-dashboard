@@ -1,4 +1,4 @@
-import { AIRequestBody, AIProvider, RoleType } from "../../layers/providers/types";
+import { AIRequestBody, AIProvider, AIRoleType } from "../../layers/providers/types";
 import { isValidType } from "../../layers/utils/typeGuard";
 import { INFLUENCER_OBJECT } from "./constants";
 import { iInfluencerRepository } from "./influencers.repository";
@@ -18,7 +18,7 @@ export class InfluencersService implements iInfluencersService {
     const requestBody: AIRequestBody = {
       messages: [
         {
-          role: RoleType.System,
+          role: 'system',
           content: `
             Your job is to discover the top health influencers on social media.
             Be precise and concise.
@@ -26,7 +26,7 @@ export class InfluencersService implements iInfluencersService {
           `
         },
         {
-          role: RoleType.User,
+          role: 'user',
           content: `
             Please perform a discovery of the top ${topN} health influencers on social media. 
             Please output an array of JSON objects for each influencer.

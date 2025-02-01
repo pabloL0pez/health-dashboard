@@ -1,7 +1,7 @@
 
 import { MongoClient } from "../../layers/config/mongo/mongo";
 import { PerplexityProvider } from "../../layers/providers/perplexity/perplexity.provider";
-import { PerplexityLLMType } from "../../layers/providers/perplexity/types";
+import { PerplexityModelType } from "../../layers/providers/perplexity/types";
 import { isValidType } from "../../layers/utils/typeGuard";
 import { Handler, HandlerResult } from "../types";
 import { buildHandlerError } from "../utils";
@@ -27,7 +27,7 @@ class InfluencersHandler implements Handler<InfluencersEvent> {
 class InfluencersHandlerProvider {
   private static readonly dalRepository = new InfluencerRepositoryMongo();
   private static readonly repository = new InfluencersRepository(this.dalRepository);
-  private static readonly aiProvider = new PerplexityProvider(PerplexityLLMType.Sonar);
+  private static readonly aiProvider = new PerplexityProvider('sonar');
   private static readonly service = new InfluencersService(this.aiProvider, this.repository);
   private static readonly controller = new InfluencersController(this.service);
   private static readonly handler = new InfluencersHandler(this.controller);

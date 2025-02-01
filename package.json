@@ -9,6 +9,7 @@
     "@types/aws-lambda": "^8.10.147",
     "@types/serverless": "^3.12.26",
     "mongoose": "^8.9.5",
+    "openai": "^4.82.0",
     "typescript": "^5.7.3"
   },
   "devDependencies": {

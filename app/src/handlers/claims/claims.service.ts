@@ -1,4 +1,4 @@
-import { AIRequestBody, AIProvider, RoleType } from "../../layers/providers/types";
+import { AIRequestBody, AIProvider, AIRoleType } from "../../layers/providers/types";
 import { isValidType } from "../../layers/utils/typeGuard";
 import { iClaimsRepository } from "./claims.repository";
 import { CLAIM_OBJECT, INFLUENCER_CLAIMS_OBJECT } from "./constants";
@@ -18,7 +18,7 @@ export class ClaimsService implements iClaimsService {
     const requestBody: AIRequestBody = {
       messages: [
         {
-          role: RoleType.System,
+          role: 'system',
           content: `
             You are a scientific journal, in charge of discovering and validating claims made by health influencers across social media.
             Be precise and complete.
@@ -26,7 +26,7 @@ export class ClaimsService implements iClaimsService {
           `
         },
         {
-          role: RoleType.User,
+          role: 'user',
           content: `
             Please perform a discovery of the most recent health claims done by the following influencers: ${influencers.join(", ")}.
             Find, at most, ${maxClaims} claims per influencer.
