@@ -1,9 +1,7 @@
 
 import { MongoClient } from "../../layers/config/mongo/mongo";
-import { PerplexityProvider } from "../../layers/providers/perplexity/perplexity.provider";
-import { PerplexityModelType } from "../../layers/providers/perplexity/types";
 import { isValidType } from "../../layers/utils/typeGuard";
-import { Handler, HandlerEvent, HandlerResult } from "../types";
+import { Handler, HandlerEvent, HandlerProvider, HandlerResult } from "../types";
 import { buildHandlerError } from "../utils";
 import { iInfluencersController, InfluencersController } from "./influencers.controller";
 import { InfluencerRepositoryMongo, InfluencersRepository } from "./influencers.repository";
@@ -24,20 +22,19 @@ class InfluencersHandler implements Handler<InfluencersEvent> {
   }
 }
 
-class InfluencersHandlerProvider {
-  private static readonly dalRepository = new InfluencerRepositoryMongo();
-  private static readonly repository = new InfluencersRepository(this.dalRepository);
-  private static readonly aiProvider = new PerplexityProvider('sonar');
-  private static readonly service = new InfluencersService(this.aiProvider, this.repository);
-  private static readonly controller = new InfluencersController(this.service);
-  private static readonly handler = new InfluencersHandler(this.controller);
+class InfluencersHandlerProvider extends HandlerProvider {
+  private readonly dalRepository = new InfluencerRepositoryMongo();
+  private readonly repository = new InfluencersRepository(this.dalRepository);
+  private readonly service = new InfluencersService(this.aiProvider, this.repository);
+  private readonly controller = new InfluencersController(this.service);
+  private readonly _handler = new InfluencersHandler(this.controller);
 
-  static inject() {
-    return this.handler;
+  public get handler() {
+    return this._handler;
   }
 }
 
-export const handler = async (event: HandlerEvent<InfluencersEvent>): HandlerResult => {
+export const handler = async ({ aiProviderModel, ...event }: HandlerEvent<InfluencersEvent>): HandlerResult => {
   if (!isValidType<InfluencersEvent>(['topN'], event)) {
     return {
       statusCode: 400,
@@ -47,7 +44,8 @@ export const handler = async (event: HandlerEvent<InfluencersEvent>): HandlerRes
 
   await MongoClient.instance.connect();
 
-  const influencersHandler = InfluencersHandlerProvider.inject();
+  const influencersHandlerProvider = new InfluencersHandlerProvider(aiProviderModel)
+  const influencersHandler = influencersHandlerProvider.handler;
   const result = influencersHandler.handleEvent(event);
 
   return result;

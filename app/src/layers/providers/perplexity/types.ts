@@ -8,6 +8,6 @@ export interface PerplexityAIRequestBody extends AIRequestBody {
 }
 
 export interface PerplexityAIProviderModel {
-  provider: AIProviderType.Perplexity;
-  model: PerplexityModelType;
+  provider?: AIProviderType.Perplexity;
+  model?: PerplexityModelType;
 }

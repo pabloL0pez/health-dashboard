@@ -8,6 +8,6 @@ export interface OpenAIRequestBody extends AIRequestBody {
 }
 
 export interface OpenAIProviderModel {
-  provider: AIProviderType.OpenAI;
-  model: OpenAIModelType;
+  provider?: AIProviderType.OpenAI;
+  model?: OpenAIModelType;
 }

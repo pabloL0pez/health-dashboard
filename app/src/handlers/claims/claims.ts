@@ -1,9 +1,8 @@
 import { MongoClient } from "../../layers/config/mongo/mongo";
-import { PerplexityProvider } from "../../layers/providers/perplexity/perplexity.provider";
-import { PerplexityModelType } from "../../layers/providers/perplexity/types";
+import { AIProviderType } from "../../layers/providers/types";
 import { isValidType } from "../../layers/utils/typeGuard";
 import { InfluencerRepositoryMongo } from "../influencers/influencers.repository";
-import { HandlerResult } from "../types";
+import { HandlerEvent, HandlerProvider, HandlerResult } from "../types";
 import { buildHandlerError } from "../utils";
 import { ClaimsController } from "./claims.controller";
 import { ClaimsRepository } from "./claims.repository";
@@ -24,30 +23,30 @@ class ClaimsHandler {
   }
 }
 
-class ClaimsHandlerProvider {
-  private static readonly dalRepository = new InfluencerRepositoryMongo();
-  private static readonly repository = new ClaimsRepository(this.dalRepository);
-  private static readonly aiProvider = new PerplexityProvider('sonar');
-  private static readonly service = new ClaimsService(this.aiProvider, this.repository);
-  private static readonly controller = new ClaimsController(this.service);
-  private static readonly handler = new ClaimsHandler(this.controller);
+class ClaimsHandlerProvider extends HandlerProvider {
+  private readonly dalRepository = new InfluencerRepositoryMongo();
+  private readonly repository = new ClaimsRepository(this.dalRepository);
+  private readonly service = new ClaimsService(this.aiProvider, this.repository);
+  private readonly controller = new ClaimsController(this.service);
+  private readonly _handler = new ClaimsHandler(this.controller);
 
-  static inject() {
-    return this.handler;
+  public get handler() {
+    return this._handler;
   }
 }
 
-export const handler = async (event: ClaimsEvent): HandlerResult => {
+export const handler = async ({ aiProviderModel = { provider: AIProviderType.Perplexity, model: 'sonar' }, ...event }: HandlerEvent<ClaimsEvent>): HandlerResult => {
   if (!isValidType<ClaimsEvent>(['influencers'], event)) {
     return {
       statusCode: 400,
       body: buildHandlerError(event),
     }
   }
-
+ 
   await MongoClient.instance.connect();
 
-  const claimsHandler = ClaimsHandlerProvider.inject();
+  const claimsHandlerProvider = new ClaimsHandlerProvider(aiProviderModel);
+  const claimsHandler = claimsHandlerProvider.handler;
   const result = await claimsHandler.handleEvent(event);
 
   return result;

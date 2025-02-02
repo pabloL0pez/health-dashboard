@@ -1,4 +1,4 @@
-import { AIRequestBody, AIProvider, AIRoleType } from "../../layers/providers/types";
+import { AIRequestBody, AIProvider } from "../../layers/providers/types";
 import { isValidType } from "../../layers/utils/typeGuard";
 import { iClaimsRepository } from "./claims.repository";
 import { CLAIM_OBJECT, INFLUENCER_CLAIMS_OBJECT } from "./constants";
@@ -43,14 +43,14 @@ export class ClaimsService implements iClaimsService {
       ],
     }
 
-    const { response } = await this.aiProvider.getStructuredResponse<InfluencerClaims[]>(requestBody);
+    const { response, ...aiProviderModel } = await this.aiProvider.getStructuredResponse<InfluencerClaims[]>(requestBody);
 
     if (response) {
       if (!isValidType<InfluencerClaims>(['influencerName', 'claims'], response[0])) {
         throw new Error(`Invalid InfluencerClaims object, received: ${JSON.stringify(response)}`);
       }
 
-      const influencerClaims = await this.claimsRepository.saveClaimsForInfluencers(response);
+      const influencerClaims = await this.claimsRepository.saveClaimsForInfluencers(response, aiProviderModel);
 
       return influencerClaims;
     }

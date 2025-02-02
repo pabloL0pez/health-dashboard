@@ -1,3 +1,7 @@
 {
-  "influencers": ["Dr. Jennifer Gunter","Dr. Mikhail Varshavski","Dr. Rhonda Patrick","Arianna Huffington","Dr. Sanjay Gupta"]
+  "influencers": ["Dr. Jennifer Gunter","Dr. Mikhail Varshavski","Dr. Rhonda Patrick","Arianna Huffington","Dr. Sanjay Gupta"],
+  "aiProviderModel": {
+    "provider": "perplexity",
+    "model": "sonar"
+  }
 }

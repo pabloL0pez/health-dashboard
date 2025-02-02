@@ -21,5 +21,5 @@ export interface InfluencerDAO {
   twitterUser?: string;
   claims?: ClaimDAO[];
   ai?: AIProviderHandler;
-  image?: Blob;
+  image?: Buffer;
 }

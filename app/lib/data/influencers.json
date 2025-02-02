@@ -1,3 +1,7 @@
 {
-  "topN": 5
+  "topN": 5,
+  "aiProviderModel": {
+    "provider": "perplexity",
+    "model": "sonar"
+  }
 }

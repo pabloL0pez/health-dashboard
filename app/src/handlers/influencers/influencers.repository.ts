@@ -1,8 +1,7 @@
-import { AIProviderModel } from "../../layers/providers/types";
 import { MongoDALRepository } from "../../layers/repository/data-access/mongo.repository"
 import { DALRepository } from "../../layers/repository/types";
-import { base64toBlob } from "../../layers/utils/encoding";
-import { AIProviderHandler } from "../types";
+import { base64toBuffer } from "../../layers/utils/encoding";
+import { AIProviderHandler, AIProviderModel } from "../types";
 import { INACTIVE_INFLUENCER_RANK } from "./constants";
 import { InfluencerModel } from "./influencers.model"
 import { Influencer, InfluencerDAO } from "./types"
@@ -63,7 +62,7 @@ export class InfluencersRepository implements iInfluencerRepository {
         rank,
         instagramUser,
         twitterUser,
-        image: image ? base64toBlob(image, 'image/jpeg') : new Blob(),
+        image: image ? base64toBuffer(image) : Buffer.alloc(0),
       }
     });
   }

@@ -1,9 +1,10 @@
 import { DALRepository, DBQuery } from "../../layers/repository/types";
 import { InfluencerDAO } from "../influencers/types";
+import { AIProviderModel } from "../types";
 import { Claim, ClaimDAO, InfluencerClaims } from "./types";
 
 export interface iClaimsRepository {
-  saveClaimsForInfluencers: (influencerClaims: InfluencerClaims[]) => Promise<InfluencerClaims[]>;
+  saveClaimsForInfluencers: (influencerClaims: InfluencerClaims[], aiProviderModel: AIProviderModel) => Promise<InfluencerClaims[]>;
 }
 
 export class ClaimsRepository implements iClaimsRepository {

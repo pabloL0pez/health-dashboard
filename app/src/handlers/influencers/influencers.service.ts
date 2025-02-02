@@ -1,6 +1,6 @@
 import { AIRequestBody, AIProvider, AIRoleType } from "../../layers/providers/types";
 import { isValidType } from "../../layers/utils/typeGuard";
-import { INFLUENCER_OBJECT } from "./constants";
+import { INFLUENCER_OBJECT, MOCK_IMAGE } from "./constants";
 import { iInfluencerRepository } from "./influencers.repository";
 import { Influencer } from "./types";
 
@@ -36,17 +36,16 @@ export class InfluencersService implements iInfluencersService {
           `
         },
       ],
-      temperature: 0,
     }
 
-    const { response, provider, model } = await this.aiProvider.getStructuredResponse<Influencer[]>(requestBody);
+    const { response, ...aiProviderModel } = await this.aiProvider.getStructuredResponse<Influencer[]>(requestBody);
 
     if (response) {
       if (!isValidType<Influencer>(['name', 'rank'], response[0])) {
         throw new Error(`Invalid Influencer object, received: ${JSON.stringify(response)}`);
       }
 
-      const influencers = await this.influencerRepository.saveInfluencers(response, { provider, model });
+      const influencers = await this.influencerRepository.saveInfluencers(response.map(item => ({ ...item, image: MOCK_IMAGE })), aiProviderModel);
 
       return influencers
         .filter(item => item.rank > 0)
@@ -54,6 +53,6 @@ export class InfluencersService implements iInfluencersService {
         .map(item => item.name);
     }
 
-    return [];
+    return await [];
   }
 }

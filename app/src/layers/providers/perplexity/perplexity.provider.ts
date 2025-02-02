@@ -1,4 +1,5 @@
-import { AIProvider, AIProviderModel, AIProviderType, AIRequestBody, AIRequestResponse, AIResponse, AIResponseFormatType } from "../types";
+import { AIProviderModel } from "../../../handlers/types";
+import { AIProvider, AIProviderType, AIRequestBody, AIRequestResponse, AIResponse, AIResponseFormatType } from "../types";
 import { PerplexityAIRequestBody, PerplexityModelType } from "./types";
 
 export class PerplexityProvider implements AIProvider {
@@ -23,11 +24,17 @@ export class PerplexityProvider implements AIProvider {
       throw new Error('Perplexity API URL is not defined');
     }
 
-    const perplexityBody: PerplexityAIRequestBody = {
+    let perplexityBody: PerplexityAIRequestBody = {
       ...requestBody,
       model: this.model,
       return_images: true,
-      response_format: schema ? { type: AIResponseFormatType.JsonSchema, json_schema: schema, } : undefined,
+    }
+
+    if (schema) {
+      perplexityBody = {
+        ...perplexityBody,
+        response_format: { type: AIResponseFormatType.JsonSchema, json_schema: schema, },
+      }
     }
 
     const options = {
