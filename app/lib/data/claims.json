@@ -1,7 +1,7 @@
 {
-  "influencers": ["Dr. Jennifer Gunter","Dr. Mikhail Varshavski","Dr. Rhonda Patrick","Arianna Huffington","Dr. Sanjay Gupta"],
+  "influencers": ["Dr. Mark Hyman","Kayla Itsines","Dr. Oz","Joe Wicks","Dr. Rhonda Patrick"],
   "aiProviderModel": {
-    "provider": "perplexity",
-    "model": "sonar"
+    "provider": "openai",
+    "model": "gpt-4o"
   }
 }

@@ -2,7 +2,7 @@
 import { MongoClient } from "../../layers/config/mongo/mongo";
 import { isValidType } from "../../layers/utils/typeGuard";
 import { Handler, HandlerEvent, HandlerProvider, HandlerResult } from "../types";
-import { buildHandlerError } from "../utils";
+import { buildHandlerError, isValidaAIProviderModel } from "../utils";
 import { iInfluencersController, InfluencersController } from "./influencers.controller";
 import { InfluencerRepositoryMongo, InfluencersRepository } from "./influencers.repository";
 import { InfluencersService } from "./influencers.service";
@@ -40,6 +40,13 @@ export const handler = async ({ aiProviderModel, ...event }: HandlerEvent<Influe
       statusCode: 400,
       body: buildHandlerError(event),
     };
+  }
+
+  if (!isValidaAIProviderModel(aiProviderModel)) {
+    return {
+      statusCode: 400,
+      body: `Invalid AI provider/model combination, received: ${JSON.stringify(aiProviderModel)}`,
+    }
   }
 
   await MongoClient.instance.connect();

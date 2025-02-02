@@ -1,7 +1,7 @@
 {
   "topN": 5,
   "aiProviderModel": {
-    "provider": "perplexity",
-    "model": "sonar"
+    "provider": "openai",
+    "model": "gpt-4o"
   }
 }

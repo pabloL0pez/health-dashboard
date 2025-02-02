@@ -27,7 +27,7 @@ export const influencersAISchema = {
             },
             "image": {
               "type": "string",
-              "description": "URL of the influencer's image."
+              "description": "Base64 encoded picture of the influencer."
             }
           },
           "required": [

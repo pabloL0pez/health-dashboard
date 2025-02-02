@@ -13,6 +13,10 @@ export interface InfluencersEvent {
   topN: number;
 }
 
+export interface InfluencersResponse {
+  influencers: Influencer[];
+}
+
 export interface InfluencerDAO {
   id: string;
   name: string;

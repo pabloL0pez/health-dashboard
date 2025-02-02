@@ -1,8 +1,9 @@
-import { AIRequestBody, AIProvider, AIRoleType } from "../../layers/providers/types";
+import { AIRequestBody, AIProvider } from "../../layers/providers/types";
 import { isValidType } from "../../layers/utils/typeGuard";
-import { INFLUENCER_OBJECT, MOCK_IMAGE } from "./constants";
+import { INFLUENCER_OBJECT, INFLUENCERS_RESPONSE_OBJECT, MOCK_IMAGE } from "./constants";
+import { influencersAISchema } from "./influencers.ai-schema";
 import { iInfluencerRepository } from "./influencers.repository";
-import { Influencer } from "./types";
+import { Influencer, InfluencersResponse } from "./types";
 
 export interface iInfluencersService {
   discoverInfluencers(topN: number): Promise<string[]>;
@@ -23,13 +24,14 @@ export class InfluencersService implements iInfluencersService {
             Your job is to discover the top health influencers on social media.
             Be precise and concise.
             Only output structured JSON data with the requested fields.
+            Don't add any additional comments outside of the requested JSON data.
           `
         },
         {
           role: 'user',
           content: `
             Please perform a discovery of the top ${topN} health influencers on social media. 
-            Please output an array of JSON objects for each influencer.
+            Please output an array of JSON objects for each influencer, under the following key: ${Object.keys(INFLUENCERS_RESPONSE_OBJECT).join("")}.
             Each JSON object should contain the following fields: 
             ${Object.keys(INFLUENCER_OBJECT).join(", ")}
             Make sure to include a base64 encoded image for each influencer.
@@ -38,18 +40,19 @@ export class InfluencersService implements iInfluencersService {
       ],
     }
 
-    const { response, ...aiProviderModel } = await this.aiProvider.getStructuredResponse<Influencer[]>(requestBody);
+    const { response, ...aiProviderModel } = await this.aiProvider.getStructuredResponse<InfluencersResponse>(requestBody, influencersAISchema);
+    const influencersResponse = response?.influencers;
 
-    if (response) {
-      if (!isValidType<Influencer>(['name', 'rank'], response[0])) {
+    if (influencersResponse) {
+      if (!isValidType<Influencer>(['name', 'rank'], influencersResponse[0])) {
         throw new Error(`Invalid Influencer object, received: ${JSON.stringify(response)}`);
       }
 
-      const influencers = await this.influencerRepository.saveInfluencers(response.map(item => ({ ...item, image: MOCK_IMAGE })), aiProviderModel);
+      const influencers = await this.influencerRepository.saveInfluencers(influencersResponse.map(item => ({ ...item, image: MOCK_IMAGE })), aiProviderModel);
 
       return influencers
         .filter(item => item.rank > 0)
-        .sort((a, b) => b.rank - a.rank)
+        .sort((a, b) => a.rank - b.rank)
         .map(item => item.name);
     }
 

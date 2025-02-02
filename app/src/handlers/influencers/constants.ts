@@ -1,6 +1,10 @@
-import { Influencer } from "./types";
+import { Influencer, InfluencersResponse } from "./types";
 
 export const DEFAULT_TOP_N_INFLUENCERS = 10;
+
+export const INFLUENCERS_RESPONSE_OBJECT: InfluencersResponse = {
+  influencers: [],
+}
 
 export const INFLUENCER_OBJECT: Influencer = {
   rank: 0,

@@ -3,7 +3,7 @@ import { AIProviderType } from "../../layers/providers/types";
 import { isValidType } from "../../layers/utils/typeGuard";
 import { InfluencerRepositoryMongo } from "../influencers/influencers.repository";
 import { HandlerEvent, HandlerProvider, HandlerResult } from "../types";
-import { buildHandlerError } from "../utils";
+import { buildHandlerError, isValidaAIProviderModel } from "../utils";
 import { ClaimsController } from "./claims.controller";
 import { ClaimsRepository } from "./claims.repository";
 import { ClaimsService } from "./claims.service";
@@ -40,6 +40,13 @@ export const handler = async ({ aiProviderModel = { provider: AIProviderType.Per
     return {
       statusCode: 400,
       body: buildHandlerError(event),
+    }
+  }
+
+  if (!isValidaAIProviderModel(aiProviderModel)) {
+    return {
+      statusCode: 400,
+      body: `Invalid AI provider/model combination, received: ${JSON.stringify(aiProviderModel)}`,
     }
   }
  

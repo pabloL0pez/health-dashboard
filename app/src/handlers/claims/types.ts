@@ -22,6 +22,10 @@ export interface InfluencerClaims {
   claims: Claim[];
 }
 
+export interface ClaimsResponse {
+  claimsByInfluencer: InfluencerClaims[];
+}
+
 export interface ClaimDAO {
   quote: string;
   title: string;

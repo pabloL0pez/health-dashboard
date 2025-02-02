@@ -1,8 +1,7 @@
 import { Schema, model } from 'mongoose';
 import { InfluencerDAO } from './types';
 import { ClaimSchema } from '../claims/claims.model';
-import { AIProviderModel } from '../../layers/providers/types';
-import { AIProviderHandler } from '../types';
+import { AIProviderHandler, AIProviderModel } from '../types';
 
 const AIProviderModelSchema = new Schema<AIProviderModel>({
   provider: { type: String, required: true },

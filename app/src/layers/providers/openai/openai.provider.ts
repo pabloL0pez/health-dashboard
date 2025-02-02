@@ -16,10 +16,16 @@ export class OpenAIProvider implements AIProvider {
   public async getStructuredResponse<T>(requestBody: AIRequestBody, schema?: any): Promise<AIResponse<T>> {
     let response = null;
 
-    const openAIBody: OpenAIRequestBody = {
+    let openAIBody: OpenAIRequestBody = {
       ...requestBody,
       model: this.model,
-      response_format: schema ? { type: AIResponseFormatType.JsonSchema, json_schema: schema, } : undefined,
+    }
+
+    if (schema) {
+      openAIBody = {
+        ...openAIBody,
+        response_format: { type: AIResponseFormatType.JsonSchema, json_schema: schema },
+      }
     }
 
     try {

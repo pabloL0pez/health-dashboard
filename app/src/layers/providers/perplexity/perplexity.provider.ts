@@ -33,7 +33,7 @@ export class PerplexityProvider implements AIProvider {
     if (schema) {
       perplexityBody = {
         ...perplexityBody,
-        response_format: { type: AIResponseFormatType.JsonSchema, json_schema: schema, },
+        response_format: { type: AIResponseFormatType.JsonSchema, json_schema: schema },
       }
     }
 
@@ -50,7 +50,8 @@ export class PerplexityProvider implements AIProvider {
 
       if (apiResponse.ok) {
         const rawResponse = await apiResponse.json();
-        response = this.parseResponse<T>(rawResponse);
+        response = this.parseUnstructuredResponse<T>(rawResponse);
+        console.log(response);
       } else {
         throw new Error(`An error occured while fetching Perplexity API. Status: ${apiResponse.status}`);
       }
@@ -61,8 +62,8 @@ export class PerplexityProvider implements AIProvider {
     return { response, ...this.aiProviderModel };
   }
 
-  protected parseResponse<T>(response: AIRequestResponse): T | null {
-    const content = response?.choices[0]?.message?.content;
+  private parseUnstructuredResponse<T>(aiRequestResponse: AIRequestResponse): T | null {
+    const content = aiRequestResponse?.choices[0]?.message?.content;
 
     if (!content) {
       return null;

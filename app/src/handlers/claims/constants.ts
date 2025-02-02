@@ -1,4 +1,4 @@
-import { Claim, InfluencerClaims, StatusType } from "./types";
+import { Claim, ClaimsResponse, InfluencerClaims, StatusType } from "./types";
 
 export const DEFAULT_MAX_CLAIMS = 5;
 
@@ -13,4 +13,8 @@ export const CLAIM_OBJECT: Claim = {
   category: '',
   score: 0,
   status: StatusType.Confirmed,
+}
+
+export const CLAIMS_RESPONSE_OBJECT: ClaimsResponse = {
+  claimsByInfluencer: [],
 }
