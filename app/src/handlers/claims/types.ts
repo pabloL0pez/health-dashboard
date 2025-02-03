@@ -3,7 +3,7 @@ export interface ClaimsEvent {
   maxClaims?: number;
 }
 
-export type StatusType = 'confirmed' | 'questionable' | 'debunked';
+export type StatusType = 'confirmed' | 'questionable' | 'debunked' | 'unverifiable';
 
 export interface Claim {
   quote: string;

@@ -31,26 +31,29 @@ export const claimsAISchema = {
                     "type": "string",
                     "description": "Category of the claim."
                   },
-                  "score": {
-                    "type": "number",
-                    "description": "Score assigned to the claim."
+                  "source": {
+                    "type": "object",
+                    "description": "The source of the claim.",
+                    "properties": {
+                      "source": {
+                        "type": "string",
+                        "description": "The source."
+                      },
+                      "url": {
+                        "type": "string",
+                        "description": "The URL for the source.",
+                      },
+                    },
+                    "required": [
+                      "source",
+                    ],
+                    "additionalProperties": false
                   },
-                  "status": {
-                    "type": "string",
-                    "description": "Status of the claim.",
-                    "enum": [
-                      "Pending",
-                      "Verified",
-                      "Rejected"
-                    ]
-                  }
                 },
                 "required": [
                   "quote",
                   "title",
                   "category",
-                  "score",
-                  "status"
                 ],
                 "additionalProperties": false
               }

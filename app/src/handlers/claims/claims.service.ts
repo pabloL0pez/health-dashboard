@@ -3,7 +3,7 @@ import { AIRequestBody, AIProvider } from "../../layers/providers/types";
 import { isValidType } from "../../layers/utils/typeGuard";
 import { claimsAISchema } from "./claims.ai-schema";
 import { iClaimsRepository } from "./claims.repository";
-import { CLAIM_OBJECT, CLAIM_SOURCE_OBJECT, CLAIMS_RESPONSE_OBJECT, UNVERIFIBLE_CLAIM_SCORE } from "./constants";
+import { CLAIM_OBJECT, CLAIM_SOURCE_OBJECT, CLAIMS_RESPONSE_OBJECT, UNVERIFIABLE_CLAIM_SCORE } from "./constants";
 import { Claim, ClaimsResponse, InfluencerClaims, InfluencerVerifiedClaims, VerifiedClaim, VerifiedClaimsResponse } from "./types";
 
 export interface iClaimsService {
@@ -106,7 +106,7 @@ export class ClaimsService implements iClaimsService {
               The status should be returned along with a description, justifying the assigned status.
               Try to include an array with the cited sources, along with an URL to the source if possible.
 
-              If it's not possible to verify the claim, just assign a score of ${UNVERIFIBLE_CLAIM_SCORE}, a status of 'unverifible' and an empty sources array.
+              If it's not possible to verify the claim, just assign a score of ${UNVERIFIABLE_CLAIM_SCORE}, a status of 'unverifiable' and an empty sources array.
             `
           },
         ],
