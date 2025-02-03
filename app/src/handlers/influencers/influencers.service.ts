@@ -1,3 +1,4 @@
+import { promptsDictionary } from "../../layers/providers/constants";
 import { AIRequestBody, AIProvider } from "../../layers/providers/types";
 import { isValidType } from "../../layers/utils/typeGuard";
 import { INFLUENCER_OBJECT, INFLUENCERS_RESPONSE_OBJECT, MOCK_IMAGE } from "./constants";
@@ -16,15 +17,16 @@ export class InfluencersService implements iInfluencersService {
   ) {}
   
   async discoverInfluencers(topN: number) {
+    const { system: { preciseAndComplete, structuredJSONData, noComments } } = promptsDictionary;
     const requestBody: AIRequestBody = {
       messages: [
         {
           role: 'system',
           content: `
             Your job is to discover the top health influencers on social media.
-            Be precise and concise.
-            Only output structured JSON data with the requested fields.
-            Don't add any additional comments outside of the requested JSON data.
+            ${preciseAndComplete}
+            ${structuredJSONData}
+            ${noComments}
           `
         },
         {

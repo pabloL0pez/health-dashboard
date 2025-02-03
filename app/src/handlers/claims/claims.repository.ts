@@ -2,6 +2,7 @@ import { DALRepository, DBQuery } from "../../layers/repository/types";
 import { InfluencerDAO } from "../influencers/types";
 import { AIProviderModel } from "../types";
 import { Claim, ClaimDAO, InfluencerClaims } from "./types";
+import { v4 as uuidv4 } from 'uuid';
 
 export interface iClaimsRepository {
   saveClaimsForInfluencers: (influencerClaims: InfluencerClaims[], aiProviderModel: AIProviderModel) => Promise<InfluencerClaims[]>;
@@ -44,7 +45,10 @@ export class ClaimsRepository implements iClaimsRepository {
   private updateInfluencerClaims(currentInfluencers: InfluencerDAO[], influencerClaims: InfluencerClaims[]): InfluencerDAO[] {
     return currentInfluencers.map(currentInfluencer => ({
       ...currentInfluencer,
-      claims: influencerClaims.find(influencer => influencer.influencerName === currentInfluencer.name)?.claims ?? [],
+      claims: influencerClaims.find(influencer => influencer.influencerName === currentInfluencer.name)?.claims.map(item => ({
+        ...item,
+        id: uuidv4(),
+      })) ?? [],
     }));
   }
 }

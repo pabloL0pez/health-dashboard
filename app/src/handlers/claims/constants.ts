@@ -21,3 +21,5 @@ export const CLAIM_SOURCE_OBJECT: ClaimSource = {
   source: '',
   url: '',
 }
+
+export const UNVERIFIBLE_CLAIM_SCORE = -1;

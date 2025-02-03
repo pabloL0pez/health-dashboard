@@ -14,12 +14,12 @@ export interface Claim {
 }
 
 export interface ClaimVerificationScore {
-  score: number;
+  value: number;
   description?: string;
 }
 
 export interface ClaimVerificationStatus {
-  status: StatusType;
+  value: StatusType;
   description?: string;
 }
 
@@ -46,9 +46,7 @@ export interface InfluencerClaims {
 
 export type ClaimsResponse = Pick<InfluencerClaims, 'claims'>;
 
-export interface VerifiedClaimsResponse {
-  verifiedClaims: VerifiedClaim[];
-}
+export type VerifiedClaimsResponse = Pick<VerifiedClaim, 'verification'>;
 
 export interface InfluencerVerifiedClaims {
   influencerName: string;
@@ -56,11 +54,10 @@ export interface InfluencerVerifiedClaims {
 }
 
 export interface ClaimDAO {
+  id: string;
   quote: string;
   title: string;
   category: string;
   date: string;
   source?: ClaimSource;
-  // score: number;
-  // status: StatusType;
 }
