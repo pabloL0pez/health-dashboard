@@ -4,6 +4,7 @@ import { AIProviderModel } from "../../handlers/types";
  * Base AI provider interface. All AI providers should implement this interface.
  */
 export interface AIProvider {
+  aiProviderModel: AIProviderModel;
   getStructuredResponse: <T>(requestBody: AIRequestBody, schema?: any) => Promise<AIResponse<T>>;
 }
 
@@ -35,7 +36,7 @@ export enum AIProviderType {
   OpenAI = 'openai',
 }
 
-export type AIResponse<T> = AIProviderModel & {
+export interface AIResponse<T> {
   response: T | null;
 }
 

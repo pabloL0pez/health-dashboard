@@ -6,7 +6,7 @@ import { AIProviderModel } from "../../../handlers/types";
 
 export class OpenAIProvider implements AIProvider {
   private readonly openAIClient = new OpenAI();
-  private readonly aiProviderModel: AIProviderModel = {
+  public readonly aiProviderModel: AIProviderModel = {
       provider: AIProviderType.OpenAI,
       model: this.model,
   }

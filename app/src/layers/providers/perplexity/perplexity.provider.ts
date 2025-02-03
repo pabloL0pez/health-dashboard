@@ -5,7 +5,7 @@ import { PerplexityAIRequestBody, PerplexityModelType } from "./types";
 export class PerplexityProvider implements AIProvider {
   private readonly url: string | undefined;
   private readonly headers: Record<string, string> = {};
-  private readonly aiProviderModel: AIProviderModel = {
+  public readonly aiProviderModel: AIProviderModel = {
     provider: AIProviderType.Perplexity,
     model: this.model,
   }

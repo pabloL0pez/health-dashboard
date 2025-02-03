@@ -1,7 +1,7 @@
 {
-  "influencers": ["Dr. Mark Hyman","Kayla Itsines","Dr. Oz","Joe Wicks","Dr. Rhonda Patrick"],
+  "influencers": ["Kayla Itsines", "Dr. Mark Hyman", "Kevin Curry"],
   "aiProviderModel": {
-    "provider": "openai",
-    "model": "gpt-4o"
+    "provider": "perplexity",
+    "model": "sonar"
   }
 }

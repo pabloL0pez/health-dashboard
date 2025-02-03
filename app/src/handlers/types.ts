@@ -25,7 +25,7 @@ export interface AIProviderHandler {
 export type HandlerEvent<T> = T & { aiProviderModel: AIProviderModel };
 
 export abstract class HandlerProvider {
-  protected readonly aiProvider: AIProvider = this.aiProviderResolver();
+  public readonly aiProvider: AIProvider = this.aiProviderResolver();
 
   constructor(readonly aiProviderModel: AIProviderModel) {}
 

@@ -32,12 +32,12 @@ export class ClaimsRepository implements iClaimsRepository {
   }
 
   private mapClaimsFromDAO(claims: ClaimDAO[]): Claim[] {
-    return claims.map(({ quote, title, category, score, status }) => ({
+    return claims.map(({ quote, title, category, date, source }) => ({
       quote,
       title,
       category,
-      score,
-      status,
+      date,
+      source,
     }));
   }
 
