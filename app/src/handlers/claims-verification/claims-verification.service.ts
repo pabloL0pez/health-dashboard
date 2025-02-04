@@ -5,6 +5,7 @@ import { iClaimsRepository } from "../claims/claims.repository";
 import { UNVERIFIABLE_CLAIM_SCORE } from "../claims/constants";
 import { claimsVerificationAISchema } from "./claims-verification.ai-schema";
 import { iClaimsVerificationRepository } from "./claims-verification.repository";
+import { VERIFIED_CLAIMS_RESPONSE_OBJECT } from "./constants";
 import { ClaimVerification, InfluencerVerifiedClaims, VerifiedClaim, VerifiedClaimsResponse } from "./types";
 
 export interface iClaimsVerificationService {
@@ -46,8 +47,8 @@ export class ClaimsVerificationService implements iClaimsVerificationService {
 
               Based on the evidence collected, calculate a trust score from 0 to 100.
               Based on the calculated score, assing a status of either 'confirmed', 'questionable' or 'debunked'.
-              Return a JSON object with your findings, with the following structure:
-              {{score, description}, {status, description}, [{source, url}]}
+              Return a JSON object with your findings, with the following structure: ${JSON.stringify(VERIFIED_CLAIMS_RESPONSE_OBJECT)}
+              The provided values are just for reference.
               The score should be returned along with a description, justifying the calculated score.
               The status should be returned along with a description, justifying the assigned status.
               Try to include an array with the cited sources, along with an URL to the source if possible.

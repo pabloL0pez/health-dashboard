@@ -27,3 +27,8 @@ functions:
     name: ClaimsLambda
     timeout: 240
     memorySize: 128
+  claimsVerification:
+    handler: app/src/handler/claims-verification/claims-verification.handler
+    name: ClaimsVerificationLambda
+    timeout: 240
+    memorySize: 128

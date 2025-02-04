@@ -1,4 +1,4 @@
-import { Claim, ClaimDAO, ClaimSource, InfluencerClaims } from "../claims/types";
+import { Claim, ClaimSource } from "../claims/types";
 
 export type StatusType = 'confirmed' | 'questionable' | 'debunked' | 'unverifiable';
 

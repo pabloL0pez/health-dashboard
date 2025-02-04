@@ -51,9 +51,9 @@ export const handler = async ({ aiProviderModel, ...event }: HandlerEvent<Influe
 
   await MongoClient.instance.connect();
 
-  const influencersHandlerProvider = new InfluencersHandlerProvider(aiProviderModel)
-  const influencersHandler = influencersHandlerProvider.handler;
-  const result = influencersHandler.handleEvent(event);
+  const provider = new InfluencersHandlerProvider(aiProviderModel)
+  const handler = provider.handler;
+  const result = handler.handleEvent(event);
 
   return result;
 };

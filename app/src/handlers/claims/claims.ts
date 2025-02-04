@@ -52,9 +52,9 @@ export const handler = async ({ aiProviderModel = { provider: AIProviderType.Per
  
   await MongoClient.instance.connect();
 
-  const claimsHandlerProvider = new ClaimsHandlerProvider(aiProviderModel);
-  const claimsHandler = claimsHandlerProvider.handler;
-  const result = await claimsHandler.handleEvent(event);
+  const provider = new ClaimsHandlerProvider(aiProviderModel);
+  const handler = provider.handler;
+  const result = await handler.handleEvent(event);
 
   return result;
 }

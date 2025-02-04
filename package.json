@@ -3,6 +3,7 @@
     "dev": "sls dev",
     "dev:influencers": "sls invoke local --function influencers --path app/lib/data/influencers.json",
     "dev:claims": "sls invoke local --function claims --path app/lib/data/claims.json",
+    "dev:claims-verification": "sls invoke local --function claimsVerification --path app/lib/data/claims-verification.json",
     "deploy": "sls deploy"
   },
   "dependencies": {
