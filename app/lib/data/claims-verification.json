@@ -1,3 +1,7 @@
 {
-  "influencerName": "Dr. Oz"
+  "influencerName": "Dr. Mark Hyman",
+  "aiProviderModel": {
+    "provider": "perplexity",
+    "model": "sonar"
+  }
 }
