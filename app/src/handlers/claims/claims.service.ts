@@ -4,7 +4,7 @@ import { isValidType } from "../../layers/utils/typeGuard";
 import { claimsAISchema } from "./claims.ai-schema";
 import { iClaimsRepository } from "./claims.repository";
 import { CLAIM_OBJECT, CLAIM_SOURCE_OBJECT, CLAIMS_RESPONSE_OBJECT, UNVERIFIABLE_CLAIM_SCORE } from "./constants";
-import { Claim, ClaimsResponse, InfluencerClaims, InfluencerVerifiedClaims, VerifiedClaim, VerifiedClaimsResponse } from "./types";
+import { Claim, ClaimsResponse, InfluencerClaims } from "./types";
 
 export interface iClaimsService {
   identifyHealthClaims: (influencers: string[], maxClaims: number) => Promise<InfluencerClaims[]>
@@ -71,56 +71,5 @@ export class ClaimsService implements iClaimsService {
     const influencerClaims = await this.claimsRepository.saveClaimsForInfluencers(influencersClaims, this.aiProvider.aiProviderModel);
   
     return influencerClaims;
-  }
-
-  private async verifyHealthClaims(influencerClaims: InfluencerClaims): Promise<InfluencerVerifiedClaims> {
-    const { influencerName, claims } = influencerClaims;
-    const { system: { preciseAndComplete, structuredJSONData, noComments } } = promptsDictionary;
-    const verifiedClaims: VerifiedClaim[] = [];
-
-    for (let claim of claims) {
-      const requestBody: AIRequestBody = {
-        messages: [
-          {
-            role: 'system',
-            content: `
-              You are a scientific journal, in charge of fact checking and verifying claims made by health influencers across social media.
-              Use scientific, trusted sources to check and back your findings.
-              ${preciseAndComplete}
-              ${structuredJSONData}
-              ${noComments}
-            `
-          },
-          {
-            role: 'user',
-            content: `
-              Please validate the following health claim made by ${influencerName} against different scientific journals / studies or any other trusted source.
-
-              Claim: \"${claim.quote}\"
-
-              Based on the evidence collected, calculate a trust score from 0 to 100.
-              Based on the calculated score, assing a status of either 'confirmed', 'questionable' or 'debunked'.
-              Return a JSON object with your findings, with the following structure:
-              {{score, description}, {status, description}, [{source, url}]}
-              The score should be returned along with a description, justifying the calculated score.
-              The status should be returned along with a description, justifying the assigned status.
-              Try to include an array with the cited sources, along with an URL to the source if possible.
-
-              If it's not possible to verify the claim, just assign a score of ${UNVERIFIABLE_CLAIM_SCORE}, a status of 'unverifiable' and an empty sources array.
-            `
-          },
-        ],
-        temperature: 1,
-      }
-
-      const { response } = await this.aiProvider.getStructuredResponse<VerifiedClaimsResponse>(requestBody, claimsAISchema);
-      const verification = response?.verification;
-
-      if (verification) {
-        verifiedClaims.push({ claim, verification });
-      }
-    }
-
-    return { influencerName, verifiedClaims };
   }
 }

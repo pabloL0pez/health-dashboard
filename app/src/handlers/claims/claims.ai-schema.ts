@@ -33,15 +33,14 @@ export const claimsAISchema = {
                   },
                   "source": {
                     "type": "object",
-                    "description": "The source of the claim.",
                     "properties": {
                       "source": {
                         "type": "string",
-                        "description": "The source."
+                        "description": "The source of the claim.",
                       },
                       "url": {
                         "type": "string",
-                        "description": "The URL for the source.",
+                        "description": "The URL for the claim's source.",
                       },
                     },
                     "required": [

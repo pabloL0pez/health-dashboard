@@ -5,11 +5,28 @@ import { Claim, ClaimDAO, InfluencerClaims } from "./types";
 import { v4 as uuidv4 } from 'uuid';
 
 export interface iClaimsRepository {
+  findClaimsByInfluencer: (influencerName: string) => Promise<Claim[]>
   saveClaimsForInfluencers: (influencerClaims: InfluencerClaims[], aiProviderModel: AIProviderModel) => Promise<InfluencerClaims[]>;
 }
 
 export class ClaimsRepository implements iClaimsRepository {
   constructor(private readonly dalRepository: DALRepository<InfluencerDAO>) {}
+
+  public async findClaimsByInfluencer(influencerName: string): Promise<Claim[]> {
+    const influencerQuery: DBQuery<InfluencerDAO> = {
+      field: 'name',
+      operator: 'eq', 
+      value: influencerName,
+    }
+
+    const foundInfluencer = await this.dalRepository.findOne(influencerQuery);
+
+    if (foundInfluencer?.claims) {
+      return this.mapClaimsFromDAO(foundInfluencer?.claims);
+    }
+
+    return [];
+  }
 
   public async saveClaimsForInfluencers(influencerClaims: InfluencerClaims[]): Promise<InfluencerClaims[]> {
     const activeInfluencersQuery: DBQuery<InfluencerDAO> = {
@@ -33,7 +50,8 @@ export class ClaimsRepository implements iClaimsRepository {
   }
 
   private mapClaimsFromDAO(claims: ClaimDAO[]): Claim[] {
-    return claims.map(({ quote, title, category, date, source }) => ({
+    return claims.map(({ id, quote, title, category, date, source }) => ({
+      id,
       quote,
       title,
       category,

@@ -1,7 +1,7 @@
 import { Schema } from "mongoose";
 import { ClaimDAO, ClaimSource } from "./types";
 
-const ClaimSourceSchema = new Schema<ClaimSource>({
+export const ClaimSourceSchema = new Schema<ClaimSource>({
   source: { type: String, required: true },
   url: { type: String, default: null },
 })

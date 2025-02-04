@@ -1,5 +1,5 @@
 import { MongoDALRepository } from "../../layers/repository/data-access/mongo.repository"
-import { DALRepository } from "../../layers/repository/types";
+import { DALRepository, DBQuery } from "../../layers/repository/types";
 import { base64toBuffer } from "../../layers/utils/encoding";
 import { AIProviderHandler, AIProviderModel } from "../types";
 import { INACTIVE_INFLUENCER_RANK } from "./constants";
@@ -7,6 +7,7 @@ import { InfluencerModel } from "./influencers.model"
 import { Influencer, InfluencerDAO } from "./types"
 
 export interface iInfluencerRepository {
+  getInfluencer(influencerName: string): Promise<Influencer | null>;
   getInfluencers(): Promise<Influencer[]>;
   saveInfluencers(influencers: Influencer[], aiProviderModel?: AIProviderModel): Promise<Influencer[]>;
 }
@@ -19,6 +20,22 @@ export class InfluencerRepositoryMongo extends MongoDALRepository<InfluencerDAO>
 
 export class InfluencersRepository implements iInfluencerRepository {
   constructor(private readonly dalRepository: DALRepository<InfluencerDAO>) {}
+
+  async getInfluencer(influencerName: string): Promise<Influencer | null> {
+     const influencerQuery: DBQuery<InfluencerDAO> = {
+          field: 'name',
+          operator: 'eq', 
+          value: influencerName,
+        }
+    
+    const foundInfluencer = await this.dalRepository.findOne(influencerQuery);
+
+    if (foundInfluencer) {
+      return this.mapInfluencerFromDAO(foundInfluencer);
+    }
+
+    return null;
+  }
 
   async getInfluencers(): Promise<Influencer[]> {
     const foundInfluencers = await this.dalRepository.find();
@@ -46,12 +63,16 @@ export class InfluencersRepository implements iInfluencerRepository {
   }
    
   private mapInfluencersFromDAO(influencersDAO: InfluencerDAO[]): Influencer[] {
-    return influencersDAO.map(({ name, rank, instagramUser, twitterUser }) => ({
+    return influencersDAO.map(this.mapInfluencerFromDAO);
+  }
+
+  private mapInfluencerFromDAO({ name, rank, instagramUser, twitterUser }: InfluencerDAO): Influencer {
+    return {
       name,
       rank,
       instagramUser,
       twitterUser
-    }));
+    }
   }
 
   private mapInfluencersToDAO(influencers: Influencer[]): InfluencerDAO[] {

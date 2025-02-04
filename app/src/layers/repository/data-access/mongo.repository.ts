@@ -3,6 +3,8 @@ import { DALRepository, DBOperator, DBQuery } from "../types";
 
 const operatorMap: Record<DBOperator, string> = {
   'gte': '$gte',
+  'eq': '$eq',
+  'set': '$set',
 }
 
 export interface MongoDocument {
@@ -24,6 +26,12 @@ export class MongoDALRepository<T extends MongoDocument> implements DALRepositor
 
   async update(id: string, item: T, upsert?: boolean): Promise<T | null> {
     return await this.model.findByIdAndUpdate({ _id: id }, item, { new: true, upsert });
+  }
+
+  async updateOne(id: string, query: DBQuery<T>): Promise<boolean> {
+    const parsedQuery = this.parseQuery(query);
+
+    return Boolean((await this.model.updateOne({ id }, parsedQuery))?.modifiedCount);
   }
 
   async updateMany(items: T[], _ids?: string[], upsert?: boolean): Promise<boolean> {
@@ -51,8 +59,10 @@ export class MongoDALRepository<T extends MongoDocument> implements DALRepositor
     return (await this.model.find(item ?? parsedQuery)).map(doc => doc.toObject());
   }
 
-  async findOne(id: string): Promise<T | null> {
-    return (await this.model.findById(id))?.toObject() ?? null;
+  async findOne(query: DBQuery<T>): Promise<T | null> {
+    const parsedQuery = this.parseQuery(query);
+
+    return (await this.model.findOne(parsedQuery))?.toObject() ?? null;
   }
 
   private parseQuery<T>(query?: DBQuery<T>): Record<keyof T, unknown> | {} {

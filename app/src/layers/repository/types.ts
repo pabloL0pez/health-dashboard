@@ -1,8 +1,8 @@
-export type DBOperator = 'gte';
+export type DBOperator = 'gte' | 'eq' | 'set';
 
 export interface DBQuery<T> {
-  field: keyof T,
-  operator: DBOperator,
+  field: keyof T;
+  operator: DBOperator;
   value: unknown;
 }
 
@@ -15,6 +15,7 @@ export interface DALRepository<T> {
   insert(item: T): Promise<T>;
   insertMany(items: T[]): Promise<T[]>;
   update(id: string, item: T, upsert?: boolean): Promise<T | null>;
+  updateOne(id: string, query: DBQuery<T>): Promise<boolean>;
   /** 
    * Updates the specified items.
    * 
@@ -28,5 +29,5 @@ export interface DALRepository<T> {
    * Finds the specified item. If no item is provided, all items are returned.
    */
   find(item?: T, query?: DBQuery<T>): Promise<T[]>;
-  findOne(id: string): Promise<T | null>;
+  findOne(query: DBQuery<T>): Promise<T | null>;
 }
