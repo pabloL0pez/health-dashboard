@@ -43,7 +43,7 @@ export class ClaimsService implements iClaimsService {
               Each claim object should have the following fields: ${Object.keys(CLAIM_OBJECT).join(", ")}
               Make sure to quote the influencer's claims and create a title for each claim, summarizing it in just a few words.
               Only include what was literally stated by the influencer in the quote, don't add anything on top of his own words; but do make sure to return all quotes in English.
-              Try to include the date in which the claim was made by the influencer, if possible.
+              Try to include the date in which the claim was made by the influencer, with the format "Month, Year".
               Also, try to include the source of the claim, like the podcast / post where it was first mentioned, and it's URL if available.
               The source should have then the following fields: ${Object.keys(CLAIM_SOURCE_OBJECT).join(", ")}
               Please group the claims for the given influencer in an array of JSON objects, under the following key: ${Object.keys(CLAIMS_RESPONSE_OBJECT).join("")}.

@@ -6,11 +6,15 @@ export const INFLUENCER_CLAIMS_OBJECT: Pick<InfluencerClaims, 'claims'> = {
   claims: [],
 }
 
-export const CLAIM_OBJECT: Claim = {
-  quote: '',
-  title: '',
+export const CLAIM_OBJECT: Pick<Claim, 'category' | 'date' | 'quote' | 'source' | 'title'> = {
   category: '',
   date: '',
+  quote: '',
+  source: { 
+    source: '',
+    url: '',
+  },
+  title: '',
 }
 
 export const CLAIMS_RESPONSE_OBJECT: ClaimsResponse = {
