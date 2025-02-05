@@ -48,10 +48,9 @@ export class PerplexityProvider implements AIProvider {
     try {
       const apiResponse = await fetch(this.url, options);
 
-      if (apiResponse.ok) {
+      if (apiResponse?.ok) {
         const rawResponse = await apiResponse.json();
         response = this.parseUnstructuredResponse<T>(rawResponse);
-        console.log(response);
       } else {
         throw new Error(`An error occured while fetching Perplexity API. Status: ${apiResponse.status}`);
       }

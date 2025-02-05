@@ -1,5 +1,5 @@
 {
-  "topN": 5,
+  "topN": 10,
   "aiProviderModel": {
     "provider": "openai",
     "model": "gpt-4o"

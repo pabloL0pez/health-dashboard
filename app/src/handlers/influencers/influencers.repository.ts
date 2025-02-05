@@ -1,5 +1,5 @@
 import { MongoDALRepository } from "../../layers/repository/data-access/mongo.repository"
-import { DALRepository, DBQuery } from "../../layers/repository/types";
+import { DALRepository, DBReadQuery } from "../../layers/repository/types";
 import { base64toBuffer } from "../../layers/utils/encoding";
 import { AIProviderHandler, AIProviderModel } from "../types";
 import { INACTIVE_INFLUENCER_RANK } from "./constants";
@@ -22,7 +22,7 @@ export class InfluencersRepository implements iInfluencerRepository {
   constructor(private readonly dalRepository: DALRepository<InfluencerDAO>) {}
 
   async getInfluencer(influencerName: string): Promise<Influencer | null> {
-     const influencerQuery: DBQuery<InfluencerDAO> = {
+     const influencerQuery: DBReadQuery<InfluencerDAO> = {
           field: 'name',
           operator: 'eq', 
           value: influencerName,

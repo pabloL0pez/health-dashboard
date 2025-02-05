@@ -13,13 +13,13 @@ import { ClaimsVerificationEvent } from "./types";
 class ClaimsVerificationHandler {
   constructor(private readonly claimsVerificationController: ClaimsVerificationController) {}
 
-  async handleEvent(event: ClaimsVerificationEvent): HandlerResult {
-    const claims = await this.claimsVerificationController.getVerifiedClaims(event?.influencerName);
+  async handleEvent({ influencerName }: ClaimsVerificationEvent): HandlerResult {
+    const verifiedClaims = await this.claimsVerificationController.getVerifiedClaims(influencerName);
 
     return {
       statusCode: 200,
-      statusDescription: `Updated database with claims: `,
-      body: JSON.stringify(claims),
+      statusDescription: `Updated database with verified claims for ${influencerName}:`,
+      body: JSON.stringify(verifiedClaims),
     };
   }
 }

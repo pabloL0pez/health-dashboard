@@ -3,71 +3,55 @@ export const claimsAISchema = {
   "schema": {
     "type": "object",
     "properties": {
-      "claimsByInfluencer": {
+      "claims": {
         "type": "array",
-        "description": "Array of claims organized by influencer.",
+        "description": "List of claims.",
         "items": {
           "type": "object",
           "properties": {
-            "influencerName": {
+            "quote": {
               "type": "string",
-              "description": "Name of the influencer."
+              "description": "The quote associated with the claim."
             },
-            "claims": {
-              "type": "array",
-              "description": "List of claims associated with the influencer.",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "quote": {
-                    "type": "string",
-                    "description": "The quote associated with the claim."
-                  },
-                  "title": {
-                    "type": "string",
-                    "description": "The title of the claim."
-                  },
-                  "category": {
-                    "type": "string",
-                    "description": "Category of the claim."
-                  },
-                  "source": {
-                    "type": "object",
-                    "properties": {
-                      "source": {
-                        "type": "string",
-                        "description": "The source of the claim.",
-                      },
-                      "url": {
-                        "type": "string",
-                        "description": "The URL for the claim's source.",
-                      },
-                    },
-                    "required": [
-                      "source",
-                    ],
-                    "additionalProperties": false
-                  },
+            "title": {
+              "type": "string",
+              "description": "The title of the claim."
+            },
+            "category": {
+              "type": "string",
+              "description": "Category of the claim."
+            },
+            "source": {
+              "type": "object",
+              "properties": {
+                "source": {
+                  "type": "string",
+                  "description": "The source of the claim.",
                 },
-                "required": [
-                  "quote",
-                  "title",
-                  "category",
-                ],
-                "additionalProperties": false
-              }
-            }
+                "url": {
+                  "type": "string",
+                  "description": "The URL for the claim's source.",
+                },
+              },
+              "required": [
+                "source",
+                "url",
+              ],
+              "additionalProperties": false
+            },
           },
           "required": [
-            "influencerName",
-            "claims"
+            "quote",
+            "title",
+            "category",
+            "source"
           ],
           "additionalProperties": false
-        }
-      }
+        },
+      },
     },
     "required": [
-      "claimsByInfluencer"
+      "claims"
     ],
     "additionalProperties": false
   },

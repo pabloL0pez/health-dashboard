@@ -1,5 +1,5 @@
 {
-  "influencers": ["Kayla Itsines", "Dr. Mark Hyman", "Kevin Curry"],
+  "influencers": ["Dr. Deepak Chopra"],
   "aiProviderModel": {
     "provider": "perplexity",
     "model": "sonar"

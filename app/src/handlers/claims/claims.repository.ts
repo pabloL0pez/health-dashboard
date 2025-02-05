@@ -1,4 +1,4 @@
-import { DALRepository, DBQuery } from "../../layers/repository/types";
+import { DALRepository, DBReadQuery } from "../../layers/repository/types";
 import { InfluencerDAO } from "../influencers/types";
 import { AIProviderModel } from "../types";
 import { Claim, ClaimDAO, InfluencerClaims } from "./types";
@@ -13,7 +13,7 @@ export class ClaimsRepository implements iClaimsRepository {
   constructor(private readonly dalRepository: DALRepository<InfluencerDAO>) {}
 
   public async findClaimsByInfluencer(influencerName: string): Promise<Claim[]> {
-    const influencerQuery: DBQuery<InfluencerDAO> = {
+    const influencerQuery: DBReadQuery<InfluencerDAO> = {
       field: 'name',
       operator: 'eq', 
       value: influencerName,
@@ -29,10 +29,10 @@ export class ClaimsRepository implements iClaimsRepository {
   }
 
   public async saveClaimsForInfluencers(influencerClaims: InfluencerClaims[]): Promise<InfluencerClaims[]> {
-    const activeInfluencersQuery: DBQuery<InfluencerDAO> = {
-      field: 'rank',
-      operator: 'gte',
-      value: 1,
+    const activeInfluencersQuery: DBReadQuery<InfluencerDAO> = {
+      field: 'id',
+      operator: 'in',
+      value: influencerClaims.map(({ influencerName}) => influencerName),
     }
     const currentInfluencers = await this.dalRepository.find(undefined, activeInfluencersQuery);
     const updatedInfluencerClaims = this.updateInfluencerClaims(currentInfluencers, influencerClaims);

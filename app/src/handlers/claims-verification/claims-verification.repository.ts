@@ -1,4 +1,4 @@
-import { DALRepository, DBQuery } from "../../layers/repository/types";
+import { DALRepository, DBWriteQuery } from "../../layers/repository/types";
 import { ClaimDAO } from "../claims/types";
 import { InfluencerDAO } from "../influencers/types";
 import { AIProviderModel } from "../types";
@@ -14,13 +14,13 @@ export class ClaimsVerificationRepository implements iClaimsVerificationReposito
   public async saveVerifiedClaimsForInfluencer({ influencerName, verifiedClaims }: InfluencerVerifiedClaims, aiProviderModel: AIProviderModel): Promise<InfluencerVerifiedClaims> {
     const verifiedClaimsDAO = this.addVerificationToClaims(verifiedClaims);
 
-    const claimsUpdateQuery: DBQuery<InfluencerDAO> = {
+    const claimsUpdateQuery: DBWriteQuery<InfluencerDAO> = {
       field: 'claims',
       operator: 'set',
       value: verifiedClaimsDAO,
     }
 
-    const updateResult = await this.dalRepository.updateOne(influencerName, claimsUpdateQuery);
+    const updateResult = await this.dalRepository.updateOne(influencerName, claimsUpdateQuery, true);
 
     if (updateResult) {
       return { influencerName, verifiedClaims };

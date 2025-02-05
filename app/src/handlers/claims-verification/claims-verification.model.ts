@@ -12,8 +12,8 @@ const ClaimVerificationStatusSchema = new Schema<ClaimVerificationStatus>({
   description: { type: String, default: null },
 });
 
-export const ClaimSchema = new Schema<ClaimVerificationDAO>({
-  score: { type: ClaimVerificationScoreSchema, required: true },
-  status: { type: ClaimVerificationStatusSchema, required: true },
+export const ClaimVerificationSchema = new Schema<ClaimVerificationDAO>({
+  score: { type: ClaimVerificationScoreSchema, required: true, _id: false },
+  status: { type: ClaimVerificationStatusSchema, required: true, _id: false },
   sources: { type: [ClaimSourceSchema], default: [] }
 });

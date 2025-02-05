@@ -3,7 +3,7 @@ import { AIRequestBody, AIProvider } from "../../layers/providers/types";
 import { isValidType } from "../../layers/utils/typeGuard";
 import { claimsAISchema } from "./claims.ai-schema";
 import { iClaimsRepository } from "./claims.repository";
-import { CLAIM_OBJECT, CLAIM_SOURCE_OBJECT, CLAIMS_RESPONSE_OBJECT, UNVERIFIABLE_CLAIM_SCORE } from "./constants";
+import { CLAIM_OBJECT, CLAIM_SOURCE_OBJECT, CLAIMS_RESPONSE_OBJECT } from "./constants";
 import { Claim, ClaimsResponse, InfluencerClaims } from "./types";
 
 export interface iClaimsService {
@@ -42,7 +42,7 @@ export class ClaimsService implements iClaimsService {
               Assign a category to each claim, such as 'nutrition', 'exercise', 'mental health', etc.
               Each claim object should have the following fields: ${Object.keys(CLAIM_OBJECT).join(", ")}
               Make sure to quote the influencer's claims and create a title for each claim, summarizing it in just a few words.
-              Only include what was literally stated by the influencer in the quote, don't add anything on top of his own words.
+              Only include what was literally stated by the influencer in the quote, don't add anything on top of his own words; but do make sure to return all quotes in English.
               Try to include the date in which the claim was made by the influencer, if possible.
               Also, try to include the source of the claim, like the podcast / post where it was first mentioned, and it's URL if available.
               The source should have then the following fields: ${Object.keys(CLAIM_SOURCE_OBJECT).join(", ")}
