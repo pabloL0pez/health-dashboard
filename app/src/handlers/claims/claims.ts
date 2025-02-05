@@ -14,11 +14,12 @@ class ClaimsHandler {
 
   async handleEvent(event: ClaimsEvent): HandlerResult {
     const claims = await this.claimsController.getClaims(event?.influencers);
+    const influencers = claims.map(item => item.influencerName);
 
     return {
       statusCode: 200,
-      statusDescription: `Updated database with claims: `,
-      body: JSON.stringify(claims),
+      statusDescription: `Updated database with claims: ${JSON.stringify(claims)}`,
+      body: JSON.stringify(influencers),
     };
   }
 }
@@ -36,6 +37,10 @@ class ClaimsHandlerProvider extends HandlerProvider {
 }
 
 export const handler = async ({ aiProviderModel = { provider: AIProviderType.Perplexity, model: 'sonar' }, ...event }: HandlerEvent<ClaimsEvent>): HandlerResult => {
+
+  console.log(aiProviderModel);
+  console.log(event);
+
   if (!isValidType<ClaimsEvent>(['influencers'], event)) {
     return {
       statusCode: 400,

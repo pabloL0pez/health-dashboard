@@ -20,15 +20,15 @@ functions:
   influencers:
     handler: app/src/handlers/influencers/influencers.handler
     name: InfluencersLambda
-    timeout: 45
+    timeout: 60
     memorySize: 128
   claims:
     handler: app/src/handlers/claims/claims.handler
     name: ClaimsLambda
     timeout: 240
-    memorySize: 128
+    memorySize: 512 
   claimsVerification:
     handler: app/src/handlers/claims-verification/claims-verification.handler
     name: ClaimsVerificationLambda
     timeout: 240
-    memorySize: 128
+    memorySize: 512
