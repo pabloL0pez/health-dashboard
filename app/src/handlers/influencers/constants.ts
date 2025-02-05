@@ -12,6 +12,7 @@ export const INFLUENCER_OBJECT: Influencer = {
   instagramUser: '',
   twitterUser: '',
   image: '',
+  bio: '',
 }
 
 export const INACTIVE_INFLUENCER_RANK = -1;

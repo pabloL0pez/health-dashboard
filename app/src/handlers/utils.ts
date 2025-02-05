@@ -1,4 +1,3 @@
-import { PerplexityModelType } from "../layers/providers/perplexity/types";
 import { AIProviderType } from "../layers/providers/types";
 import { AIProviderModel, HandlerError } from "./types";
 

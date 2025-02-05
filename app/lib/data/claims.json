@@ -1,5 +1,5 @@
 {
-  "influencers": ["Dr. Deepak Chopra"],
+  "influencers": ["Kayla Itsines","Joe Wicks","Dr. Mark Hyman","Dr. Rhonda Patrick","Dr. Eric Berg","Adriene Mishler","Dr. Megan Rossi","Cassey Ho","Dr. Josh Axe","Drew Manning"],
   "aiProviderModel": {
     "provider": "perplexity",
     "model": "sonar"

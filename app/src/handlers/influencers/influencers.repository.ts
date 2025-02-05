@@ -66,9 +66,10 @@ export class InfluencersRepository implements iInfluencerRepository {
     return influencersDAO.map(this.mapInfluencerFromDAO);
   }
 
-  private mapInfluencerFromDAO({ name, rank, instagramUser, twitterUser }: InfluencerDAO): Influencer {
+  private mapInfluencerFromDAO({ name, bio, rank, instagramUser, twitterUser }: InfluencerDAO): Influencer {
     return {
       name,
+      bio,
       rank,
       instagramUser,
       twitterUser
@@ -76,10 +77,11 @@ export class InfluencersRepository implements iInfluencerRepository {
   }
 
   private mapInfluencersToDAO(influencers: Influencer[]): InfluencerDAO[] {
-    return influencers.map(({ name, rank, instagramUser, twitterUser, image }) => {
+    return influencers.map(({ name, bio, rank, instagramUser, twitterUser, image }) => {
       return {
         id: name,
         name,
+        bio,
         rank,
         instagramUser,
         twitterUser,

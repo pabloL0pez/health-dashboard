@@ -16,6 +16,7 @@ const AIProviderHandlerSchema = new Schema<AIProviderHandler>({
 const InfluencerSchema = new Schema<InfluencerDAO>({
   id: { type: String, required: true },
   name: { type: String, required: true },
+  bio: { type: String, required: true },
   rank: { type: Number, required: true },
   instagramUser: { type: String, default: null },
   twitterUser: { type: String, default: null },

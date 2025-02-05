@@ -17,6 +17,10 @@ export const influencersAISchema = {
               "type": "string",
               "description": "The name of the influencer."
             },
+            "bio": {
+              "type": "string",
+              "description": "A brief biography of the influencer.",
+            },
             "instagramUser": {
               "type": "string",
               "description": "Instagram username of the influencer."
@@ -33,6 +37,7 @@ export const influencersAISchema = {
           "required": [
             "rank",
             "name",
+            "bio",
             "instagramUser",
             "twitterUser",
             "image"

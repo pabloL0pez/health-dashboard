@@ -36,6 +36,7 @@ export class InfluencersService implements iInfluencersService {
             Please output an array of JSON objects for each influencer, under the following key: ${Object.keys(INFLUENCERS_RESPONSE_OBJECT).join("")}.
             Each JSON object should contain the following fields: 
             ${Object.keys(INFLUENCER_OBJECT).join(", ")}
+            Include a brief biography for each influencer.
             Make sure to include a base64 encoded image for each influencer.
           `
         },

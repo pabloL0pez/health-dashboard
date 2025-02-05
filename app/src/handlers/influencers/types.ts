@@ -4,6 +4,7 @@ import { AIProviderHandler } from "../types";
 export interface Influencer {
   rank: number;
   name: string;
+  bio: string;
   instagramUser?: string;
   twitterUser?: string;
   image?: string;
@@ -20,6 +21,7 @@ export interface InfluencersResponse {
 export interface InfluencerDAO {
   id: string;
   name: string;
+  bio: string;
   rank: number;
   instagramUser?: string;
   twitterUser?: string;
