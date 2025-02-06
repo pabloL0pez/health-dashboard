@@ -3,7 +3,7 @@ export type DBReadOperator = 'gte' | 'eq' | 'in';
 export type DBWriteOperator = 'set';
 
 interface DBQuery<T> {
-  field: keyof T;
+  field: string;
   value: unknown;
 }
 
@@ -24,7 +24,7 @@ export interface DALRepository<T> {
   insert(item: T): Promise<T>;
   insertMany(items: T[]): Promise<T[]>;
   update(id: string, item: T, upsert?: boolean): Promise<T | null>;
-  updateOne(id: string, query: DBWriteQuery<T>, upsert?: boolean): Promise<boolean>;
+  updateOne(id: string, query: DBWriteQuery<T>[], upsert?: boolean): Promise<boolean>;
   /** 
    * Updates the specified items.
    * 

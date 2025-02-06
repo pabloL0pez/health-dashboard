@@ -32,10 +32,10 @@ export class MongoDALRepository<T extends MongoDocument> implements DALRepositor
     return await this.model.findByIdAndUpdate({ _id: id }, item, { new: true, upsert });
   }
 
-  async updateOne(id: string, query: DBWriteQuery<T>, upsert: boolean = false): Promise<boolean> {
-    const parsedQuery = this.parseWriteQuery(query);
+  async updateOne(id: string, queries: DBWriteQuery<T>[], upsert: boolean = false): Promise<boolean> {
+    const parsedQueries = this.parseWriteQueries(queries);
 
-    return Boolean((await this.model.updateOne({ id }, parsedQuery, { upsert }))?.modifiedCount);
+    return Boolean((await this.model.updateOne({ id }, parsedQueries, { upsert }))?.modifiedCount);
   }
 
   async updateMany(items: T[], _ids?: string[], upsert: boolean = false): Promise<boolean> {
@@ -77,11 +77,11 @@ export class MongoDALRepository<T extends MongoDocument> implements DALRepositor
     return {[query.field]: { [readOperatorMap[query.operator]]: query.value }};
   }
 
-  private parseWriteQuery<T>(query?: DBWriteQuery<T>): Record<keyof T, unknown> | {} {
-    if (!query) {
-      return {}
+  private parseWriteQueries<T>(queries?: DBWriteQuery<T>[]): (Record<keyof T, unknown> | {})[] {
+    if (!queries) {
+      return [{}];
     }
 
-    return {[writeOperatorMap[query.operator]]: { [query.field]: query.value }};
+    return queries.map(query => ({[writeOperatorMap[query.operator]]: { [query.field]: query.value }}));
   }
 }

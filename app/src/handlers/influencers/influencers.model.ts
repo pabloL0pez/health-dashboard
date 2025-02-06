@@ -11,6 +11,7 @@ const AIProviderModelSchema = new Schema<AIProviderModel>({
 const AIProviderHandlerSchema = new Schema<AIProviderHandler>({
   influencers: { type: AIProviderModelSchema, default: null },
   claims: { type: AIProviderModelSchema, default: null },
+  claimsVerification: { type: AIProviderModelSchema, default: null },
 });
 
 const InfluencerSchema = new Schema<InfluencerDAO>({

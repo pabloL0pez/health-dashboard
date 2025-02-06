@@ -20,7 +20,13 @@ export class ClaimsVerificationRepository implements iClaimsVerificationReposito
       value: verifiedClaimsDAO,
     }
 
-    const updateResult = await this.dalRepository.updateOne(influencerName, claimsUpdateQuery, true);
+    const aiProviderModelUpdateQuery: DBWriteQuery<InfluencerDAO> = {
+      field: 'ai.claimsVerification',
+      operator: 'set',
+      value: aiProviderModel,
+    }
+
+    const updateResult = await this.dalRepository.updateOne(influencerName, [claimsUpdateQuery, aiProviderModelUpdateQuery], true);
 
     if (updateResult) {
       return { influencerName, verifiedClaims };

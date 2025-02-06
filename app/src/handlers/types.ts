@@ -20,6 +20,7 @@ export type AIProviderModel = OpenAIProviderModel | PerplexityAIProviderModel;
 export interface AIProviderHandler {
   influencers?: AIProviderModel;
   claims?: AIProviderModel;
+  claimsVerification?: AIProviderModel;
 }
 
 export type HandlerEvent<T> = T & { aiProviderModel: AIProviderModel };

@@ -28,14 +28,14 @@ export class ClaimsRepository implements iClaimsRepository {
     return [];
   }
 
-  public async saveClaimsForInfluencers(influencerClaims: InfluencerClaims[]): Promise<InfluencerClaims[]> {
+  public async saveClaimsForInfluencers(influencerClaims: InfluencerClaims[], aiProviderModel: AIProviderModel): Promise<InfluencerClaims[]> {
     const activeInfluencersQuery: DBReadQuery<InfluencerDAO> = {
       field: 'id',
       operator: 'in',
       value: influencerClaims.map(({ influencerName}) => influencerName),
     }
     const currentInfluencers = await this.dalRepository.find(undefined, activeInfluencersQuery);
-    const updatedInfluencerClaims = this.updateInfluencerClaims(currentInfluencers, influencerClaims);
+    const updatedInfluencerClaims = this.updateInfluencerClaims(currentInfluencers, influencerClaims, aiProviderModel);
 
     const result = await this.dalRepository.updateMany(updatedInfluencerClaims, [], true);
 
@@ -60,9 +60,13 @@ export class ClaimsRepository implements iClaimsRepository {
     }));
   }
 
-  private updateInfluencerClaims(currentInfluencers: InfluencerDAO[], influencerClaims: InfluencerClaims[]): InfluencerDAO[] {
+  private updateInfluencerClaims(currentInfluencers: InfluencerDAO[], influencerClaims: InfluencerClaims[], aiProviderModel: AIProviderModel): InfluencerDAO[] {
     return currentInfluencers.map(currentInfluencer => ({
       ...currentInfluencer,
+      ai: {
+        ...currentInfluencer.ai,
+        claims: aiProviderModel,
+      },
       claims: influencerClaims.find(influencer => influencer.influencerName === currentInfluencer.name)?.claims.map(item => ({
         ...item,
         id: uuidv4(),
