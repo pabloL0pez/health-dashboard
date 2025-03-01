@@ -79,7 +79,7 @@ export class InfluencersRepository implements iInfluencerRepository {
   private mapInfluencersToDAO(influencers: Influencer[]): InfluencerDAO[] {
     return influencers.map(({ name, bio, rank, instagramUser, twitterUser, image }) => {
       return {
-        id: name,
+        id: this.formatIdFromName(name),
         name,
         bio,
         rank,
@@ -106,5 +106,12 @@ export class InfluencersRepository implements iInfluencerRepository {
       ...updatedCurrentInfluencers,
       ...filteredNewInfluencers
     ];
+  }
+
+  private formatIdFromName(name: string): string {
+    return name
+      .toLowerCase()
+      .replace(/[ .,()]/g, '-')
+      .replace(/-+/g, '-');
   }
 }
