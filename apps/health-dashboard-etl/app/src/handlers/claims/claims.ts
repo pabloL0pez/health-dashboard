@@ -13,7 +13,7 @@ class ClaimsHandler {
   constructor(private readonly claimsController: ClaimsController) {}
 
   async handleEvent(event: ClaimsEvent): HandlerResult {
-    const claims = await this.claimsController.getClaims(event?.influencers);
+    const claims = await this.claimsController.getClaims(event?.influencers, event?.maxClaims);
     const influencers = claims.map(item => item.influencerName);
 
     return {
