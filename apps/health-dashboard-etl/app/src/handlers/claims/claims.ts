@@ -37,10 +37,6 @@ class ClaimsHandlerProvider extends HandlerProvider {
 }
 
 export const handler = async ({ aiProviderModel = { provider: AIProviderType.Perplexity, model: 'sonar' }, ...event }: HandlerEvent<ClaimsEvent>): HandlerResult => {
-
-  console.log(aiProviderModel);
-  console.log(event);
-
   if (!isValidType<ClaimsEvent>(['influencers'], event)) {
     return {
       statusCode: 400,
