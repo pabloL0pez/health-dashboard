@@ -5,6 +5,7 @@ import { AIProviderHandler, AIProviderModel } from "../types";
 import { INACTIVE_INFLUENCER_RANK } from "./constants";
 import { InfluencerModel } from "./influencers.model"
 import { Influencer, InfluencerDAO } from "./types"
+import { formatInfluencerNameToId } from "./utils";
 
 export interface iInfluencerRepository {
   getInfluencer(influencerName: string): Promise<Influencer | null>;
@@ -79,7 +80,7 @@ export class InfluencersRepository implements iInfluencerRepository {
   private mapInfluencersToDAO(influencers: Influencer[]): InfluencerDAO[] {
     return influencers.map(({ name, bio, rank, instagramUser, twitterUser, image }) => {
       return {
-        id: this.formatIdFromName(name),
+        id: formatInfluencerNameToId(name),
         name,
         bio,
         rank,
@@ -106,12 +107,5 @@ export class InfluencersRepository implements iInfluencerRepository {
       ...updatedCurrentInfluencers,
       ...filteredNewInfluencers
     ];
-  }
-
-  private formatIdFromName(name: string): string {
-    return name
-      .toLowerCase()
-      .replace(/[ .,()]/g, '-')
-      .replace(/-+/g, '-');
   }
 }

@@ -1,5 +1,6 @@
 import { DALRepository, DBReadQuery } from "../../layers/repository/types";
 import { InfluencerDAO } from "../influencers/types";
+import { formatInfluencerNameToId } from "../influencers/utils";
 import { AIProviderModel } from "../types";
 import { Claim, ClaimDAO, InfluencerClaims } from "./types";
 import { v4 as uuidv4 } from 'uuid';
@@ -32,7 +33,7 @@ export class ClaimsRepository implements iClaimsRepository {
     const activeInfluencersQuery: DBReadQuery<InfluencerDAO> = {
       field: 'id',
       operator: 'in',
-      value: influencerClaims.map(({ influencerName}) => influencerName),
+      value: influencerClaims.map(({ influencerName }) => formatInfluencerNameToId(influencerName)),
     }
     const currentInfluencers = await this.dalRepository.find(undefined, activeInfluencersQuery);
     const updatedInfluencerClaims = this.updateInfluencerClaims(currentInfluencers, influencerClaims, aiProviderModel);
