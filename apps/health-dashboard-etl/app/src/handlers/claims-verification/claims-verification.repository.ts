@@ -1,6 +1,7 @@
 import { DALRepository, DBWriteQuery } from "../../layers/repository/types";
 import { ClaimDAO } from "../claims/types";
 import { InfluencerDAO } from "../influencers/types";
+import { formatInfluencerNameToId } from "../influencers/utils";
 import { AIProviderModel } from "../types";
 import { InfluencerVerifiedClaims, VerifiedClaim } from "./types";
 
@@ -26,7 +27,7 @@ export class ClaimsVerificationRepository implements iClaimsVerificationReposito
       value: aiProviderModel,
     }
 
-    const updateResult = await this.dalRepository.updateOne(influencerName, [claimsUpdateQuery, aiProviderModelUpdateQuery], true);
+    const updateResult = await this.dalRepository.updateOne(formatInfluencerNameToId(influencerName), [claimsUpdateQuery, aiProviderModelUpdateQuery], true);
 
     if (updateResult) {
       return { influencerName, verifiedClaims };
