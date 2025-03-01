@@ -93,7 +93,7 @@ export class InfluencersRepository implements iInfluencerRepository {
 
   private updateInfluencersRanking(currentInfluencers: InfluencerDAO[], newInfluencers: Influencer[]): InfluencerDAO[] {
     const updatedCurrentInfluencers: InfluencerDAO[] = currentInfluencers.map(currentItem => {
-      const foundInfluencer = newInfluencers.find(newItem => newItem.name === currentItem.id);
+      const foundInfluencer = newInfluencers.find(newItem => formatInfluencerNameToId(newItem.name) === currentItem.id);
 
       return {
         ...currentItem,
