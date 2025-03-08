@@ -6,6 +6,7 @@
   "module": "dist/esm/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
+    "dev": "rollup -c -w",
     "build": "rm dist tsconfig.tsbuildinfo & rollup -c"
   },
   "devDependencies": {
