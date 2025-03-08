@@ -1,0 +1,25 @@
+{
+  "name": "@core/health-dashboard",
+  "version": "1.0.0",
+  "description": "Utility functions and types for the health-dashboard project",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "rm dist tsconfig.tsbuildinfo & rollup -c"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "28.0.3",
+    "@rollup/plugin-node-resolve": "16.0.0",
+    "@rollup/plugin-typescript": "11.0.0",
+    "rollup-plugin-dts": "6.1.1"
+  },
+  "author": "Pablo López",
+  "license": "ISC",
+  "nx": {
+		"name": "@core/health-dashboard",
+		"$schema": "node_modules/nx/schemas/project-schema.json",
+		"sourceRoot": "src",
+		"projectType": "library"
+	}
+}

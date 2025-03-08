@@ -1,0 +1,34 @@
+{
+	"$schema": "./node_modules/nx/schemas/nx-schema.json",
+	"targetDefaults": {
+		"test:unit": {
+			"outputs": ["{projectRoot}/coverage"],
+			"cache": true
+		},
+		"build": {
+			"outputs": ["{projectRoot}/dist"],
+			"dependsOn": ["^build"],
+			"cache": true
+		}
+	},
+	"defaultBase": "master",
+	"release": {
+		"projects": ["packages/*"],
+		"version": {
+			"preVersionCommand": "pnpm nx run-many -t build --verbose",
+			"conventionalCommits": true,
+			"generatorOptions": {
+				"skipLockFileUpdate": true
+			}
+		},
+		"changelog": {
+			"automaticFromRef": true,
+			"projectChangelogs": false
+		},
+		"git": {
+			"commit": false,
+			"stageChanges": false,
+			"tag": false
+		}
+	}
+}
