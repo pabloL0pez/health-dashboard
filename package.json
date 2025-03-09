@@ -3,7 +3,14 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "nx run-many --target dev --exclude health-dashboard-etl",
-    "build": "nx run-many --target build"
+    "build": "nx run-many --target build",
+    "dev:client": "nx run health-dashboard-client:dev",
+    "dev:api": "nx run health-dashboard-api:dev",
+    "dev:etl": "nx run health-dashboard-etl:dev",
+    "dev:@core": "nx run @core/health-dashboard:dev",
+    "dev:etl:influencers": "nx run health-dashboard-etl:dev:influencers",
+    "dev:etl:claims": "nx run health-dashboard-etl:dev:claims",
+    "dev:etl:claims-verification": "nx run health-dashboard-etl:dev:claims-verification"
   },
   "devDependencies": {
     "@nx/js": "20.5.0",
