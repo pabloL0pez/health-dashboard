@@ -1,0 +1,8 @@
+.navigationItems {
+  display: flex;
+  gap: 20px;
+}
+
+a:hover {
+  color: var(--accent);
+}

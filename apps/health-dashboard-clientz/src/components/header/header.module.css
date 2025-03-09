@@ -1,0 +1,14 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 60px;
+  width: 100%;
+  border-bottom: 1px solid var(--grey-800);
+  padding: 0 30px;
+  gap: 20px;
+}
+
+.searchBar {
+  margin-left: auto;
+}

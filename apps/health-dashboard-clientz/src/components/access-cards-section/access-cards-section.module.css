@@ -1,0 +1,11 @@
+.accessCardsSection {
+  display: grid;
+  grid-auto-rows: 1fr;
+  gap: 10px;
+}
+
+@media screen and (min-width: 1024px) {
+  .accessCardsSection {
+    grid-template-columns: 1fr 1fr;
+  }
+}

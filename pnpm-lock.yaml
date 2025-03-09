@@ -67,6 +67,9 @@ importers:
         specifier: ^19.0.0
         version: 19.0.0(react@19.0.0)
     devDependencies:
+      '@core/health-dashboard':
+        specifier: workspace:*
+        version: link:../../packages/@core
       '@eslint/eslintrc':
         specifier: ^3
         version: 3.3.0

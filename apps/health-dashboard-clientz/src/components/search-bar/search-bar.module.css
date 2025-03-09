@@ -1,0 +1,44 @@
+.searchBar {
+  display: flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 5px 20px;
+  gap: 5px;
+  border: 1px solid var(--foreground);
+  border-radius: 50px;
+  cursor: pointer;
+  background-color: var(--grey-900);
+
+  &:hover, &.hasFocus {
+    border-color: var(--accent);
+
+    .icon {
+      path {
+        fill: var(--accent);
+      }
+    }
+  }
+}
+
+.input {
+  flex: 1;
+  align-self: stretch;
+  background: none;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  letter-spacing: -0.5px;
+
+  .hasFocus &::placeholder {
+    color: var(--accent);
+  }
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+
+  path {
+    fill: var(--foreground);
+  }
+}

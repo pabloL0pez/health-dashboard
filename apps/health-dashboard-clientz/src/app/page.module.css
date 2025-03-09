@@ -1,0 +1,77 @@
+.home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 30px;
+  gap: 40px;
+  flex: 1;
+}
+
+.topSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1.5em;
+}
+
+.siteName {
+  color: var(--accent);
+}
+
+.slogan {
+  font-size: 0.9em;
+  text-align: center;
+}
+
+@media screen and (min-width: 768px) {
+  .home {
+    padding: 30px 50px;
+  }
+
+  .title {
+    flex-direction: row;
+    font-size: 1.5rem;
+  }
+
+  .siteName {
+    margin-left: 0.5rem;
+  }
+
+  .slogan {
+    font-size: 1.25rem;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .title {
+    font-size: 2rem;
+  }
+
+  .slogan {
+    font-size: 1.5rem;
+  }
+  
+}
+
+@media screen and (min-width: 1440px) {
+  .home {
+    padding: 30px 75px;
+  }
+
+  .title {
+    font-size: 3rem;
+  }
+
+  .slogan {
+    font-size: 1.75rem;
+  }
+}

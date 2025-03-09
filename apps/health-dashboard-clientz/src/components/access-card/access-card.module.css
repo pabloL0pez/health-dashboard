@@ -1,0 +1,55 @@
+.accessCard {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  border: solid 1px var(--grey-800);
+  border-radius: 6px;
+  cursor: pointer;
+  padding: 42px;
+  gap: 10px;
+  box-shadow: var(--box-shadow-1);
+
+  &:hover {
+    border-color: var(--accent);
+
+    .title {
+      color: var(--accent);
+
+      .icon {
+        path {
+          fill: var(--accent);
+        }
+      }
+    }
+  }
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+}
+
+.description {
+  font-size: 0.8rem;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+
+  path {
+    fill: var(--foreground);
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .title {
+    font-size: 1.2rem;
+  }
+
+  .description {
+    font-size: 1rem;
+  }
+}

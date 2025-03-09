@@ -1,0 +1,28 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  gap: 30px;
+}
+
+.claims {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  gap: 20px;
+  width: 100%;
+}
+
+@media screen and (min-width: 1024px) {
+  .page {
+    gap: 40px;
+  }
+
+  .claims {
+    gap: 30px;
+  }
+}

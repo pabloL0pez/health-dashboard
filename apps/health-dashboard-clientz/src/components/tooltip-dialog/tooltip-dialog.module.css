@@ -1,0 +1,28 @@
+.tooltipDialog {
+  position: absolute;
+}
+
+.content {
+  position: relative;
+  display: flex;
+  padding: 20px;
+  border: 1px solid var(--grey-800);
+  border-radius: var(--radius-1);
+  min-height: 48px;
+  font-size: 14px;
+  background: var(--background);
+  box-shadow: var(--box-shadow-1);
+
+  &:after {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: calc(50% - 10px);
+    background: var(--background);
+    width: 10px;
+    height: 10px; 
+    border-right: 1px solid var(--grey-800);
+    border-top: 1px solid var(--grey-800);
+    transform: rotate(-45deg);
+  }
+}

@@ -1,0 +1,40 @@
+.navigationMenu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 40px 30px;
+  min-height: 100vh;
+  min-width: 225px;
+  background: var(--background);
+  z-index: 2;
+  border-right: 1px solid var(--grey-800);
+}
+
+.navigationItems {
+  flex-direction: column;
+  margin-right: auto;
+}
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  cursor: pointer;
+  opacity: 0.5;
+  z-index: 1;
+  
+  @media (prefers-color-scheme: light) {
+    background: var(--foreground);
+  }
+  
+  @media (prefers-color-scheme: dark) {
+    background: var(--background);
+  }
+}

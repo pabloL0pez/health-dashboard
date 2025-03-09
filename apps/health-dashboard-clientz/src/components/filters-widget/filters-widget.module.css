@@ -1,0 +1,41 @@
+.filterWidget {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 20px;
+}
+
+.filtersContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  width: 100%;
+  gap: 10px;
+  padding-top: 10px;
+}
+
+.filterOptions {
+  align-self: flex-start;
+}
+
+.resetAllButton {
+  align-self: flex-end;
+  text-decoration: underline;
+
+  span {
+    font-size: 0.75rem;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .filterWidget {
+    max-width: 850px;
+  }
+
+  .resetAllButton {
+    span {
+      font-size: 0.9rem;
+    }
+  }
+}

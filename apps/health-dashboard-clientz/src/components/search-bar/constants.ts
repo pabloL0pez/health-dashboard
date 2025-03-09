@@ -1,0 +1,1 @@
+export const tooltipMessage = 'You can search for an influencer here. Give it a try!';

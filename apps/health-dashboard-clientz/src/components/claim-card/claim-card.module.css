@@ -1,0 +1,267 @@
+.claimCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  border: 1px solid var(--grey-800);
+  border-radius: 8px;
+  box-shadow: var(--box-shadow-1);
+  min-height: 300px;
+  max-width: 650px;
+  cursor: pointer;
+  gap: 20px;
+  background-color: var(--background);
+  width: 100%;
+}
+
+.content {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 15px;
+  flex: 1;
+  width: 100%;
+}
+
+.contentContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 15px;
+  position: absolute;
+  transition: transform 0.5s;
+  height: 100%;
+  padding: 16px;
+}
+
+.quoteContainer {
+  .slideContent & {
+    transform: translateX(-100%);
+  }
+}
+
+.verificationContainer {
+  transform: translateX(100%);
+
+  .slideContent & {
+    transform: none;
+  }
+}
+
+.quote {
+  font-size: 1.1rem;
+  font-weight: bold;
+  padding-right: 55px;
+}
+
+.influencer {
+  font-size: 0.8rem;
+}
+
+.categoriesContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.category {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--accent);
+  color: var(--background);
+  border-radius: 25px;
+  padding: 5px 10px;
+  font-size: 0.7rem;
+}
+
+.toggle {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: auto;
+  align-self: flex-end;
+}
+
+.toggleLabel {
+  color: var(--background);
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.toggleIcon {
+  width: 14px;
+  height: 14px;
+  transform: rotate(-90deg);
+
+  path {
+    fill: var(--background);
+  }
+}
+
+.rotateToggleIcon {
+  order: -1;
+  transform: rotate(90deg);
+}
+
+.verificationContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex: 1;
+  gap: 15px;
+  position: absolute;
+  transform: translateX(100%);
+  transition: transform 0.5s;
+  height: 100%;
+
+  .slideContent & {
+    transform: none;
+  }
+}
+
+.description {
+  font-size: 0.9rem;
+  padding-right: 55px;
+}
+
+.sourcesContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 4px;
+  padding-left: 25px;
+}
+
+.source {
+  font-size: 0.8rem;
+
+  a {
+    color: var(--color-links);
+    text-decoration: underline;
+  }
+}
+
+@media screen and (min-width: 425px) {
+  .claimCard {
+    min-height: 235px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .claimCard {
+    min-height: 250px;
+  }
+
+  .content {
+    gap: 35px;
+  }
+
+  .quote {
+    font-size: 1.5rem;
+    padding-right: 85px;
+  }
+
+  .categoriesContainer {
+    gap: 6px;
+  }
+
+  .category {
+    font-size: 0.8rem;
+  }
+
+  .description {
+    font-size: 1.1rem;
+    padding-right: 65px;
+  }
+
+  .source {
+    font-size: 1rem;
+    text-decoration: underline;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .claimCard {
+    min-width: 750px;
+  }
+
+  .content {
+    gap: 50px;
+  }
+
+  .influencer {
+    font-size: 1rem;
+  }
+
+  .toggleLabel {
+    font-size: 0.9rem;
+  }
+  
+  .toggleIcon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .description {
+    font-weight: bold;
+    padding-right: 85px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .claimCard {
+    min-width: 950px;
+    min-height: 320px;
+  }
+
+  .contentContainer {
+    padding: 32px;
+  }
+
+  .quote {
+    font-size: 2rem;
+  }
+
+  .influencer {
+    font-size: 1.25rem;
+  }
+
+  .toggle {
+    padding: 12px;
+
+    &.toggleRight {
+      padding-left: 20px;
+      padding-right: 16px;
+    }
+  
+    &.toggleLeft {
+      padding-left: 16px;
+      padding-right: 20px;
+    }
+  }
+
+  .toggleLabel {
+    font-size: 1rem;
+  }
+
+  .toggleIcon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .description {
+    font-size: 1.5rem;
+  }
+
+  .source {
+    font-size: 1.1rem;
+    text-decoration: underline;
+  }
+}
