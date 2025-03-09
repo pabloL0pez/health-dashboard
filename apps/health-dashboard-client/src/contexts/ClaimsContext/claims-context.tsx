@@ -1,7 +1,7 @@
 'use client';
 
 import { useFiltersContext } from "@/contexts/FiltersContext/filters-context";
-import { filtersSelectionToQueryParams } from "@/core/utils/query-parser";
+import { filtersSelectionToQueryParams } from "@core/health-dashboard";
 import { createContext, ReactNode, useEffect } from "react";
 
 interface ClaimsContextProviderProps {

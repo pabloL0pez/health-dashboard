@@ -4,7 +4,7 @@ import { FilterConfig } from "@/components/filters-widget/types";
 import { filterWidgetConfig } from "@/contexts/FiltersContext/constants";
 import { FilterSelection, MapFiltersSelection } from "@/contexts/FiltersContext/types";
 import { filtersToMapSelection, filtersToSelection, getUpdatedFilters, getUpdatedFiltersAll, mapSelectionToFilters } from "@/contexts/FiltersContext/utils";
-import { filtersParameter, queryParamsToFilterSelection } from "@/core/utils/query-parser";
+import { FILTERS_PARAMETER, queryParamsToFilterSelection } from "@core/health-dashboard";
 import { useSearchParams } from "next/navigation";
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 
@@ -43,7 +43,7 @@ export const FiltersContextProvider = ({ children }: Readonly<FiltersContextProv
   }, [filters]);
 
   useEffect(() => {
-    const queryParams = searchParams.getAll(filtersParameter)[0];
+    const queryParams = searchParams.getAll(FILTERS_PARAMETER)[0];
     const parsedSelection = queryParamsToFilterSelection(queryParams);
 
     const updatedFilters = mapSelectionToFilters(filters, parsedSelection);
