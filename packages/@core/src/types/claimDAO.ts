@@ -1,4 +1,4 @@
-import { ClaimSource, ClaimVerification, ClaimVerificationScore, ClaimVerificationStatus } from "types/claim";
+import { ClaimCategoryType, ClaimSource, ClaimVerification, ClaimVerificationScore, ClaimVerificationStatus } from "types/claim";
 
 export interface ClaimVerificationDAO {
   score: ClaimVerificationScore;
@@ -10,7 +10,7 @@ export interface ClaimDAO {
   id: string;
   quote: string;
   title: string;
-  category: string;
+  category: ClaimCategoryType;
   date: string;
   source?: ClaimSource;
   verification?: ClaimVerification;

@@ -1,5 +1,5 @@
 import { iClaimsVerificationService } from "./claims-verification.service";
-import { ClaimsVerificationEvent, InfluencerVerifiedClaims } from "./types";
+import { InfluencerVerifiedClaims } from "./types";
 
 export interface iClaimsVerificationController {
   getVerifiedClaims(influencerName: string): Promise<InfluencerVerifiedClaims>;

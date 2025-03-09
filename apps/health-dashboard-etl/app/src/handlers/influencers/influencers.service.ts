@@ -1,10 +1,11 @@
+import { Influencer } from "@core/health-dashboard";
 import { promptsDictionary } from "../../layers/providers/constants";
 import { AIRequestBody, AIProvider } from "../../layers/providers/types";
 import { isValidType } from "../../layers/utils/typeGuard";
 import { INFLUENCER_OBJECT, INFLUENCERS_RESPONSE_OBJECT, MOCK_IMAGE } from "./constants";
 import { influencersAISchema } from "./influencers.ai-schema";
 import { iInfluencerRepository } from "./influencers.repository";
-import { Influencer, InfluencersResponse } from "./types";
+import { InfluencersResponse } from "./types";
 
 export interface iInfluencersService {
   discoverInfluencers(topN: number): Promise<string[]>;

@@ -1,4 +1,5 @@
-import { ClaimVerification, VerifiedClaimsResponse } from "./types";
+import { ClaimVerification } from "@core/health-dashboard";
+import { VerifiedClaimsResponse } from "./types";
 
 export const CLAIM_VERIFICATION_OBJECT: ClaimVerification = {
   score: {

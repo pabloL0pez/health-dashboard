@@ -1,10 +1,11 @@
+import { Claim } from "@core/health-dashboard";
 import { promptsDictionary } from "../../layers/providers/constants";
 import { AIRequestBody, AIProvider } from "../../layers/providers/types";
 import { isValidType } from "../../layers/utils/typeGuard";
 import { claimsAISchema } from "./claims.ai-schema";
 import { iClaimsRepository } from "./claims.repository";
 import { CLAIM_OBJECT, CLAIM_SOURCE_OBJECT, CLAIMS_RESPONSE_OBJECT } from "./constants";
-import { Claim, ClaimsResponse, InfluencerClaims } from "./types";
+import { ClaimsResponse, InfluencerClaims } from "./types";
 
 export interface iClaimsService {
   identifyHealthClaims: (influencers: string[], maxClaims: number) => Promise<InfluencerClaims[]>

@@ -1,30 +1,7 @@
-import { Claim, ClaimSource } from "../claims/types";
-
-export type StatusType = 'confirmed' | 'questionable' | 'debunked' | 'unverifiable';
-
-export interface ClaimVerificationScore {
-  value: number;
-  description?: string;
-}
-
-export interface ClaimVerificationStatus {
-  value: StatusType;
-  description?: string;
-}
-
-export interface ClaimVerification {
-  score: ClaimVerificationScore;
-  status: ClaimVerificationStatus;
-  sources: ClaimSource[];
-}
+import { VerifiedClaim } from "@core/health-dashboard";
 
 export interface ClaimsVerificationEvent {
   influencerName: string;
-}
-
-export interface VerifiedClaim {
-  claim: Claim;
-  verification: ClaimVerification;
 }
 
 export interface InfluencerVerifiedClaims {
@@ -33,9 +10,3 @@ export interface InfluencerVerifiedClaims {
 }
 
 export type VerifiedClaimsResponse = Pick<VerifiedClaim, 'verification'>;
-
-export interface ClaimVerificationDAO {
-  score: ClaimVerificationScore;
-  status: ClaimVerificationStatus;
-  sources: ClaimSource[];
-}

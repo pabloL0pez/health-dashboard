@@ -1,3 +1,4 @@
+import { ClaimVerification, VerifiedClaim } from "@core/health-dashboard";
 import { promptsDictionary } from "../../layers/providers/constants";
 import { AIProvider, AIRequestBody } from "../../layers/providers/types";
 import { isValidType } from "../../layers/utils/typeGuard";
@@ -6,7 +7,7 @@ import { UNVERIFIABLE_CLAIM_SCORE } from "../claims/constants";
 import { claimsVerificationAISchema } from "./claims-verification.ai-schema";
 import { iClaimsVerificationRepository } from "./claims-verification.repository";
 import { VERIFIED_CLAIMS_RESPONSE_OBJECT } from "./constants";
-import { ClaimVerification, InfluencerVerifiedClaims, VerifiedClaim, VerifiedClaimsResponse } from "./types";
+import { InfluencerVerifiedClaims, VerifiedClaimsResponse } from "./types";
 
 export interface iClaimsVerificationService {
   verifyHealthClaims: (influencerName: string) => Promise<InfluencerVerifiedClaims>

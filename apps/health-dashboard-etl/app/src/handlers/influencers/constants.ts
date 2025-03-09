@@ -1,4 +1,5 @@
-import { Influencer, InfluencersResponse } from "./types";
+import { Influencer } from "@core/health-dashboard";
+import { InfluencersResponse } from "./types";
 
 export const DEFAULT_TOP_N_INFLUENCERS = 10;
 

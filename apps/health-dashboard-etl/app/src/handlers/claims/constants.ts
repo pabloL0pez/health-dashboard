@@ -1,4 +1,5 @@
-import { Claim, ClaimSource, ClaimsResponse, InfluencerClaims } from "./types";
+import { Claim, ClaimSource } from "@core/health-dashboard";
+import { ClaimsResponse, InfluencerClaims } from "./types";
 
 export const DEFAULT_MAX_CLAIMS = 5;
 
@@ -7,7 +8,7 @@ export const INFLUENCER_CLAIMS_OBJECT: Pick<InfluencerClaims, 'claims'> = {
 }
 
 export const CLAIM_OBJECT: Pick<Claim, 'category' | 'date' | 'quote' | 'source' | 'title'> = {
-  category: '',
+  category: 'education',
   date: '',
   quote: '',
   source: { 

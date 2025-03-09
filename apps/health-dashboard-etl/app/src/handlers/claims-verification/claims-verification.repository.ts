@@ -1,9 +1,9 @@
+import { ClaimDAO, VerifiedClaim } from "@core/health-dashboard";
 import { DALRepository, DBWriteQuery } from "../../layers/repository/types";
-import { ClaimDAO } from "../claims/types";
 import { InfluencerDAO } from "../influencers/types";
 import { formatInfluencerNameToId } from "../influencers/utils";
 import { AIProviderModel } from "../types";
-import { InfluencerVerifiedClaims, VerifiedClaim } from "./types";
+import { InfluencerVerifiedClaims } from "./types";
 
 export interface iClaimsVerificationRepository {
   saveVerifiedClaimsForInfluencer: (influencerVerifiedClaims: InfluencerVerifiedClaims, aiProviderModel: AIProviderModel) => Promise<InfluencerVerifiedClaims>

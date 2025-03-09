@@ -1,8 +1,8 @@
 import { Schema, model } from 'mongoose';
-import { ClaimSchema } from 'models/claim.model';
-import { InfluencerDAO } from 'types/influencer';
+import { ClaimSchema } from 'models/claim';
+import { InfluencerDAO } from 'types/influencerDAO';
 
-const InfluencerSchema = new Schema<InfluencerDAO>({
+export const InfluencerSchema = new Schema<InfluencerDAO>({
   id: { type: String, required: true },
   name: { type: String, required: true },
   bio: { type: String, required: true },

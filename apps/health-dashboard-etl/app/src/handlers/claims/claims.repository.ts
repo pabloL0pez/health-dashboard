@@ -1,8 +1,9 @@
+import { Claim, ClaimDAO } from "@core/health-dashboard";
 import { DALRepository, DBReadQuery } from "../../layers/repository/types";
 import { InfluencerDAO } from "../influencers/types";
 import { formatInfluencerNameToId } from "../influencers/utils";
 import { AIProviderModel } from "../types";
-import { Claim, ClaimDAO, InfluencerClaims } from "./types";
+import { InfluencerClaims } from "./types";
 import { v4 as uuidv4 } from 'uuid';
 
 export interface iClaimsRepository {

@@ -72,6 +72,10 @@ importers:
       uuid:
         specifier: ^11.0.5
         version: 11.1.0
+    devDependencies:
+      '@core/health-dashboard':
+        specifier: workspace:*
+        version: link:../../packages/@core
 
   packages/@core:
     dependencies:
