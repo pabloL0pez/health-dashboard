@@ -9,10 +9,6 @@
 			"outputs": ["{projectRoot}/dist"],
 			"dependsOn": ["^build"],
 			"cache": true
-		},
-		"dev:api": {
-			"dependsOn": ["^build"],
-			"cache": true
 		}
 	},
 	"defaultBase": "master",
