@@ -4,9 +4,9 @@ import { baseMetadata } from "@/app/constants";
 import { capitalize } from "@/shared/utils/capitalize";
 import { pageName } from "@/app/claims/constants";
 import { ClaimCard } from "@/components/claim-card/claim-card";
-import { ClaimVerificationStatus } from '@/core/types';
 import { FiltersWidget } from '@/components/filters-widget/filters-widget';
 import { FiltersProvider, ClaimsProvider } from '@/contexts';
+import { ClaimVerificationStatusType } from '@core/health-dashboard';
 
 export const metadata: Metadata = {
   title: baseMetadata.baseTitle.concat(` | ${capitalize(pageName)}`),
@@ -54,7 +54,7 @@ const Claims = () => {
   );
 }
 
-const getMockedStatus = (score: number): ClaimVerificationStatus => {
+const getMockedStatus = (score: number): ClaimVerificationStatusType => {
   if (!score) {
     return 'unverified';
   }
