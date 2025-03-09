@@ -32,7 +32,7 @@ export default [
 			commonjs(),
 			typescript({ tsconfig: './tsconfig.json' }),
 		],
-		external: ['@types/react', '@types/react-dom', 'react', 'react-dom', '@rcg/ui-analytics'],
+		external: ['mongoose'],
 	},
 	{
 		input: 'dist/esm/dist/index.d.ts',

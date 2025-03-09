@@ -1,5 +1,5 @@
 import { MapFiltersSelection } from "../types/filters";
-import { ClaimCategory, ClaimVerificationStatus } from "../types/claim";
+import { ClaimCategoryType, ClaimVerificationStatus } from "../types/claim";
 
 export const FILTERS_PARAMETER = 'filters';
 
@@ -53,7 +53,7 @@ export const queryParamsToFilterSelection = (queryParams: string): MapFiltersSel
         } else if (key === 'date') {
           filterSelection.date = selectedOptions;
         } else if (key === 'category') {
-          filterSelection.category = selectedOptions as ClaimCategory[];
+          filterSelection.category = selectedOptions as ClaimCategoryType[];
         } else if (key === 'status') {
           filterSelection.status = selectedOptions as ClaimVerificationStatus[];
         }

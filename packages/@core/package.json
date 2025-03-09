@@ -9,11 +9,15 @@
     "dev": "rollup -c -w",
     "build": "rm dist tsconfig.tsbuildinfo & rollup -c"
   },
+  "peerDependencies": {
+    "mongoose": "^8.9.5"
+  },
   "devDependencies": {
     "@rollup/plugin-commonjs": "28.0.3",
     "@rollup/plugin-node-resolve": "16.0.0",
     "@rollup/plugin-typescript": "11.0.0",
-    "rollup-plugin-dts": "6.1.1"
+    "rollup-plugin-dts": "6.1.1",
+    "rollup-plugin-peer-deps-external": "2.2.4"
   },
   "author": "Pablo López",
   "license": "ISC",

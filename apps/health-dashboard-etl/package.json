@@ -15,9 +15,6 @@
     "openai": "^4.82.0",
     "uuid": "^11.0.5"
   },
-  "devDependencies": {
-    "@types/mongoose": "^5.11.96"
-  },
   "nx": {
     "name": "health-dashboard-etl",
     "$schema": "node_modules/nx/schemas/project-schema.json",

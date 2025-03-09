@@ -2,7 +2,7 @@
   "name": "health-dashboard",
   "version": "1.0.0",
   "scripts": {
-    "dev": "nx run-many --target dev --exclude health-dashboard-etl",
+    "dev": "nx run-many --target dev",
     "build": "nx run-many --target build"
   },
   "devDependencies": {

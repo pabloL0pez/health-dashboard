@@ -1,23 +1,42 @@
-export type ClaimCategory = 'nutrition' | 'mental-health' | 'cardiovascular-health' | 'training' | 'fitness' | 'education' | 'other';
+export type ClaimVerificationStatusType = 'confirmed' | 'questionable' | 'debunked' | 'unverifiable';
 
-export type ClaimVerificationStatus = 'confirmed' | 'questionable' | 'debunked' | 'unverified';
+export type ClaimCategoryType = 'nutrition' | 'mental-health' | 'cardiovascular-health' | 'training' | 'fitness' | 'education' | 'other';
 
-export interface ClaimSource {
-  source: string;
-  url: string;
+export interface ClaimVerificationScore {
+  value: number;
+  description?: string;
+}
+
+export interface ClaimVerificationStatus {
+  value: ClaimVerificationStatusType;
+  description?: string;
 }
 
 export interface ClaimVerification {
-  score: number;
+  score: ClaimVerificationScore;
   status: ClaimVerificationStatus;
-  description: string;
   sources: ClaimSource[];
 }
 
-export interface Claim {
-  quote: string;
-  categories: ClaimCategory[];
-  date?: string;
-  source: ClaimSource;
+export interface ClaimsVerificationEvent {
+  influencerName: string;
+}
+
+export interface VerifiedClaim {
+  claim: Claim;
   verification: ClaimVerification;
+}
+
+export interface Claim {
+  id: string;
+  quote: string;
+  title: string;
+  category: ClaimCategoryType;
+  date: string;
+  source?: ClaimSource;
+}
+
+export interface ClaimSource {
+  source: string;
+  url?: string;
 }

@@ -1,8 +1,8 @@
-import { ClaimCategory, ClaimVerificationStatus } from "./claim";
+import { ClaimCategoryType, ClaimVerificationStatus } from "./claim";
 
 export type MapFiltersSelection = {
   'influencer': string[],
   'date': string[],
-  'category': ClaimCategory[],
+  'category': ClaimCategoryType[],
   'status': ClaimVerificationStatus[],
 }
