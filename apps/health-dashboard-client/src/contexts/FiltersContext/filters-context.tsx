@@ -4,7 +4,7 @@ import { FilterConfig } from "@/components/filters-widget/types";
 import { filterWidgetConfig } from "@/contexts/FiltersContext/constants";
 import { FilterSelection, MapFiltersSelection } from "@/contexts/FiltersContext/types";
 import { filtersToMapSelection, filtersToSelection, getUpdatedFilters, getUpdatedFiltersAll, mapSelectionToFilters } from "@/contexts/FiltersContext/utils";
-import { FILTERS_PARAMETER, queryParamsToFilterSelection } from "@core/health-dashboard";
+import { FILTERS_PARAMETER, filtersSelectionToQueryParams, queryParamsToFilterSelection } from "@core/health-dashboard";
 import { useSearchParams } from "next/navigation";
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 
@@ -18,6 +18,7 @@ interface FiltersContextProps {
   mapSelection: MapFiltersSelection;
   updateSelection: (filterSelection: FilterSelection) => void;
   resetSelection: () => void;
+  querySelection: string;
 }
 
 interface FiltersContextProviderProps {
@@ -34,6 +35,7 @@ export const FiltersContextProvider = ({ children }: Readonly<FiltersContextProv
 
   const selection: FilterSelection[] = useMemo(() => filtersToSelection(filters), [filters]);
   const mapSelection: MapFiltersSelection = useMemo(() => filtersToMapSelection(filters), [filters]);
+  const querySelection = useMemo(() => filtersSelectionToQueryParams(mapSelection), [mapSelection]);
 
   const updateSelection = useCallback((filterSelection: FilterSelection) => setFilters(getUpdatedFilters(filters, filterSelection)), [filters, setFilters]);
   const resetSelection = useCallback(() => setFilters(getUpdatedFiltersAll(filters, false)), [filters, setFilters]);
@@ -59,7 +61,8 @@ export const FiltersContextProvider = ({ children }: Readonly<FiltersContextProv
     mapSelection,
     updateSelection,
     resetSelection,
-  }), [filters,selectedFilter, setSelectedFilter, selection, mapSelection, updateSelection, resetSelection]);
+    querySelection
+  }), [filters,selectedFilter, setSelectedFilter, selection, mapSelection, updateSelection, resetSelection, querySelection]);
 
   return (
     <FiltersContext.Provider value={state}>

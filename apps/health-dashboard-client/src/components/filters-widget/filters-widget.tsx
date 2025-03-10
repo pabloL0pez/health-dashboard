@@ -6,11 +6,21 @@ import { FilterDropdown } from '@/components/filters-widget/filter-dropdown/filt
 import { FilterOptions } from '@/components/filters-widget/filter-options/filter-options';
 import { FilterConfig } from '@/components/filters-widget/types';
 import { useFiltersContext } from '@/contexts/FiltersContext/filters-context';
+import { useQuery } from '@/core/utils/useQuery';
+import { ClaimsService } from '@/services/claims.service';
 
 interface FilterWidgetProps {}
 
+const claimsPromiseCache = new Map<string, Promise<{}>>();
+
 export const FiltersWidget = ({}: Readonly<FilterWidgetProps>) => {
-  const { filters, selectedFilter, setSelectedFilter, selection, resetSelection } = useFiltersContext();
+  const { filters, selectedFilter, setSelectedFilter, selection, resetSelection, querySelection } = useFiltersContext();
+
+  const claimsMock = useQuery({
+    cache: claimsPromiseCache,
+    key: `query${querySelection ? '_' + querySelection : ''}`,
+    promise: ClaimsService.getClaims(querySelection),
+  });
 
   const handleFilterClick = (filter: FilterConfig) => {
     setSelectedFilter(prev => (prev?.id === filter.id ? null : filter));
@@ -47,6 +57,8 @@ export const FiltersWidget = ({}: Readonly<FilterWidgetProps>) => {
           <span>Reset all</span>
         </TextButton>
       )}
+
+      <>{JSON.stringify(claimsMock)}</>
     </div>
   );
 }
