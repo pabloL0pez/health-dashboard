@@ -6,12 +6,11 @@ interface IconButtonProps extends ButtonProps {
   icon: IconType;
 }
 
-export const IconButton = ({ testId, icon, onClick }: Readonly<IconButtonProps>) => {
+export const IconButton = ({ icon, ...props }: Readonly<IconButtonProps>) => {
   return (
     <Button
-      testId={testId}
+      {...props}
       className={styles.iconButton}
-      onClick={onClick}
     >
       <Icon icon={icon} />
     </Button>

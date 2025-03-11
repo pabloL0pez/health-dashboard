@@ -26,8 +26,10 @@ export const Header = () => {
         isTabletPortrait ?
         <NavigationItems /> :
         <IconButton
+          testId='navigation-menu-button'
           icon='line3'
           onClick={handleNavigationMenuClick}
+          ariaLabel='navigation-menu-button'
         />
       }
       <SearchBar className={styles.searchBar}/>

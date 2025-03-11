@@ -5,26 +5,20 @@ import { TextButton } from '@/components/buttons/text-button/text-button';
 import { FilterDropdown } from '@/components/filters-widget/filter-dropdown/filter-dropdown';
 import { FilterOptions } from '@/components/filters-widget/filter-options/filter-options';
 import { FilterConfig } from '@/components/filters-widget/types';
-import { useFiltersContext } from '@/contexts/FiltersContext/filters-context';
-import { useQuery } from '@/core/utils/useQuery';
-import { ClaimsService } from '@/services/claims.service';
+import { useFiltersDispatch, useFiltersState } from '@/contexts/FiltersContext/filters-context';
+import { useMemo } from 'react';
 
 interface FilterWidgetProps {}
 
-const claimsPromiseCache = new Map<string, Promise<{}>>();
-
 export const FiltersWidget = ({}: Readonly<FilterWidgetProps>) => {
-  const { filters, selectedFilter, setSelectedFilter, selection, resetSelection, querySelection } = useFiltersContext();
-
-  const claimsMock = useQuery({
-    cache: claimsPromiseCache,
-    key: `query${querySelection ? '_' + querySelection : ''}`,
-    promise: ClaimsService.getClaims(querySelection),
-  });
+  const { filters, selectedFilter, getSelection } = useFiltersState();
+  const { setSelectedFilter, resetSelection, updateSelection } = useFiltersDispatch();
 
   const handleFilterClick = (filter: FilterConfig) => {
     setSelectedFilter(prev => (prev?.id === filter.id ? null : filter));
   }
+
+  const selection = useMemo(getSelection, [getSelection]);
 
   return (
     <div className={styles.filterWidget}>
@@ -43,12 +37,12 @@ export const FiltersWidget = ({}: Readonly<FilterWidgetProps>) => {
       {selectedFilter && (
         <FilterOptions
           className={styles.filterOptions}
-          filterId={selectedFilter?.id}
           options={selectedFilter?.options}
+          onClick={(value: string) => updateSelection({ id: selectedFilter?.id, value })}
         />
       )}
 
-      { selection.length > 0 && (
+      {selection.length > 0 && (
         <TextButton
           className={styles.resetAllButton}
           testId='filters-reset-all-button'
@@ -57,8 +51,6 @@ export const FiltersWidget = ({}: Readonly<FilterWidgetProps>) => {
           <span>Reset all</span>
         </TextButton>
       )}
-
-      <>{JSON.stringify(claimsMock)}</>
     </div>
   );
 }

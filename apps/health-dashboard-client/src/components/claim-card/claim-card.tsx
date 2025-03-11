@@ -8,6 +8,7 @@ import Icon from '@/components/icon/icon';
 import { useState } from 'react';
 import { ScoreCounter } from '@/components/claim-card/score-counter/score-counter';
 import { Button } from '@/components/buttons/button';
+import React from 'react';
 
 interface iClaimCard {
   influencerName: string;
@@ -27,7 +28,7 @@ const quoteWildcard = "“{{quote}}”"
 const readScoreSummary = "Read score summary";
 const readInfluencerQuote = "Back to quote";
 
-export const ClaimCard = ({ index, categories, quote, influencerName, date, verification }: Readonly<ClaimCardProps>) => {
+export const ClaimCard = React.memo(({ index, categories, quote, influencerName, date, verification }: Readonly<ClaimCardProps>) => {
   const [isScoreSummaryActive, setIsScoreSummaryActive] = useState(false);
 
   const renderQuote = () => (
@@ -99,4 +100,4 @@ export const ClaimCard = ({ index, categories, quote, influencerName, date, veri
       />
     </div>
   );
-}
+});

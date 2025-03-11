@@ -3,10 +3,10 @@ import type { Metadata } from "next";
 import { baseMetadata } from "@/app/constants";
 import { capitalize } from "@/shared/utils/capitalize";
 import { pageName } from "@/app/claims/constants";
-import { ClaimCard } from "@/components/claim-card/claim-card";
 import { FiltersWidget } from '@/components/filters-widget/filters-widget';
 import { FiltersProvider, ClaimsProvider } from '@/contexts';
-import { ClaimVerificationStatusType } from '@core/health-dashboard';
+import { ClaimsList } from '@/components/claims-list/claims-list';
+import { ClaimsService } from '@/services/claims.service';
 
 export const metadata: Metadata = {
   title: baseMetadata.baseTitle.concat(` | ${capitalize(pageName)}`),
@@ -14,60 +14,17 @@ export const metadata: Metadata = {
 };
 
 const Claims = () => {
-  return (
-    <FiltersProvider>
-      <ClaimsProvider>
-        <div className={styles.page}>
-          <FiltersWidget/>
-          <div className={styles.claims}>
-            {[...Array(10).keys()].map((index) => {
-              const score = 100 - (index * 10);
+  const claims = ClaimsService.getClaims();
+  const filters = ClaimsService.getFilters();
 
-              return (
-                <ClaimCard
-                  key={`${index}-claim-card`}
-                  index={index}
-                  categories={['cardiovascular-health', 'education']}
-                  quote='Stress relief through deep breathing and gentle movement encourages relaxation and reduces stress hormones.'
-                  influencerName='Massy Arias'
-                  date='May, 2024'
-                  source={{
-                    source: 'Massy\'s Mobility and Mental Health Video Series',
-                    url: 'https://www.massyarias.com/massys-mobility-mental-health-video-series/',
-                  }}
-                  verification={{
-                    score: score,
-                    status: getMockedStatus(score),
-                    description: 'The claim is supported by robust scientific evidence. Studies consistently show that deep breathing exercises effectively reduce stress and stress hormones by promoting relaxation and decreasing cortisol levels.',
-                    sources: [
-                      { source: 'Research: Why Breathing Is So Effective at Reducing Stress', url: 'https://hbr.org/2020/09/research-why-breathing-is-so-effective-at-reducing-stress'},
-                      { source: 'The Effect of Breathing Exercise on Stress Hormones', url: 'https://cyprusjmedsci.com/articles/the-effect-of-breathing-exercise-on-stress-hormones/doi/cjms.2021.2020.2390'},
-                    ]
-                  }}
-                />
-              )
-            })}
-          </div>
-        </div>
-      </ClaimsProvider>
+  return (
+    <FiltersProvider filtersPromise={filters}>
+      <div className={styles.page}>
+        <FiltersWidget />
+        <ClaimsList claims={claims}/>
+      </div>
     </FiltersProvider>
   );
-}
-
-const getMockedStatus = (score: number): ClaimVerificationStatusType => {
-  if (!score) {
-    return 'unverified';
-  }
-
-  if (score >= 81) {
-    return 'confirmed'
-  }
-
-  if (score >= 51) {
-    return 'questionable'
-  }
-
-  return 'debunked';
 }
 
 export default Claims;

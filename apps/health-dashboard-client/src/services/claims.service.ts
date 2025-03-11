@@ -1,4 +1,5 @@
 import { useConfig } from "@/config";
+import { filterWidgetConfig } from "@/contexts/FiltersContext/constants";
 import axios from "axios";
 
 export class ClaimsService {
@@ -11,5 +12,11 @@ export class ClaimsService {
       .then(response => {
         return response.data
       });
+  }
+
+  public static async getFilters() {
+    return Promise.resolve(
+      filterWidgetConfig
+    );
   }
 }

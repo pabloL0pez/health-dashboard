@@ -1,44 +1,48 @@
 'use client';
 
 import { FilterConfig } from "@/components/filters-widget/types";
-import { filterWidgetConfig } from "@/contexts/FiltersContext/constants";
 import { FilterSelection, MapFiltersSelection } from "@/contexts/FiltersContext/types";
 import { filtersToMapSelection, filtersToSelection, getUpdatedFilters, getUpdatedFiltersAll, mapSelectionToFilters } from "@/contexts/FiltersContext/utils";
 import { FILTERS_PARAMETER, filtersSelectionToQueryParams, queryParamsToFilterSelection } from "@core/health-dashboard";
 import { useSearchParams } from "next/navigation";
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, use, useCallback, useContext, useEffect, useMemo, useState } from "react";
 
-const DEFAULT_FILTERS = filterWidgetConfig;
-
-interface FiltersContextProps {
+interface FiltersStateProps {
   filters: FilterConfig[];
   selectedFilter: FilterConfig | null;
+  getSelection: () => FilterSelection[];
+  getMapSelection: () => MapFiltersSelection;
+  getQuerySelection: () => string;
+}
+
+interface FiltersDispatchProps {
   setSelectedFilter: React.Dispatch<React.SetStateAction<FilterConfig | null>>;
-  selection: FilterSelection[];
-  mapSelection: MapFiltersSelection;
   updateSelection: (filterSelection: FilterSelection) => void;
   resetSelection: () => void;
-  querySelection: string;
 }
 
 interface FiltersContextProviderProps {
   children: React.ReactNode;
+  filtersPromise: Promise<FilterConfig[]>;
 }
 
-const FiltersContext = createContext<FiltersContextProps>({} as unknown as any);
+const FiltersStateContext = createContext<FiltersStateProps>({} as unknown as any);
 
-export const FiltersContextProvider = ({ children }: Readonly<FiltersContextProviderProps>) => {
+const FiltersDispatchContext = createContext<FiltersDispatchProps>({} as unknown as any);
+
+export const FiltersContextProvider = ({ children, filtersPromise }: Readonly<FiltersContextProviderProps>) => {
   const searchParams = useSearchParams();
+  const initialFilters = use(filtersPromise);
 
-  const [filters, setFilters] = useState(DEFAULT_FILTERS);
+  const [filters, setFilters] = useState(initialFilters);
   const [selectedFilter, setSelectedFilter] = useState<FilterConfig | null>(null);
 
-  const selection: FilterSelection[] = useMemo(() => filtersToSelection(filters), [filters]);
-  const mapSelection: MapFiltersSelection = useMemo(() => filtersToMapSelection(filters), [filters]);
-  const querySelection = useMemo(() => filtersSelectionToQueryParams(mapSelection), [mapSelection]);
+  const getSelection = useCallback(() => filtersToSelection(filters), [filters]);
+  const getMapSelection = useCallback(() => filtersToMapSelection(filters), [filters]);
+  const getQuerySelection = useCallback(() => filtersSelectionToQueryParams(getMapSelection()), [getMapSelection]);
 
-  const updateSelection = useCallback((filterSelection: FilterSelection) => setFilters(getUpdatedFilters(filters, filterSelection)), [filters, setFilters]);
-  const resetSelection = useCallback(() => setFilters(getUpdatedFiltersAll(filters, false)), [filters, setFilters]);
+  const updateSelection = useCallback((filterSelection: FilterSelection) => setFilters(prev => getUpdatedFilters(prev, filterSelection)), []);
+  const resetSelection = useCallback(() => setFilters(prev => getUpdatedFiltersAll(prev, false)), []);
 
   useEffect(() => {
     setSelectedFilter(prev => prev ? filters.find(filter => filter.id === prev.id) ?? null : prev);
@@ -53,22 +57,48 @@ export const FiltersContextProvider = ({ children }: Readonly<FiltersContextProv
     setFilters(updatedFilters);
   }, []);
 
+  useEffect(() => {
+    const queryParams = filtersSelectionToQueryParams(getMapSelection());
+    const url = queryParams ? `?${queryParams}` : location.pathname;
+
+    window.history.pushState(null, '', url);
+  }, [getMapSelection]);
+
   const state = useMemo(() => ({
     filters,
     selectedFilter,
     setSelectedFilter,
-    selection,
-    mapSelection,
+    getSelection,
+    getMapSelection,
+    getQuerySelection
+  }), [
+    filters,
+    selectedFilter,
+    setSelectedFilter,
+    getSelection,
+    getMapSelection,
+    getQuerySelection
+  ]);
+
+  const dispatch = useMemo(() => ({
+    setSelectedFilter,
     updateSelection,
     resetSelection,
-    querySelection
-  }), [filters,selectedFilter, setSelectedFilter, selection, mapSelection, updateSelection, resetSelection, querySelection]);
+  }), [
+    setSelectedFilter,
+    updateSelection,
+    resetSelection,
+  ]);
 
   return (
-    <FiltersContext.Provider value={state}>
-      { children }
-    </FiltersContext.Provider>
+    <FiltersStateContext.Provider value={state}>
+      <FiltersDispatchContext.Provider value={dispatch}>
+        { children }
+      </FiltersDispatchContext.Provider>
+    </FiltersStateContext.Provider>
   );
 }
 
-export const useFiltersContext = () => (useContext(FiltersContext));
+export const useFiltersState = () => (useContext(FiltersStateContext));
+
+export const useFiltersDispatch = () => (useContext(FiltersDispatchContext));

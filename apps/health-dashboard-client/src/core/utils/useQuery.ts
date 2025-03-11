@@ -1,21 +1,22 @@
 import { use } from "react";
 
 interface useQueryProps<T> {
-  cache: Map<string, Promise<T>>;
   key: string;
   promise: Promise<T>;
 }
 
-export const useQuery = <T>({ cache, key, promise }: useQueryProps<T>) => {
-  if (!cache.has(key)) {
-    if (cache.size > 0) {
-      cache.clear();
+const claimsPromiseCache = new Map<string, Promise<unknown>>();
+
+export const useQuery = <T>({ key, promise }: useQueryProps<T>) => {
+  if (!claimsPromiseCache.has(key)) {
+    if (claimsPromiseCache.size > 0) {
+      claimsPromiseCache.clear();
     }
 
-    cache.set(key, promise);
+    claimsPromiseCache.set(key, promise);
   }
 
-  const cachedPromise = cache.get(key);
+  const cachedPromise = claimsPromiseCache.get(key);
 
   if (!cachedPromise) {
     return;
