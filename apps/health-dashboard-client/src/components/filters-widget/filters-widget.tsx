@@ -4,8 +4,8 @@ import styles from './filters-widget.module.css';
 import { TextButton } from '@/components/buttons/text-button/text-button';
 import { FilterDropdown } from '@/components/filters-widget/filter-dropdown/filter-dropdown';
 import { FilterOptions } from '@/components/filters-widget/filter-options/filter-options';
-import { FilterConfig } from '@/components/filters-widget/types';
 import { useFiltersDispatch, useFiltersState } from '@/contexts/FiltersContext/filters-context';
+import { FilterConfig } from '@core/health-dashboard';
 import { useMemo } from 'react';
 
 interface FilterWidgetProps {}

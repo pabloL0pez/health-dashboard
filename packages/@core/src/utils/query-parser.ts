@@ -1,4 +1,4 @@
-import { MapFiltersSelection } from "../types/filters";
+import { FilterConfig, MapFiltersSelection } from "../types/filters";
 import { ClaimCategoryType, ClaimVerificationStatusType } from "../types/claim";
 
 export const FILTERS_PARAMETER = 'filters';
@@ -7,13 +7,28 @@ export interface FiltersQuery {
   [FILTERS_PARAMETER]: string;
 }
 
-export const filtersSelectionToQueryParams = (selection: MapFiltersSelection): string => {
+const DEFAULT_MAP_SELECTION: MapFiltersSelection = {
+  'influencer': [],
+  'date': [],
+  'category': [],
+  'status': [],
+};
+
+const filtersToMapSelection = (filters: FilterConfig[]): MapFiltersSelection => {
+  return filters.reduce((acum: MapFiltersSelection, { id, options }) => ({
+    ...acum,
+    [id]: options.filter(option => option.isSelected).map(({ value }) => value),
+  }), DEFAULT_MAP_SELECTION);
+}
+
+export const filtersSelectionToQueryParams = (selection: FilterConfig[]): string => {
   const queryParams: string[] = [];
 
-  const filters = Object.keys(selection) as (keyof MapFiltersSelection)[];
+  const mapSelection = filtersToMapSelection(selection);
+  const filters = Object.keys(mapSelection) as (keyof MapFiltersSelection)[];
 
   for (let filter of filters) {
-    const selectedOptions = selection[filter];
+    const selectedOptions = mapSelection[filter];
 
     if (selectedOptions?.length > 0) {
       queryParams.push(`${filter}:${selectedOptions?.join(',')}`);

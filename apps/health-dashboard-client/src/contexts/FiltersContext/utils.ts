@@ -1,19 +1,11 @@
-import { FilterConfig } from "@/components/filters-widget/types";
-import { DEFAULT_MAP_SELECTION } from "@/contexts/FiltersContext/constants";
 import { FilterSelection, MapFiltersSelection } from "@/contexts/FiltersContext/types";
+import { FilterConfig } from "@core/health-dashboard";
 
 export const filtersToSelection = (filters: FilterConfig[]): FilterSelection[] => {
   return filters.reduce((acum: FilterSelection[], { id, options }) => ([
     ...acum,
     ...options.filter(option => option.isSelected).map(({ value }) => ({ id, value }))
   ]), []);
-}
-
-export const filtersToMapSelection = (filters: FilterConfig[]): MapFiltersSelection => {
-  return filters.reduce((acum: MapFiltersSelection, { id, options }) => ({
-    ...acum,
-    [id]: options.filter(option => option.isSelected).map(({ value }) => value),
-  }), DEFAULT_MAP_SELECTION);
 }
 
 export const getUpdatedFilters = (filters: FilterConfig[], { id, value }: FilterSelection): FilterConfig[] => {

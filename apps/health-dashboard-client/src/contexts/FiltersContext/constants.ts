@@ -1,5 +1,4 @@
-import { FilterConfig } from "@/components/filters-widget/types";
-import { MapFiltersSelection } from "@/contexts/FiltersContext/types";
+import { FilterConfig } from "@core/health-dashboard";
 
 export const filterWidgetConfig: FilterConfig[] = [
   {
@@ -96,10 +95,3 @@ export const filterWidgetConfig: FilterConfig[] = [
     ],
   },
 ];
-
-export const DEFAULT_MAP_SELECTION: MapFiltersSelection = {
-  'influencer': [],
-  'date': [],
-  'category': [],
-  'status': [],
-};

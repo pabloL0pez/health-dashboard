@@ -4,7 +4,7 @@ import { baseMetadata } from "@/app/constants";
 import { capitalize } from "@/shared/utils/capitalize";
 import { pageName } from "@/app/claims/constants";
 import { FiltersWidget } from '@/components/filters-widget/filters-widget';
-import { FiltersProvider, ClaimsProvider } from '@/contexts';
+import { FiltersProvider } from '@/contexts';
 import { ClaimsList } from '@/components/claims-list/claims-list';
 import { ClaimsService } from '@/services/claims.service';
 
