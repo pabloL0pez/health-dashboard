@@ -1,6 +1,4 @@
-import { Influencer } from "@core/health-dashboard";
-import { MongoDALRepository } from "../../layers/repository/data-access/mongo.repository"
-import { DALRepository, DBReadQuery } from "../../layers/repository/types";
+import { DALRepository, DBReadQuery, Influencer, MongoDALRepository } from "@core/health-dashboard";
 import { base64toBuffer } from "../../layers/utils/encoding";
 import { AIProviderHandler, AIProviderModel } from "../types";
 import { INACTIVE_INFLUENCER_RANK } from "./constants";

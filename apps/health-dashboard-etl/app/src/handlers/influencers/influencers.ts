@@ -1,5 +1,5 @@
 
-import { MongoClient } from "../../layers/config/mongo/mongo";
+import { MongoClient } from "@core/health-dashboard";
 import { isValidType } from "../../layers/utils/typeGuard";
 import { Handler, HandlerEvent, HandlerProvider, HandlerResult } from "../types";
 import { buildHandlerError, isValidaAIProviderModel } from "../utils";

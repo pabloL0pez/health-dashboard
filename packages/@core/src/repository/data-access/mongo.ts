@@ -11,7 +11,7 @@ const writeOperatorMap: Record<DBWriteOperator, string> = {
   'set': '$set',
 }
 
-export interface MongoDocument {
+interface MongoDocument {
   id: string;
   _id?: string;
   __v?: string;

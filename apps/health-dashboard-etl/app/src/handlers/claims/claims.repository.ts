@@ -1,5 +1,4 @@
-import { Claim, ClaimDAO } from "@core/health-dashboard";
-import { DALRepository, DBReadQuery } from "../../layers/repository/types";
+import { Claim, ClaimDAO, DALRepository, DBReadQuery } from "@core/health-dashboard";
 import { InfluencerDAO } from "../influencers/types";
 import { formatInfluencerNameToId } from "../influencers/utils";
 import { AIProviderModel } from "../types";

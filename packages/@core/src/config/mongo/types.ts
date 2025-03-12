@@ -1,8 +1,7 @@
-export enum MongoEventType {
-  Connected = 'connected',
-  Open = 'open',
-  Disconnected = 'disconnected',
-  Reconnected = 'reconnected',
-  Disconnecting = 'disconnecting',
-  Close = 'close',
-}
+export type MongoEventType = 
+  | 'connected' 
+  | 'open' 
+  | 'disconnected' 
+  | 'reconnected' 
+  | 'disconnecting' 
+  | 'close';

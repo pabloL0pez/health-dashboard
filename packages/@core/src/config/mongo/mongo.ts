@@ -2,7 +2,9 @@ import { connect, connection, Mongoose } from 'mongoose';
 import { Singleton } from '../../utils/singleton';
 import { MongoEventType } from './types';
 
-export class MongoClient extends Singleton<MongoClient>() {
+const SingletonMongo = Singleton<MongoClient>();
+
+export class MongoClient extends SingletonMongo {
   private readonly uri: string | undefined;
   private _client: Mongoose | undefined;
 

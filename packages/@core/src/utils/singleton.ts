@@ -1,4 +1,4 @@
-export const Singleton = <T>() => {
+export const Singleton = <T = unknown>() => {
   return class Singleton {
     static _instance: T;
 

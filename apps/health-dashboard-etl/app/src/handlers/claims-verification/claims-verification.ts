@@ -1,4 +1,4 @@
-import { MongoClient } from "../../layers/config/mongo/mongo";
+import { MongoClient } from "@core/health-dashboard";
 import { AIProviderType } from "../../layers/providers/types";
 import { isValidType } from "../../layers/utils/typeGuard";
 import { ClaimsRepository } from "../claims/claims.repository";
