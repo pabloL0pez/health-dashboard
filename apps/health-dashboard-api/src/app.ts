@@ -2,6 +2,7 @@ import * as path from 'node:path';
 import AutoLoad, {AutoloadPluginOptions} from '@fastify/autoload';
 import { FastifyPluginAsync } from 'fastify';
 import { fileURLToPath } from 'node:url'
+import { MongoClient } from '@core/health-dashboard';
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -25,6 +26,12 @@ const app: FastifyPluginAsync<AppOptions> = async (
     options: opts,
     forceESM: true
   })
+
+  try {
+    await MongoClient.instance.connect();
+  } catch (e) {
+    console.error(`Error connecting to Mongo - ${e}`);
+  }
 };
 
 export default app;

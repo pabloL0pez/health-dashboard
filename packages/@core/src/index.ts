@@ -17,3 +17,6 @@ export * from 'repository/data-access/mongo';
 
 export type * from 'config/mongo/types';
 export * from 'config/mongo/mongo';
+
+export type * from 'repository/influencers/influencers';
+export * from 'repository/influencers/influencers';
