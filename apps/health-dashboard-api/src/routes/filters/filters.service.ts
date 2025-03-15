@@ -1,5 +1,5 @@
-import { capitalize, ClaimCategoryType, FilterBase, FilterCategory, FilterConfig, FilterOption, iInfluencerRepository, Influencer, VerifiedClaim } from "@core/health-dashboard";
-import { CATEGORY_FILTER_LABEL, DATE_FILTER_LABEL, INFLUENCER_FILTER_LABEL } from "./constants.js";
+import { capitalize, FilterBase, FilterCategory, FilterConfig, FilterOption, FilterStatus, iInfluencerRepository, Influencer, VerifiedClaim } from "@core/health-dashboard";
+import { CATEGORY_FILTER_LABEL, DATE_FILTER_LABEL, INFLUENCER_FILTER_LABEL, STATUS_FILTER_LABEL, STATUS_ORDER } from "./constants.js";
 
 export interface iFiltersService {
   fetchFilters: () => Promise<FilterConfig[]>
@@ -21,6 +21,7 @@ export class FiltersService implements iFiltersService {
       this.getInfluencerFilter(influencers),
       this.getCategoryFilter(influencers),
       this.getDateFilter(influencers),
+      this.getStatusFilter(influencers),
     ].filter(item => item?.options?.length);
   }
 
@@ -37,27 +38,13 @@ export class FiltersService implements iFiltersService {
   }
 
   private getCategoryFilter(influencers: Influencer[]): FilterCategory {
+    const valueFn = (({ claim: { category } }: VerifiedClaim) => category);
+    const options = this.reduceInfluencersToFilterOptions(influencers, valueFn);
+
     return {
       id: 'category',
       label: CATEGORY_FILTER_LABEL,
-      options: influencers
-        .reduce((acum: VerifiedClaim[], item) => {
-          return [...acum, ...item.claims];
-        }, [])
-        .reduce((acum: FilterOption<ClaimCategoryType>[], { claim }) => {
-          if (!acum.filter((item: FilterOption<ClaimCategoryType>) => item.value === claim.category).length) {
-            return [
-              ...acum,
-              {
-                value: claim.category,
-                label: capitalize(claim.category),
-                isSelected: false,
-              }
-            ]
-          }
-
-          return acum;
-        }, [])
+      options,
     }
   }
 
@@ -67,5 +54,38 @@ export class FiltersService implements iFiltersService {
       label: DATE_FILTER_LABEL,
       options: [],
     }
+  }
+
+  private getStatusFilter(influencers: Influencer[]): FilterStatus {
+    const valueFn = (({ verification: { status: { value } } }: VerifiedClaim) => value);
+    const options = this.reduceInfluencersToFilterOptions(influencers, valueFn)
+      .sort((a, b) => STATUS_ORDER[a.value] - STATUS_ORDER[b.value]);
+
+    return {
+      id: 'status',
+      label: STATUS_FILTER_LABEL,
+      options,
+    }
+  }
+
+  private reduceInfluencersToFilterOptions<T extends string>(influencers: Influencer[], valueFn: (claim: VerifiedClaim) => T): FilterOption<T>[] {
+    return influencers
+      .reduce((acum: VerifiedClaim[], item) => {
+        return [...acum, ...item.claims];
+      }, [])
+      .reduce((acum: FilterOption<T>[], claim) => {
+        if (!acum.filter((item: FilterOption<T>) => item.value === valueFn(claim)).length) {
+          return [
+            ...acum,
+            {
+              value: valueFn(claim),
+              label: capitalize(valueFn(claim)),
+              isSelected: false,
+            }
+          ]
+        }
+
+        return acum;
+      }, [])
   }
 }

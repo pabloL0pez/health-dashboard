@@ -1,4 +1,4 @@
-export type ClaimVerificationStatusType = 'confirmed' | 'questionable' | 'debunked' | 'unverified';
+export type ClaimVerificationStatusType = 'confirmed' | 'questionable' | 'debunked' | 'unverified' | 'unverifiable';
 
 export type ClaimCategoryType = 'nutrition' | 'mental-health' | 'cardiovascular-health' | 'training' | 'fitness' | 'education' | 'other';
 

@@ -3,27 +3,16 @@
 import { ClaimCard } from "@/components/claim-card/claim-card";
 import styles from "./claims-list.module.css";
 import { ClaimVerificationStatusType } from "@core/health-dashboard";
-import { use } from "react";
 
 interface ClaimsListProps {
   claims: Promise<unknown>;
 }
 
-const claimsPromiseCache = new Map<string, Promise<{}>>();
-
-export const ClaimsList = ({ claims }: Readonly<ClaimsListProps>) => {
-  const claimsMock = use(claims);
-  
+export const ClaimsList = ({ claims }: Readonly<ClaimsListProps>) => {  
   return (
     <div className={styles.claimsList}>
-
-
-      <>{JSON.stringify(claimsMock)}</>
-
-
       {[...Array(10).keys()].map((index) => {
         const score = 100 - (index * 10);
-
         return (
           <ClaimCard
             key={`${index}-claim-card`}
