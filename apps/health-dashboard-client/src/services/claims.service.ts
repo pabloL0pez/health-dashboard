@@ -1,6 +1,10 @@
 import { useConfig } from "@/config";
-import { filterWidgetConfig } from "@/contexts/FiltersContext/constants";
+import { FilterConfig } from "@core/health-dashboard";
 import axios from "axios";
+
+interface FiltersResponse {
+  filters: FilterConfig[];
+}
 
 export class ClaimsService {
   public static async getClaims(query: string = '') {
@@ -15,8 +19,13 @@ export class ClaimsService {
   }
 
   public static async getFilters() {
-    return Promise.resolve(
-      filterWidgetConfig
-    );
+    const { apis: { healthDashboardApi }, endpoints: { filters } } = useConfig();
+    const url = `${healthDashboardApi}${filters}`;
+
+    return axios
+      .get<FiltersResponse>(url)
+      .then(response => {
+        return response.data?.filters
+      });
   }
 }
