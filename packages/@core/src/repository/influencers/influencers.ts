@@ -1,6 +1,8 @@
 import { InfluencerModel } from "models/influencer";
 import { MongoDALRepository } from "repository/data-access/mongo";
 import { DALRepository } from "repository/types";
+import { Claim, ClaimVerification, VerifiedClaim } from "types/claim";
+import { ClaimDAO } from "types/claimDAO";
 import { Influencer } from "types/influencer";
 import { InfluencerDAO } from "types/influencerDAO";
 
@@ -20,20 +22,32 @@ export class InfluencersRepository implements iInfluencerRepository {
   async getInfluencers(): Promise<Influencer[]> {
     const foundInfluencers = await this.dalRepository.find();
 
-    return this.mapInfluencersFromDAO(foundInfluencers);
+    return foundInfluencers.map((item) => this.mapInfluencerFromDAO(item));
   }
 
-  private mapInfluencersFromDAO(influencersDAO: InfluencerDAO[]): Influencer[] {
-    return influencersDAO.map(this.mapInfluencerFromDAO);
-  }
-
-  private mapInfluencerFromDAO({ name, bio, rank, instagramUser, twitterUser }: InfluencerDAO): Influencer {
+  private mapClaimFromDAO({ id, quote, title, category, date, source, verification }: ClaimDAO): VerifiedClaim {
     return {
+      claim: {
+        id,
+        quote,
+        title,
+        category,
+        date,
+        source,
+      },
+      verification,
+    }
+  }
+
+  private mapInfluencerFromDAO({ id, name, bio, rank, instagramUser, twitterUser, claims }: InfluencerDAO): Influencer {
+    return {
+      id,
       name,
       bio,
       rank,
       instagramUser,
-      twitterUser
+      twitterUser,
+      claims: claims?.map((item) => this.mapClaimFromDAO(item)) ?? [],
     }
   }
 }

@@ -20,3 +20,5 @@ export * from 'config/mongo/mongo';
 
 export type * from 'repository/influencers/influencers';
 export * from 'repository/influencers/influencers';
+
+export * from 'utils/capitalize';

@@ -12,6 +12,6 @@ export interface ClaimDAO {
   title: string;
   category: ClaimCategoryType;
   date: string;
-  source?: ClaimSource;
-  verification?: ClaimVerification;
+  source: ClaimSource;
+  verification: ClaimVerification;
 }
