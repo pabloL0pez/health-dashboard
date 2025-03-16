@@ -7,14 +7,21 @@ import { FiltersWidget } from '@/components/filters-widget/filters-widget';
 import { FiltersProvider } from '@/contexts';
 import { ClaimsList } from '@/components/claims-list/claims-list';
 import { ClaimsService } from '@/services/claims.service';
+import { FILTERS_PARAMETER } from '@core/health-dashboard';
 
 export const metadata: Metadata = {
   title: baseMetadata.baseTitle.concat(` | ${capitalize(pageName)}`),
   description: `Health dashboard ${pageName}`,
 };
 
-const Claims = () => {
-  const claims = ClaimsService.getClaims();
+interface SearchParams {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}
+
+const Claims = async ({ searchParams }: SearchParams) => { 
+  const queryParams = (await searchParams)?.filters;
+
+  const claims = ClaimsService.getClaims(`${FILTERS_PARAMETER}=${queryParams}`);
   const filters = ClaimsService.getFilters();
 
   return (

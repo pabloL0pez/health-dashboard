@@ -52,7 +52,7 @@ export class ClaimsRepository implements iClaimsRepository {
     }
 
     if (filters?.status?.length) {
-      categoryAndStatusFilter.push({"$in": ["$$claim.verification.score.value", filters?.status]});
+      categoryAndStatusFilter.push({"$in": ["$$claim.verification.status.value", filters?.status]});
     }
 
     if (categoryAndStatusFilter.length) {
