@@ -10,7 +10,7 @@ class ClaimsHandler {
     private claimsController: iClaimsController,
   ) {}
 
-  public async getFilters(query: string): Promise<ClaimV2[]> {
+  public async getClaims(query: string): Promise<ClaimV2[]> {
     return await this.claimsController.getClaims(query);
   } 
 }
@@ -31,7 +31,7 @@ const claims: FastifyPluginAsync = async (fastify): Promise<void> => {
   fastify.get<{ Reply: ReplyClaims, Querystring: FiltersQuery }>('/', async (request, response) => {
     try {
       const handler = new ClaimsHandlerProvider().handler;
-      const claims = await handler.getFilters(request?.query?.filters ?? '');
+      const claims = await handler.getClaims(request?.query?.filters ?? '');
 
       response.code(200).send({
         claims

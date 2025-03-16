@@ -30,7 +30,7 @@ export const filtersSelectionToQueryParams = (selection: FilterConfig[]): string
   for (let filter of filters) {
     const selectedOptions = mapSelection[filter];
 
-    if (selectedOptions?.length > 0) {
+    if (selectedOptions?.length) {
       queryParams.push(`${filter}:${selectedOptions?.join(',')}`);
     }
   }
