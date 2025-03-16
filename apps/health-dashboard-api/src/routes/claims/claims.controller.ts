@@ -1,13 +1,14 @@
-import { Claim, FiltersQuery } from '@core/health-dashboard';
+import { ClaimV2 } from '@core/health-dashboard';
+import { iClaimsService } from './claims.service.js';
 
 export interface iClaimsController {
-  fetchClaims: (query: FiltersQuery) => Claim[]
+  getClaims: (query: string) => Promise<ClaimV2[]>
 }
 
 export class ClaimsController implements iClaimsController {
-  constructor() {}
+  constructor(private readonly claimsService: iClaimsService) {}
 
-  public fetchClaims(query: FiltersQuery): Claim[] {
-    return [];
+  public async getClaims(query: string): Promise<ClaimV2[]> {
+    return await this.claimsService.fetchClaims(query);
   }
 }

@@ -40,3 +40,18 @@ export interface ClaimSource {
   source: string;
   url?: string;
 }
+
+export interface ClaimVerificationV2 {
+  score: number;
+  status: ClaimVerificationStatusType;
+  description?: string;
+  sources: ClaimSource[];
+}
+
+export interface ClaimV2 {
+  quote: string;
+  categories: ClaimCategoryType[];
+  date?: string;
+  source?: ClaimSource;
+  verification: ClaimVerificationV2;
+}

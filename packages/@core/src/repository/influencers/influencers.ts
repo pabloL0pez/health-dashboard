@@ -1,7 +1,7 @@
 import { InfluencerModel } from "models/influencer";
 import { MongoDALRepository } from "repository/data-access/mongo";
 import { DALRepository } from "repository/types";
-import { Claim, ClaimVerification, VerifiedClaim } from "types/claim";
+import { VerifiedClaim } from "types/claim";
 import { ClaimDAO } from "types/claimDAO";
 import { Influencer } from "types/influencer";
 import { InfluencerDAO } from "types/influencerDAO";

@@ -20,9 +20,9 @@ export type FilterStatus = Filter<'status', ClaimVerificationStatusType>;
 
 export type FilterConfig = FilterBase | FilterCategory | FilterStatus;
 
-export type MapFiltersSelection = {
-  'influencer': string[],
-  'date': string[],
-  'category': ClaimCategoryType[],
-  'status': ClaimVerificationStatusType[],
+export interface MapFiltersSelection {
+  influencer?: string[],
+  date?: string[],
+  category?: ClaimCategoryType[],
+  status?: ClaimVerificationStatusType[],
 }

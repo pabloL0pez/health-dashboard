@@ -39,4 +39,8 @@ export interface DALRepository<T> {
    */
   find(item?: T, query?: DBReadQuery<T>): Promise<T[]>;
   findOne(query: DBReadQuery<T>): Promise<T | null>;
+  /**
+   * Runs a manual query.
+   */
+  query<K>(callback: (model?: K) => Promise<T[]>): Promise<T[]>;
 }

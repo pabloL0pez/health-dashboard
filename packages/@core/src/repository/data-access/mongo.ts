@@ -69,6 +69,10 @@ export class MongoDALRepository<T extends MongoDocument> implements DALRepositor
     return (await this.model.findOne(parsedQuery))?.toObject() ?? null;
   }
 
+  async query<K>(callback: (model?: K | undefined) => Promise<T[]>): Promise<T[]> {
+    return await callback(this.model as K);
+  }
+
   private parseReadQuery<T>(query?: DBReadQuery<T>): Record<keyof T, unknown> | {} {
     if (!query) {
       return {}
