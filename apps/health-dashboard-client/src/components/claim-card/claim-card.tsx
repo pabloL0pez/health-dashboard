@@ -9,9 +9,9 @@ import { useState } from 'react';
 import { ScoreCounter } from '@/components/claim-card/score-counter/score-counter';
 import { Button } from '@/components/buttons/button';
 import React from 'react';
+import { ClaimV2 } from '@core/health-dashboard';
 
 interface iClaimCard {
-  influencerName: string;
   index: number;
 }
 
@@ -22,7 +22,7 @@ interface ButtonParams {
   iconPosition?: string;
 }
 
-type ClaimCardProps = Claim & iClaimCard;
+type ClaimCardProps = ClaimV2 & iClaimCard;
 
 const quoteWildcard = "“{{quote}}”"
 const readScoreSummary = "Read score summary";

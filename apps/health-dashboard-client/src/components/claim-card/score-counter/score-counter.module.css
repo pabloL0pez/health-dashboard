@@ -55,13 +55,14 @@
   }
 }
 
-.unverified {
+.unverified, .unverifiable {
   background-color: var(--color-unverified);
 
   &:after {
     background-color: var(--color-unverified);
   }
 }
+
 
 .status {
   font-size: 0.7rem;

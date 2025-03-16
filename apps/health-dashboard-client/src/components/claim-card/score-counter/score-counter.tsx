@@ -10,7 +10,7 @@ interface ScoreCounterProps {
 export const ScoreCounter = ({ score, status }: ScoreCounterProps) => {
   return (
     <div className={`${styles.scoreContainer} ${styles[status]}`}>
-      <span className={styles.score}>{score}</span>
+      <span className={styles.score}>{status === 'unverifiable' || status === 'unverified' ? '--' : score}</span>
       <span className={styles.status}>{capitalize(status)}</span>
     </div>
   );

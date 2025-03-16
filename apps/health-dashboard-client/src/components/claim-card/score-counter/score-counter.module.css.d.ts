@@ -6,6 +6,7 @@ declare const styles: {
   readonly questionable: string;
   readonly debunked: string;
   readonly unverified: string;
+  readonly unverifiable: string;
 }
 
 export default styles;

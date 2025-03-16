@@ -11,6 +11,6 @@ export interface Claim {
   quote: string;
   categories: ClaimCategoryType[];
   date?: string;
-  source: ClaimSource;
+  source?: ClaimSource;
   verification: ClaimVerification;
 }

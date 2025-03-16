@@ -1,9 +1,13 @@
 import { useConfig } from "@/config";
-import { FilterConfig } from "@core/health-dashboard";
+import { ClaimV2, FilterConfig } from "@core/health-dashboard";
 import axios from "axios";
 
 interface FiltersResponse {
   filters: FilterConfig[];
+}
+
+interface ClaimsResponse {
+  claims: ClaimV2[];
 }
 
 export class ClaimsService {
@@ -12,9 +16,9 @@ export class ClaimsService {
     const url = `${healthDashboardApi}${claims}${query ? '?' + query : ''}`;
 
     return axios
-      .get<{}>(url)
+      .get<ClaimsResponse>(url)
       .then(response => {
-        return response.data
+        return response.data?.claims
       });
   }
 

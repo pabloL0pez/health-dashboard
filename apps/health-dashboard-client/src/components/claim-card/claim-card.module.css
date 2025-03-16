@@ -36,6 +36,7 @@
   transition: transform 0.5s;
   height: 100%;
   padding: 16px;
+  width: 100%;
 }
 
 .quoteContainer {
@@ -226,11 +227,11 @@
   }
 
   .quote {
-    font-size: 2rem;
+    font-size: 1.75rem;
   }
 
   .influencer {
-    font-size: 1.25rem;
+    font-size: 1.1rem;
   }
 
   .toggle {
