@@ -42,15 +42,14 @@ export const FiltersWidget = ({}: Readonly<FilterWidgetProps>) => {
         />
       )}
 
-      {selection.length > 0 && (
-        <TextButton
-          className={styles.resetAllButton}
-          testId='filters-reset-all-button'
-          onClick={resetSelection}
-        >
-          <span>Reset all</span>
-        </TextButton>
-      )}
+      <TextButton
+        className={styles.resetAllButton}
+        testId='filters-reset-all-button'
+        onClick={resetSelection}
+        disabled={!selection?.length}
+      >
+        <span>Reset all</span>
+      </TextButton>
     </div>
   );
 }

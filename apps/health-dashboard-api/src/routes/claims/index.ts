@@ -33,6 +33,10 @@ const claims: FastifyPluginAsync = async (fastify): Promise<void> => {
       const handler = new ClaimsHandlerProvider().handler;
       const claims = await handler.getClaims(request?.query?.filters ?? '');
 
+      const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+      await delay(1500);
+
       response.code(200).send({
         claims
      });

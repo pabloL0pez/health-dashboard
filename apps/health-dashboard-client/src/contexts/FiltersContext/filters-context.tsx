@@ -3,13 +3,14 @@
 import { FilterSelection } from "@/contexts/FiltersContext/types";
 import { filtersToSelection, getUpdatedFilters, getUpdatedFiltersAll, mapSelectionToFilters } from "@/contexts/FiltersContext/utils";
 import { FilterConfig, FILTERS_PARAMETER, filtersSelectionToQueryParams, queryParamsToFilterSelection } from "@core/health-dashboard";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { createContext, use, useCallback, useContext, useEffect, useMemo, useState } from "react";
 
 interface FiltersStateProps {
   filters: FilterConfig[];
   selectedFilter: FilterConfig | null;
   getSelection: () => FilterSelection[];
+  isLoading: boolean;
 }
 
 interface FiltersDispatchProps {
@@ -28,9 +29,12 @@ const FiltersStateContext = createContext<FiltersStateProps>({} as unknown as an
 const FiltersDispatchContext = createContext<FiltersDispatchProps>({} as unknown as any);
 
 export const FiltersProvider = ({ children, filtersPromise }: Readonly<FiltersContextProviderProps>) => {
+  const pathname = usePathname();
+  const { replace } = useRouter();
   const searchParams = useSearchParams();
   const initialFilters = use(filtersPromise);
 
+  const [isLoading, setIsLoading] = useState(false);
   const [filters, setFilters] = useState(initialFilters);
   const [selectedFilter, setSelectedFilter] = useState<FilterConfig | null>(null);
 
@@ -48,12 +52,19 @@ export const FiltersProvider = ({ children, filtersPromise }: Readonly<FiltersCo
   }, []);
 
   useEffect(() => {
+    const params = new URLSearchParams(searchParams);
     setSelectedFilter(prev => prev ? filters.find(filter => filter.id === prev.id) ?? null : prev);
 
     const queryParams = filtersSelectionToQueryParams(filters);
-    const url = queryParams ? `?${queryParams}` : location.pathname;
 
-    window.history.pushState(null, '', url);
+    if (queryParams) {
+      params.set(FILTERS_PARAMETER, queryParams);
+    } else {
+      params.delete(FILTERS_PARAMETER);
+    }
+
+    replace(`${pathname}?${params.toString()}`, { scroll: false });
+    setIsLoading(true);
   }, [filters]);
 
   const state = useMemo(() => ({
@@ -61,11 +72,13 @@ export const FiltersProvider = ({ children, filtersPromise }: Readonly<FiltersCo
     selectedFilter,
     setSelectedFilter,
     getSelection,
+    isLoading,
   }), [
     filters,
     selectedFilter,
     setSelectedFilter,
     getSelection,
+    isLoading,
   ]);
 
   const dispatch = useMemo(() => ({

@@ -13,6 +13,7 @@ import { ClaimV2 } from '@core/health-dashboard';
 
 interface iClaimCard {
   index: number;
+  className?: string;
 }
 
 interface ButtonParams {
@@ -28,11 +29,11 @@ const quoteWildcard = "“{{quote}}”"
 const readScoreSummary = "Read score summary";
 const readInfluencerQuote = "Back to quote";
 
-export const ClaimCard = React.memo(({ index, categories, quote, influencerName, date, verification }: Readonly<ClaimCardProps>) => {
+export const ClaimCard = React.memo(({ index, categories, quote, influencerName, date, verification, className = ''}: Readonly<ClaimCardProps>) => {
   const [isScoreSummaryActive, setIsScoreSummaryActive] = useState(false);
 
   const renderQuote = () => (
-    <div className={`${styles.quoteContainer} ${styles.contentContainer}`}>
+    <div className={`${styles.quoteContainer} ${styles.contentContainer} ${className}`}>
       <div className={styles.categoriesContainer}>
         {categories.map((category) => (
           <div

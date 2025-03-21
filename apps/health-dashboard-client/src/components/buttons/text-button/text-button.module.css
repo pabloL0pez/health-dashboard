@@ -4,4 +4,15 @@
   border: none;
   font-size: 0.9rem;
   font-weight: bold;
+
+  &:disabled {
+    color: var(--grey-800);
+    cursor: not-allowed;
+  }
+
+  @media (prefers-color-scheme: light) {
+    &:disabled {
+      color: var(--grey-900);
+    }
+  }
 }

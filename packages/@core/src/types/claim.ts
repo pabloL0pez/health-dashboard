@@ -49,6 +49,7 @@ export interface ClaimVerificationV2 {
 }
 
 export interface ClaimV2 {
+  influencerName: string;
   quote: string;
   categories: ClaimCategoryType[];
   date?: string;

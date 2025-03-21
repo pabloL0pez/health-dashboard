@@ -2,8 +2,9 @@
 
 import { ClaimCard } from "@/components/claim-card/claim-card";
 import styles from "./claims-list.module.css";
-import { ClaimV2, ClaimVerificationStatusType } from "@core/health-dashboard";
-import { use } from "react";
+import { ClaimV2 } from "@core/health-dashboard";
+import { use, useEffect, useState } from "react";
+import { useFiltersState } from "@/contexts/FiltersContext/filters-context";
 
 interface ClaimsListProps {
   claims: Promise<ClaimV2[]>;
@@ -11,9 +12,19 @@ interface ClaimsListProps {
 
 export const ClaimsList = ({ claims }: Readonly<ClaimsListProps>) => {
   const resolvedClaims = use(claims);
+  const { filters } = useFiltersState();
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    claims.then(() => setIsLoading(false));
+  }, [claims]);
+
+  useEffect(() => {
+    setIsLoading(true);
+  }, [filters]);
 
   return (
-    <div className={styles.claimsList}>
+    <div className={`${styles.claimsList} ${isLoading ? styles.loadingCard : ''}`}>
       {resolvedClaims.map(({ categories, quote, influencerName, date, source, verification }, index) => {
         return (
           <ClaimCard

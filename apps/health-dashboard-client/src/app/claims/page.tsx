@@ -8,6 +8,8 @@ import { FiltersProvider } from '@/contexts';
 import { ClaimsList } from '@/components/claims-list/claims-list';
 import { ClaimsService } from '@/services/claims.service';
 import { FILTERS_PARAMETER } from '@core/health-dashboard';
+import { Suspense } from 'react';
+import { ClaimsListSkeleton } from '@/components/claims-list-skeleton/claims-list-skeleton';
 
 export const metadata: Metadata = {
   title: baseMetadata.baseTitle.concat(` | ${capitalize(pageName)}`),
@@ -15,12 +17,11 @@ export const metadata: Metadata = {
 };
 
 interface SearchParams {
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+  searchParams: Promise<{ [key: string]: string}>
 }
 
 const Claims = async ({ searchParams }: SearchParams) => { 
   const queryParams = (await searchParams)?.filters;
-
   const claims = ClaimsService.getClaims(`${FILTERS_PARAMETER}=${queryParams}`);
   const filters = ClaimsService.getFilters();
 
@@ -28,7 +29,9 @@ const Claims = async ({ searchParams }: SearchParams) => {
     <FiltersProvider filtersPromise={filters}>
       <div className={styles.page}>
         <FiltersWidget />
-        <ClaimsList claims={claims}/>
+        <Suspense fallback={<ClaimsListSkeleton />}>
+          <ClaimsList claims={claims}/>
+        </Suspense>
       </div>
     </FiltersProvider>
   );

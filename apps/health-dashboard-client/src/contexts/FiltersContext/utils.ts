@@ -1,5 +1,5 @@
-import { FilterSelection, MapFiltersSelection } from "@/contexts/FiltersContext/types";
-import { FilterConfig } from "@core/health-dashboard";
+import { FilterSelection } from "@/contexts/FiltersContext/types";
+import { FilterConfig, MapFiltersSelection } from "@core/health-dashboard";
 
 export const filtersToSelection = (filters: FilterConfig[]): FilterSelection[] => {
   return filters.reduce((acum: FilterSelection[], { id, options }) => ([
@@ -49,7 +49,7 @@ export const mapSelectionToFilters = (filters: FilterConfig[], mapSelection: Map
     ...filter,
     options: filter.options.map(option => ({
       ...option,
-      isSelected: Boolean(mapSelection[filter?.id].find((item) => item === option.value)),
+      isSelected: Boolean(mapSelection?.[filter?.id]?.find((item) => item === option.value)),
     }))
   })) as FilterConfig[];
 }

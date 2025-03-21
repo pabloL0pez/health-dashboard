@@ -39,7 +39,7 @@ export const filtersSelectionToQueryParams = (selection: FilterConfig[]): string
     return '';
   }
 
-  return `${FILTERS_PARAMETER}=${queryParams.join('|')}`;
+  return `${queryParams.join('|')}`;
 }
 
 export const queryParamsToFilterSelection = (queryParams: string): MapFiltersSelection => {
