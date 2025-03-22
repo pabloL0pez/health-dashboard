@@ -1,6 +1,6 @@
 declare const styles: {
   readonly claimsList: string;
-  readonly loadingCard: string;
+  readonly loading: string;
 }
 
 export default styles;

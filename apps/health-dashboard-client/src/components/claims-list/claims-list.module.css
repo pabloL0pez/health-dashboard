@@ -8,8 +8,9 @@
   width: 100%;
 }
 
-.loadingCard {
+.loading {
   opacity: 0.5;
+  pointer-events: none;
 }
 
 @media screen and (min-width: 1024px) {

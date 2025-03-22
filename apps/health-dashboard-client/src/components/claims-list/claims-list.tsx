@@ -24,7 +24,7 @@ export const ClaimsList = ({ claims }: Readonly<ClaimsListProps>) => {
   }, [filters]);
 
   return (
-    <div className={`${styles.claimsList} ${isLoading ? styles.loadingCard : ''}`}>
+    <div className={`${styles.claimsList} ${isLoading ? styles.loading : ''}`}>
       {resolvedClaims.map(({ categories, quote, influencerName, date, source, verification }, index) => {
         return (
           <ClaimCard

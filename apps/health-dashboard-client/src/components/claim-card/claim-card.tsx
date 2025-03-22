@@ -3,9 +3,8 @@
 import { capitalize } from '@/shared/utils/capitalize';
 import styles from './claim-card.module.css';
 import buttonStyles from '@/components/buttons/button.module.css';
-import { Claim } from "@/core/types";
 import Icon from '@/components/icon/icon';
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { ScoreCounter } from '@/components/claim-card/score-counter/score-counter';
 import { Button } from '@/components/buttons/button';
 import React from 'react';
@@ -29,7 +28,7 @@ const quoteWildcard = "“{{quote}}”"
 const readScoreSummary = "Read score summary";
 const readInfluencerQuote = "Back to quote";
 
-export const ClaimCard = React.memo(({ index, categories, quote, influencerName, date, verification, className = ''}: Readonly<ClaimCardProps>) => {
+export const ClaimCard = memo(({ index, categories, quote, influencerName, date, verification, className = ''}: Readonly<ClaimCardProps>) => {
   const [isScoreSummaryActive, setIsScoreSummaryActive] = useState(false);
 
   const renderQuote = () => (
@@ -47,7 +46,11 @@ export const ClaimCard = React.memo(({ index, categories, quote, influencerName,
       <span className={styles.quote}>{quoteWildcard.replace("{{quote}}", quote)}</span>
       <span className={styles.influencer}>- {influencerName}{date && `, ${date}`}</span>
 
-      {renderButton({ testId: 'read-score-summary', position: styles.toggleRight, label: readScoreSummary })}
+      {
+        verification.status !== 'unverifiable' && 
+        verification.status !== 'unverified' && 
+        renderButton({ testId: 'read-score-summary', position: styles.toggleRight, label: readScoreSummary })
+      }
     </div>
   );
 
