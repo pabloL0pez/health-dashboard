@@ -1,16 +1,14 @@
 'use client';
 
 import { FilterSelection } from "@/contexts/FiltersContext/types";
-import { filtersToSelection, getUpdatedFilters, getUpdatedFiltersAll, mapSelectionToFilters } from "@/contexts/FiltersContext/utils";
+import { useFilters } from "@/contexts/FiltersContext/useFilters";
 import { FilterConfig, FILTERS_PARAMETER, filtersSelectionToQueryParams, queryParamsToFilterSelection } from "@core/health-dashboard";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { createContext, use, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
 interface FiltersStateProps {
   filters: FilterConfig[];
   selectedFilter: FilterConfig | null;
-  getSelection: () => FilterSelection[];
-  isLoading: boolean;
 }
 
 interface FiltersDispatchProps {
@@ -32,24 +30,9 @@ export const FiltersProvider = ({ children, filtersPromise }: Readonly<FiltersCo
   const pathname = usePathname();
   const { replace } = useRouter();
   const searchParams = useSearchParams();
-  const initialFilters = use(filtersPromise);
+  const { filters, updateSelection, resetSelection } = useFilters(filtersPromise, searchParams);
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [filters, setFilters] = useState(initialFilters);
   const [selectedFilter, setSelectedFilter] = useState<FilterConfig | null>(null);
-
-  const getSelection = useCallback(() => filtersToSelection(filters), [filters]);
-  const updateSelection = useCallback((filterSelection: FilterSelection) => setFilters(prev => getUpdatedFilters(prev, filterSelection)), []);
-  const resetSelection = useCallback(() => setFilters(prev => getUpdatedFiltersAll(prev, false)), []);
-
-  useEffect(() => {
-    const queryParams = searchParams.getAll(FILTERS_PARAMETER)[0];
-    const parsedSelection = queryParamsToFilterSelection(queryParams);
-
-    const updatedFilters = mapSelectionToFilters(filters, parsedSelection);
-
-    setFilters(updatedFilters);
-  }, []);
 
   useEffect(() => {
     const params = new URLSearchParams(searchParams);
@@ -64,21 +47,14 @@ export const FiltersProvider = ({ children, filtersPromise }: Readonly<FiltersCo
     }
 
     replace(`${pathname}?${params.toString()}`, { scroll: false });
-    setIsLoading(true);
   }, [filters]);
 
   const state = useMemo(() => ({
     filters,
     selectedFilter,
-    setSelectedFilter,
-    getSelection,
-    isLoading,
   }), [
     filters,
     selectedFilter,
-    setSelectedFilter,
-    getSelection,
-    isLoading,
   ]);
 
   const dispatch = useMemo(() => ({
